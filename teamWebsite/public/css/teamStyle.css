@@ -10,6 +10,15 @@ body {
     margin: 0 auto;
 }
 
+.persona-pic {
+    object-fit: cover;
+    width: 100%;
+    height: 100%;
+    margin: 0 auto;
+    border: 1px solid black;
+    border-radius: 50%;
+}
+
 .btn-group button {
     text-align: left;
 }
@@ -71,6 +80,14 @@ body {
 
 .skills > li {
     font-style: italic;
+}
+
+.btn-link {
+    color: rgb(83, 83, 83);
+}
+
+.btn-link:hover {
+    text-decoration: none;
 }
 
 #navbar {

@@ -21,125 +21,585 @@
     </head>
     <body>
         <span id="navbar-placeholder"></span>
-        <div class="container">
-            <h1>Personas and User Stories</h1>
+        <div class="container my-4">
+            <div class="jumbotron mb-4">
+                <h1 class="display-4">Personas & User Stories</h1>
+                <p class="lead">
+                    Here is our completed work from deliverable 2.
+                    <span class="d-md-block"
+                        >We have prepared 5 Personas with an accompanying 18
+                        User Stories.
+                    </span>
+                </p>
+            </div>
 
-            <h2>Personas</h2>
-            <h3>Restaurant Owner Personas</h3>
-            <h4>Victor Chang</h4>
-            <p>
-                Victor Chang is a 33-year old restaurant owner of three
-                restaurants in suburban GTA. His restaurants are very busy
-                during peak hours, and many people order his popular dishes, but
-                he wants to encourage more customers to come during non-peak
-                hours, and to try more food from his menus. He owns a laptop and
-                is not very comfortable using this technology. His primary
-                language is Chinese, so he often navigates English websites
-                using the visuals. Wifi is provided for staff members in his
-                restaurants.
-            </p>
+            <div class="card mb-4 border-dark">
+                <div class="card-header">
+                    <h4 class="m-0">
+                        <strong>Restaurant Owner Personas</strong>
+                    </h4>
+                </div>
 
-            <h4>Ella Fields</h4>
-            <p>
-                Ella Fields is a 40 year old female who owns a new restaurant in
-                downtown Toronto. Her restaurant is not very popular yet, and
-                she wants to encourage new customers and customer loyalty. Her
-                menu has many different categories, and she wants customers to
-                try a variety of categories. She also has seasonal dishes and
-                drinks that she wants to promote that change frequently. As a
-                new restaurant owner, she is very busy and wants things to be
-                done quickly. She is comfortable using technology such as
-                laptops and smartphones.
-            </p>
+                <div class="accordion" id="ownerPersonas">
+                    <div class="card">
+                        <div class="card-header">
+                            <h2 class="mb-0">
+                                <button
+                                    class="btn btn-link btn-block text-left"
+                                    data-toggle="collapse"
+                                    data-target="#victor"
+                                >
+                                    Victor Chang
+                                </button>
+                            </h2>
+                        </div>
 
-            <h3>Customer Personas</h3>
-            <h4>Kelly Sawyer</h4>
-            <p>
-                Kelly Sawyer is a 17 year old female who enjoys socializing with
-                various groups of friends at restaurants in the GTA. She likes
-                to try a variety of new restaurants when she eats out. She gets
-                bored easily, and does not finish tasks if they are not visually
-                appealing or they take too long. She is very competitive in all
-                aspects of her life and likes to receive rewards. She uses her
-                smartphone often and is comfortable using applications and
-                navigating websites on her device.
-            </p>
+                        <div
+                            id="victor"
+                            class="collapse show"
+                            data-parent="#ownerPersonas"
+                        >
+                            <div class="card-body p-md-4 px-3">
+                                <div class="row">
+                                    <div class="col-lg-5 col-xl-4 p-md-2">
+                                        <img
+                                            src="img/personas/victor.png"
+                                            class="persona-pic"
+                                        />
+                                    </div>
+                                    <div class="col-lg-7 col-xl-8 pt-3 pt-lg-0">
+                                        <ul class="nav nav-tabs mb-3">
+                                            <li class="nav-item">
+                                                <a
+                                                    class="nav-link active"
+                                                    data-toggle="tab"
+                                                    href="#profile-victor"
+                                                    >Profile</a
+                                                >
+                                            </li>
+                                            <li class="nav-item">
+                                                <a
+                                                    class="nav-link"
+                                                    data-toggle="tab"
+                                                    href="#stories-victor"
+                                                    >User Stories</a
+                                                >
+                                            </li>
+                                        </ul>
+                                        <div class="tab-content">
+                                            <div
+                                                class="tab-pane fade show active"
+                                                id="profile-victor"
+                                            >
+                                                Victor Chang is a 33-year old
+                                                restaurant owner of three
+                                                restaurants in suburban GTA. His
+                                                restaurants are very busy during
+                                                peak hours, and many people
+                                                order his popular dishes, but he
+                                                wants to encourage more
+                                                customers to come during
+                                                non-peak hours, and to try more
+                                                food from his menus. He owns a
+                                                laptop and is not very
+                                                comfortable using this
+                                                technology. His primary language
+                                                is Chinese, so he often
+                                                navigates English websites using
+                                                the visuals. Wifi is provided
+                                                for staff members in his
+                                                restaurants.
+                                            </div>
+                                            <div
+                                                class="tab-pane fade"
+                                                id="stories-victor"
+                                            >
+                                                <ul class="m-0 point">
+                                                    <li>
+                                                        As Victor (an owner) , I
+                                                        want to choose goals and
+                                                        rewards from provided
+                                                        options so that I can
+                                                        limit my amount of
+                                                        English writing.
+                                                    </li>
+                                                    <li>
+                                                        As Victor (an owner), I
+                                                        want to choose goals and
+                                                        rewards on my laptop so
+                                                        that I can choose them
+                                                        at work.
+                                                    </li>
+                                                    <li>
+                                                        As Victor (an owner), I
+                                                        want clear navigation
+                                                        interfaces because so
+                                                        that I can use them
+                                                        without much
+                                                        translation.
+                                                    </li>
+                                                    <li>
+                                                        As Victor (an owner), I
+                                                        want a long-lasting
+                                                        reward system so that I
+                                                        do not need to use
+                                                        technology often.
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
-            <h3>Bob Smith</h3>
-            <p>
-                Bob Smith has an active family with his 3 younger children who
-                are picky eaters; they live in suburban Scarborough. As a result
-                of this, he is loyal to a few restaurants and frequents them
-                often. Bob keeps his children engaged with interesting
-                events/activities. He likes to save money so that they can use
-                it towards other things for the future. As a busy parent, he
-                does not have very much time to deal with the nuances with
-                technology; because of that, he wants to earn his rewards
-                without much hassle. He has a smartphone and only uses its basic
-                functions.
-            </p>
+                    <div class="card">
+                        <div class="card-header">
+                            <h2 class="mb-0">
+                                <button
+                                    class="btn btn-link btn-block text-left"
+                                    data-toggle="collapse"
+                                    data-target="#ella"
+                                >
+                                    Ella Fields
+                                </button>
+                            </h2>
+                        </div>
 
-            <h2>User Stories</h2>
-            <h3>Restaurant Owner User Stories</h3>
-            <h4>Victor Chang</h4>
-            <p>
-                As Victor (an owner) , I want to choose goals and rewards from
-                provided options so that I can limit my amount of English
-                writing.
-            </p>
-            <p>
-                As Victor (an owner), I want to choose goals and rewards on my
-                laptop so that I can choose them at work.
-            </p>
-            <p>
-                As Victor (an owner), I want clear navigation interfaces because
-                so that I can use them without much translation.
-            </p>
-            <p>
-                As Victor (an owner), I want a long-lasting reward system so
-                that I do not need to use technology often.
-            </p>
+                        <div
+                            id="ella"
+                            class="collapse"
+                            data-parent="#ownerPersonas"
+                        >
+                            <div class="card-body p-md-4 px-3">
+                                <div class="row">
+                                    <div class="col-lg-5 col-xl-4 p-md-2">
+                                        <img
+                                            src="img/personas/ella.png"
+                                            class="persona-pic"
+                                        />
+                                    </div>
+                                    <div class="col-lg-7 col-xl-8 pt-3 pt-lg-0">
+                                        <ul class="nav nav-tabs mb-3">
+                                            <li class="nav-item">
+                                                <a
+                                                    class="nav-link active"
+                                                    data-toggle="tab"
+                                                    href="#profile-ella"
+                                                    >Profile</a
+                                                >
+                                            </li>
+                                            <li class="nav-item">
+                                                <a
+                                                    class="nav-link"
+                                                    data-toggle="tab"
+                                                    href="#stories-ella"
+                                                    >User Stories</a
+                                                >
+                                            </li>
+                                        </ul>
+                                        <div class="tab-content">
+                                            <div
+                                                class="tab-pane fade show active"
+                                                id="profile-ella"
+                                            >
+                                                Ella Fields is a 40 year old
+                                                female who owns a new restaurant
+                                                in downtown Toronto. Her
+                                                restaurant is not very popular
+                                                yet, and she wants to encourage
+                                                new customers and customer
+                                                loyalty. Her menu has many
+                                                different categories, and she
+                                                wants customers to try a variety
+                                                of categories. She also has
+                                                seasonal dishes and drinks that
+                                                she wants to promote that change
+                                                frequently. As a new restaurant
+                                                owner, she is very busy and
+                                                wants things to be done quickly.
+                                                She is comfortable using
+                                                technology such as laptops and
+                                                smartphones.
+                                            </div>
+                                            <div
+                                                class="tab-pane fade"
+                                                id="stories-ella"
+                                            >
+                                                <ul class="m-0 point">
+                                                    <li>
+                                                        As Ella (an owner), I
+                                                        want to customize goals
+                                                        so that I can promote
+                                                        seasonal dishes.
+                                                    </li>
+                                                    <li>
+                                                        As Ella (an owner), I
+                                                        want easy verification
+                                                        of achievements so that
+                                                        I can finish orders
+                                                        quickly and have time
+                                                        for more tasks.
+                                                    </li>
+                                                    <li>
+                                                        As Ella (an owner), I
+                                                        want easy verification
+                                                        of rewards so that I can
+                                                        finish orders quickly
+                                                        and have time for more
+                                                        tasks.
+                                                    </li>
+                                                    <li>
+                                                        As Ella (an owner), I
+                                                        want one-time redemption
+                                                        of rewards per customer.
+                                                    </li>
+                                                    <li>
+                                                        As Ella (an owner), I
+                                                        want one-time redemption
+                                                        of achievements per
+                                                        customer.
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-            <h4>Ella Fields</h4>
-            <p>
-                As Ella (an owner), I want to customize goals so that I can
-                promote seasonal dishes.
-            </p>
-            <p>
-                As Ella (an owner), I want easy verification of rewards so that
-                I can finish orders quickly and have time for more tasks.
-            </p>
+            <div class="card mb-4 border-dark">
+                <div class="card-header">
+                    <h4 class="m-0">
+                        <strong>Customer Personas</strong>
+                    </h4>
+                </div>
 
-            <h3>Customer User Stories</h3>
-            <h4>Kelly Sawyer</h4>
-            <p>
-                As Kelly (a customer), I want to compete with my friends when
-                working towards rewards.
-            </p>
-            <p>
-                As Kelly (a customer), I want an engaging game interface so that
-                I retain interest in the application.
-            </p>
-            <p>
-                As Kelly (a customer), I want to complete goals quickly so that
-                I can be rewarded for eating at a variety of different
-                restaurants.
-            </p>
+                <div class="accordion" id="customerPersonas">
+                    <div class="card">
+                        <div class="card-header">
+                            <h2 class="mb-0">
+                                <button
+                                    class="btn btn-link btn-block text-left"
+                                    data-toggle="collapse"
+                                    data-target="#kelly"
+                                >
+                                    Kelly Sawyer
+                                </button>
+                            </h2>
+                        </div>
 
-            <h4>Bob Smith</h4>
-            <p>
-                As Bob (a customer), I want to be rewarded for loyalty to a
-                restaurant so that I will be able to save money to be used for
-                more activities.
-            </p>
-            <p>
-                As Bob (a customer), I want a simplistic game interface so that
-                my children can use it.
-            </p>
-            <p>
-                As Bob (a customer), I want to redeem rewards easily so that I
-                do not have to spend much time on the application.
-            </p>
+                        <div
+                            id="kelly"
+                            class="collapse show"
+                            data-parent="#customerPersonas"
+                        >
+                            <div class="card-body p-md-4 px-3">
+                                <div class="row">
+                                    <div class="col-lg-5 col-xl-4 p-md-2">
+                                        <img
+                                            src="img/personas/kelly.png"
+                                            class="persona-pic"
+                                        />
+                                    </div>
+                                    <div class="col-lg-7 col-xl-8 pt-3 pt-lg-0">
+                                        <ul class="nav nav-tabs mb-3">
+                                            <li class="nav-item">
+                                                <a
+                                                    class="nav-link active"
+                                                    data-toggle="tab"
+                                                    href="#profile-kelly"
+                                                    >Profile</a
+                                                >
+                                            </li>
+                                            <li class="nav-item">
+                                                <a
+                                                    class="nav-link"
+                                                    data-toggle="tab"
+                                                    href="#stories-kelly"
+                                                    >User Stories</a
+                                                >
+                                            </li>
+                                        </ul>
+                                        <div class="tab-content">
+                                            <div
+                                                class="tab-pane fade show active"
+                                                id="profile-kelly"
+                                            >
+                                                Kelly Sawyer is a 17 year old
+                                                female who enjoys socializing
+                                                with various groups of friends
+                                                at restaurants in the GTA. She
+                                                likes to try a variety of new
+                                                restaurants when she eats out.
+                                                She gets bored easily, and does
+                                                not finish tasks if they are not
+                                                visually appealing or they take
+                                                too long. She is very
+                                                competitive in all aspects of
+                                                her life and likes to receive
+                                                rewards. She uses her smartphone
+                                                often and is comfortable using
+                                                applications and navigating
+                                                websites on her device.
+                                            </div>
+                                            <div
+                                                class="tab-pane fade"
+                                                id="stories-kelly"
+                                            >
+                                                <ul class="m-0 point">
+                                                    <li>
+                                                        As Kelly (a customer), I
+                                                        want to compete with my
+                                                        friends when working
+                                                        towards rewards.
+                                                    </li>
+                                                    <li>
+                                                        As Kelly (a customer), I
+                                                        want an engaging game
+                                                        interface so that I
+                                                        retain interest in the
+                                                        application.
+                                                    </li>
+                                                    <li>
+                                                        As Kelly (a customer), I
+                                                        want to complete goals
+                                                        quickly so that I can be
+                                                        rewarded for eating at a
+                                                        variety of different
+                                                        restaurants.
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-header">
+                            <h2 class="mb-0">
+                                <button
+                                    class="btn btn-link btn-block text-left"
+                                    data-toggle="collapse"
+                                    data-target="#bob"
+                                >
+                                    Bob Smith
+                                </button>
+                            </h2>
+                        </div>
+
+                        <div
+                            id="bob"
+                            class="collapse"
+                            data-parent="#customerPersonas"
+                        >
+                            <div class="card-body p-md-4 px-3">
+                                <div class="row">
+                                    <div class="col-lg-5 col-xl-4 p-md-2">
+                                        <img
+                                            src="img/personas/bob.png"
+                                            class="persona-pic"
+                                        />
+                                    </div>
+                                    <div class="col-lg-7 col-xl-8 pt-3 pt-lg-0">
+                                        <ul class="nav nav-tabs mb-3">
+                                            <li class="nav-item">
+                                                <a
+                                                    class="nav-link active"
+                                                    data-toggle="tab"
+                                                    href="#profile-bob"
+                                                    >Profile</a
+                                                >
+                                            </li>
+                                            <li class="nav-item">
+                                                <a
+                                                    class="nav-link"
+                                                    data-toggle="tab"
+                                                    href="#stories-bob"
+                                                    >User Stories</a
+                                                >
+                                            </li>
+                                        </ul>
+                                        <div class="tab-content">
+                                            <div
+                                                class="tab-pane fade show active"
+                                                id="profile-bob"
+                                            >
+                                                Bob Smith has an active family
+                                                with his three younger children
+                                                who are picky eaters; they live
+                                                in suburban Scarborough. As a
+                                                result of this, he is loyal to a
+                                                few restaurants and frequents
+                                                them often. Bob keeps his
+                                                children engaged with
+                                                interesting events/activities.
+                                                He likes to save money so that
+                                                they can use it towards other
+                                                things for the future. As a busy
+                                                parent, he does not have very
+                                                much time to deal with the
+                                                nuances with technology; because
+                                                of that, he wants to earn his
+                                                rewards without much hassle. He
+                                                has a smartphone and only uses
+                                                its basic functions.
+                                            </div>
+                                            <div
+                                                class="tab-pane fade"
+                                                id="stories-bob"
+                                            >
+                                                <ul class="m-0 point">
+                                                    <li>
+                                                        As Bob (a customer), I
+                                                        want to be rewarded for
+                                                        loyalty to a restaurant
+                                                        so that I will be able
+                                                        to save money to be used
+                                                        for more activities.
+                                                    </li>
+                                                    <li>
+                                                        As Bob (a customer), I
+                                                        want a simplistic game
+                                                        interface so that my
+                                                        children can use it.
+                                                    </li>
+                                                    <li>
+                                                        As Bob (a customer), I
+                                                        want to redeem rewards
+                                                        easily so that I do not
+                                                        have to spend much time
+                                                        on the application.
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="card">
+                        <div class="card-header">
+                            <h2 class="mb-0">
+                                <button
+                                    class="btn btn-link btn-block text-left"
+                                    data-toggle="collapse"
+                                    data-target="#charity"
+                                >
+                                    Charity Galvan
+                                </button>
+                            </h2>
+                        </div>
+
+                        <div
+                            id="charity"
+                            class="collapse"
+                            data-parent="#customerPersonas"
+                        >
+                            <div class="card-body p-md-4 px-3">
+                                <div class="row">
+                                    <div class="col-lg-5 col-xl-4 p-md-2">
+                                        <img
+                                            src="img/personas/charity.png"
+                                            class="persona-pic"
+                                        />
+                                    </div>
+                                    <div class="col-lg-7 col-xl-8 pt-3 pt-lg-0">
+                                        <ul class="nav nav-tabs mb-3">
+                                            <li class="nav-item">
+                                                <a
+                                                    class="nav-link active"
+                                                    data-toggle="tab"
+                                                    href="#profile-charity"
+                                                    >Profile</a
+                                                >
+                                            </li>
+                                            <li class="nav-item">
+                                                <a
+                                                    class="nav-link"
+                                                    data-toggle="tab"
+                                                    href="#stories-charity"
+                                                    >User Stories</a
+                                                >
+                                            </li>
+                                        </ul>
+                                        <div class="tab-content">
+                                            <div
+                                                class="tab-pane fade show active"
+                                                id="profile-charity"
+                                            >
+                                                Charity Galvan is a 28-year-old
+                                                who lives on a farm in Markham.
+                                                She has heard of the variety in
+                                                restaurants back in the city,
+                                                but she does not want to go
+                                                during rush hour periods or
+                                                weekends, since the drive is
+                                                already long. Her job makes her
+                                                schedule very flexible, so she
+                                                can go whenever she wants to.
+                                                She does not care for games, but
+                                                if there are good rewards
+                                                involved then she is happy; she
+                                                is motivated when she sees
+                                                progress towards rewards. She is
+                                                comfortable using her smartphone
+                                                and is environmentally friendly,
+                                                so she would prefer to have
+                                                electronic copies of her rewards
+                                                that she can redeem in store.
+                                            </div>
+                                            <div
+                                                class="tab-pane fade"
+                                                id="stories-charity"
+                                            >
+                                                <ul class="m-0 point">
+                                                    <li>
+                                                        As Charity (a customer),
+                                                        I want to redeem my
+                                                        rewards whenever I want.
+                                                    </li>
+                                                    <li>
+                                                        As Charity (a customer),
+                                                        I want my rewards to be
+                                                        digital and redeemable
+                                                        in store.
+                                                    </li>
+                                                    <li>
+                                                        As Charity (a customer),
+                                                        I want to see my
+                                                        achievements progress
+                                                        for each restaurant so
+                                                        that I can see how close
+                                                        I am to a reward.
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card bg-light mb-4">
+                <div class="card-header">Image Rights</div>
+                <div class="card-body">
+                    <em style="font-size: 0.9rem;"
+                        >All images used in this deliverable were obtained
+                        through ShutterStock.</em
+                    >
+                </div>
+            </div>
         </div>
         <script src="js/main.js"></script>
     </body>
