@@ -26,3 +26,7 @@ $('#navbar-placeholder').load('/partials/navbar.html', () => {
         }
     });
 });
+
+$('.bio-pic').height((i) => {
+    return $('.bio-pic')[i].width;
+});
