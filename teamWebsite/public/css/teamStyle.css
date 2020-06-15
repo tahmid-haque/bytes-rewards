@@ -3,10 +3,6 @@ body {
     width: 100%;
 }
 
-#teamImage {
-    width: 100%;
-}
-
 .bio-pic {
     vertical-align: top;
     float: left;
@@ -19,10 +15,6 @@ body {
 
 .btn-group button {
     text-align: left;
-}
-
-.nav-item:hover {
-    background-color: aqua;
 }
 
 .btn-group > button {
@@ -64,9 +56,6 @@ body {
     transition: 0.5s ease;
 }
 
-.card-text {
-}
-
 .card-img-overlay:hover {
     opacity: 100%;
 }
@@ -90,4 +79,13 @@ body {
     transition: 0.3s;
     background-color: #f8f8f8;
     line-height: 2.2rem;
+}
+
+@media only screen and (min-width: 768px) {
+    .btn-group:hover .dropdown-menu {
+        display: block;
+    }
+    .dropdown-menu {
+        margin-top: 0;
+    }
 }
