@@ -1,15 +1,13 @@
 $('#navbar-placeholder').load('/partials/navbar.html', () => {
-    $(window)
-        .bind('resize', function () {
-            if ($(this).width() < 768) {
-                $('.dropdown-menu').removeClass('dropdown-menu-right');
-                $('.btn-group button').width('92vw');
-            } else {
-                $('.dropdown-menu').addClass('dropdown-menu-right');
-                $('.btn-group button').width('auto');
-            }
-        })
-        .trigger('resize');
+    $(window).resize(() => {
+        if ($(window).width() < 768) {
+            $('.dropdown-menu').removeClass('dropdown-menu-right');
+            $('.btn-group button').width($('.container').width());
+        } else {
+            $('.dropdown-menu').addClass('dropdown-menu-right');
+            $('.btn-group button').width('auto');
+        }
+    });
 
     const navHeight = $('#navbar').height();
 

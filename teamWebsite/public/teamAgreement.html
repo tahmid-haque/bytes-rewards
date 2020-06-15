@@ -1,109 +1,252 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Bytes | Our Commitment</title>
+        <link rel="icon" href="img/logo.png" />
+
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css"
+        />
         <link rel="stylesheet" href="css/teamStyle.css" />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;700&display=swap"
+            rel="stylesheet"
+        />
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/js/bootstrap.min.js"></script>
     </head>
+
     <body>
-        <img id="logo" src="img/logo.png" width="200" height="200" />
+        <span id="navbar-placeholder"></span>
 
-        <div class="container">
-            <h3>Pages</h3>
-            <li class="list"><a href="./teamWebsite.html">Our Team</a></li>
-            <li class="list">
-                <a href="./teamBiographies.html">Biographies</a>
-            </li>
-            <li class="list">
-                <a href="./personaUserStories.html"
-                    >Personas and User Stories</a
-                >
-            </li>
+        <div class="container my-4">
+            <div class="jumbotron mb-4">
+                <h1 class="display-4">Team Expectations Agreement</h1>
+                <p class="lead">
+                    Here we outline the procedures and workflows that will be
+                    followed throughout the completion of this project.
+                </p>
+            </div>
 
-            <h1>Team Expectations Agreement</h1>
+            <div class="row mt-4">
+                <div class="col-md-6 mb-4">
+                    <div class="card border-dark h-100">
+                        <div class="card-header">Communication</div>
+                        <div class="card-body">
+                            <div
+                                class="m-0 pl-3 d-flex flex-column justify-content-around h-100"
+                            >
+                                <div>
+                                    <strong>Methods</strong>
+                                    <ul>
+                                        <li>Facebook Messenger</li>
+                                        <li>Zoom</li>
+                                        <li>Microsoft Teams</li>
+                                        <li>GitHub</li>
+                                    </ul>
+                                </div>
+                                <div>
+                                    <strong>Response Times</strong>
+                                    <ul class="mb-0">
+                                        <li>
+                                            24 Hour Response Period on Facebook
+                                        </li>
+                                        <li>
+                                            Arrive at Zoom/MS Teams meetings
+                                            within 5 minutes of scheduled time
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
 
-            <h2>Methods of Communication</h2>
-            <p>
-                Our main methods of communication are Facebook Messenger and
-                Zoom.
-            </p>
+                <div class="col-md-6 mb-4">
+                    <div class="card border-dark h-100">
+                        <div class="card-header">Meetings</div>
+                        <div class="card-body">
+                            <div class="m-0 pl-3">
+                                <div>
+                                    <strong>Scheduling</strong>
+                                    <ul>
+                                        <li>
+                                            Weekly Zoom meetings held on Mondays
+                                            at 4:15 PM
+                                        </li>
+                                        <li>
+                                            Zoom meetings to be hosted by Tia,
+                                            who will also take meeting minutes
+                                        </li>
+                                        <li>
+                                            Weekly Facebook Messenger updates
+                                            will be sent on Thursdays at 3:00 PM
+                                        </li>
+                                        <li>All Meetings are mandatory</li>
+                                    </ul>
+                                </div>
+                                <div>
+                                    <strong>Preparation</strong>
+                                    <ul class="mb-0">
+                                        <li>
+                                            Each team member will be prepared
+                                            with a list of updates and
+                                            roadblocks before each meeting
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-            <h2>Communication Response Times</h2>
-            <p>
-                We will respond to Facebook messages within one day, and respond
-                to scheduled Zoom meetings within five minutes.
-            </p>
+            <div class="card border-dark h-100 mb-4">
+                <div class="card-header">Workflow</div>
+                <div class="card-body">
+                    <div class="m-0 pl-3 h-100">
+                        <div>
+                            <strong>Division of Work</strong>
+                            <ul>
+                                <li>
+                                    Will be done as a team during the Monday
+                                    Zoom meeting
+                                </li>
+                                <li>Will be documented using a Trello board</li>
+                            </ul>
+                        </div>
+                        <hr />
+                        <div>
+                            <strong>Submission of Work</strong>
+                            <p class="mb-1">
+                                The following steps will be completed before the
+                                submission of work to the master branch of the
+                                team Git repository:
+                            </p>
+                            <ol class="mb-1">
+                                <li>
+                                    A Unit test suite or a list of test cases
+                                    will be created per commit, where possible
+                                </li>
+                                <li>
+                                    A commit will be ready 36 hours before the
+                                    due date
+                                </li>
+                                <li>
+                                    A commit's peer review will be completed 12
+                                    hours before the due date
+                                </li>
+                            </ol>
+                            <p class="mb-0">
+                                Submission of work to the Git repository will be
+                                done by the group member that completed the
+                                task.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-            <h2>Regular Meeting Times</h2>
-            <p>
-                Weekly Zoom meetings will be held at Mondays at 4:15. The Zoom
-                meetings will be hosted by Tia, who will also take meeting
-                minutes.<br />Weekly Facebook Messenger updates will be sent on
-                Thursdays at 3:00.<br />
-                All meetings are mandatory.
-            </p>
+            <div class="card border-dark mb-4">
+                <div class="card-header">
+                    Contingency Planning &#8212; Scenarios
+                </div>
+                <div class="card-body">
+                    <div class="m-0 pl-3">
+                        <div>
+                            <strong>Team member drops out:</strong>
+                            <ul>
+                                <li>
+                                    The team member is expected to inform the
+                                    group as soon as possible
+                                </li>
+                                <li>
+                                    Their work will be redistributed by the team
+                                    during a Zoom meeting
+                                </li>
+                            </ul>
+                        </div>
+                        <hr />
+                        <div>
+                            <strong>Team member is sick:</strong>
+                            <ul>
+                                <li>
+                                    The team member is expected to inform the
+                                    group as soon as possible
+                                </li>
+                                <li>
+                                    Their work will be redistributed by the team
+                                    during a Zoom meeting
+                                </li>
+                            </ul>
+                        </div>
+                        <hr />
+                        <div>
+                            <strong
+                                >Team member consistently misses
+                                meetings:</strong
+                            >
+                            <ul>
+                                <li>
+                                    A team meeting will be held on Zoom to
+                                    discuss with the group member and understand
+                                    why they are missing meetings
+                                </li>
+                                <li>
+                                    The team will work together to overcome any
+                                    obstacles the individual is facing
+                                </li>
+                            </ul>
+                        </div>
+                        <hr />
+                        <div>
+                            <strong
+                                >Team member is academically dishonest</strong
+                            >
+                            <ul class="mb-0">
+                                <li>
+                                    A team meeting will be held on Zoom to talk
+                                    with the individual to understand why they
+                                    were academically dishonest
+                                </li>
+                                <li>
+                                    The team will help the individual come up
+                                    with original ideas and ensure they redo
+                                    their work
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-            <h2>Meeting Preparation</h2>
-            <p>
-                Each team member will be prepared with a list of updates and
-                roadblocks before each meeting.
-            </p>
-
-            <h2>Division of Work</h2>
-            <p>
-                Division of work will be done as a team during the Monday Zoom
-                meeting. Division of work will be documented using a Trello
-                board.
-            </p>
-
-            <h2>Submission of Work</h2>
-            <p>
-                The following steps will be completed before the submission of
-                work to the master branch of the team Git repository:
-            </p>
-            <p class="list">
-                1. A Unit test suite or a list of test cases will be created per
-                commit, where possible
-            </p>
-            <p class="list">
-                2. A commit will be ready 36 hours before the due date
-            </p>
-            <p class="list">
-                3. A commit's peer review will be completed 12 hours before the
-                due date
-            </p>
-            <p>
-                Submission of work to the Git repository will be done by the
-                group member that completed the task.
-            </p>
-
-            <h2>Contingency Planning</h2>
-            <h3>If a team member drops out:</h3>
-            <p>
-                The team member is expected to inform the group as soon as
-                possible. Their work will be redistributed by the team during a
-                Zoom meeting.
-            </p>
-            <h3>If a team member is sick:</h3>
-            <p>
-                The team member is expected to inform the group as soon as
-                possible. Their work will be redistributed by the team during a
-                Zoom meeting.
-            </p>
-            <h3>If a team member consistently misses a meeting:</h3>
-            <p>
-                A team meeting will be held on Zoom to discuss with the group
-                member and understand why they are missing meetings. The team
-                will work together to overcome any obstacles the individual is
-                facing.
-            </p>
-            <h3>If a team member is academically dishonest:</h3>
-            <p>
-                A team meeting will be held on Zoom to talk with the individual
-                to understand why they were academically dishonest. The team
-                will help the individual come up with original ideas and ensure
-                they redo their work.
-            </p>
-            <h3>Signed by:</h3>
-            <p>Jodi Jang, Tia Jang, Aaren Chu, Junaid Ali Syed, Tahmid Haque</p>
+            <div class="card bg-light mb-4">
+                <div class="card-header">Agreement Signed By:</div>
+                <div class="card-body">
+                    <ul class="mb-0">
+                        <li>
+                            Jodi Jang
+                        </li>
+                        <li>
+                            Tia Jang
+                        </li>
+                        <li>
+                            Aaren Chu
+                        </li>
+                        <li>
+                            Junaid Syed
+                        </li>
+                        <li>
+                            Tahmid Haque
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <script src="js/main.js"></script>
         </div>
     </body>
 </html>

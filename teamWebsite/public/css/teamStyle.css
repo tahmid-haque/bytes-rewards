@@ -18,7 +18,7 @@ body {
 }
 
 .btn-group > button {
-    border-radius: 3%;
+    border-radius: 0;
     border: none;
     height: 51px;
 }
@@ -43,6 +43,10 @@ body {
 .dark-nav-item:hover {
     background-color: white !important;
     color: black !important;
+}
+
+.display-4 {
+    font-size: 3.2rem;
 }
 
 .pink {
@@ -81,11 +85,12 @@ body {
     line-height: 2.2rem;
 }
 
+.dropdown-menu {
+    margin-top: 0;
+}
+
 @media only screen and (min-width: 768px) {
     .btn-group:hover .dropdown-menu {
         display: block;
-    }
-    .dropdown-menu {
-        margin-top: 0;
     }
 }
