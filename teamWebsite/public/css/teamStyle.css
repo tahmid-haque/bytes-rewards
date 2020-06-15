@@ -1,37 +1,93 @@
 body {
-	font-family: Arial, Helvetica, sans-serif;
-	width: 100%;
-}
-
-ul {
-	margin: 0;
-}
-
-.list {
-	margin-left: 30px;
-}
-
-.container {
-	margin: 0 auto;
-	max-width: 700px;
-	padding: 0 5%;
+    font-family: 'Raleway', sans-serif;
+    width: 100%;
 }
 
 #teamImage {
-	width: 100%;
-}
-
-#logo {
-	display: block;
-	margin: 0 auto;
+    width: 100%;
 }
 
 .bio-pic {
-	vertical-align: top;
-	float: left;
-	padding: 0 2% 2% 0;
+    vertical-align: top;
+    float: left;
+    padding: 0 2% 2% 0;
 }
 
 .bio-pic + p {
-	display: inline;
+    display: inline;
+}
+
+.btn-group button {
+    text-align: left;
+}
+
+.nav-item:hover {
+    background-color: aqua;
+}
+
+.btn-group > button {
+    border-radius: 3%;
+    border: none;
+    height: 51px;
+}
+
+.light-nav-item {
+    transition: 0.3s;
+    background-color: #f8f8f8 !important;
+    color: black !important;
+}
+
+.light-nav-item:hover {
+    background-color: rgb(245, 94, 97) !important;
+    color: #f8f8f8 !important;
+}
+
+.dark-nav-item {
+    transition: 0.3s;
+    background-color: rgb(245, 94, 97) !important;
+    color: white !important;
+}
+
+.dark-nav-item:hover {
+    background-color: white !important;
+    color: black !important;
+}
+
+.pink {
+    background-color: rgb(245, 94, 97) !important;
+    color: white !important;
+}
+
+.card-img-overlay {
+    opacity: 0%;
+    background-color: #5f5f5fd0;
+    transition: 0.5s ease;
+}
+
+.card-text {
+}
+
+.card-img-overlay:hover {
+    opacity: 100%;
+}
+
+.point > li:not(:first-child) {
+    margin-top: 1rem;
+}
+
+.card-text a {
+    color: #5bf4ff;
+}
+
+.skills > li {
+    font-style: italic;
+}
+
+#navbar {
+    -webkit-box-shadow: 0px 2px 5px 0px rgba(133, 133, 133, 1);
+    -moz-box-shadow: 0px 2px 5px 0px rgba(133, 133, 133, 1);
+    box-shadow: 0px 1px 3px 0px rgba(133, 133, 133, 1);
+    transition: 0.3s;
+    background-color: #f8f8f8;
+    line-height: 2.2rem;
 }
