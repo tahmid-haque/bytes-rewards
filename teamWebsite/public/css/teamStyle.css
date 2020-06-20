@@ -3,11 +3,18 @@ body {
     width: 100%;
 }
 
-.bio-pic {
+.bio-pic,
+.sprint-plan-img {
     object-fit: cover;
     width: 100%;
     height: 100%;
     margin: 0 auto;
+}
+
+.sprint-plan-img {
+    border-radius: 2%;
+    border: 1px solid grey;
+    margin-top: 0.7rem;
 }
 
 .persona-pic {
@@ -58,6 +65,11 @@ body {
 .pink {
     background-color: rgb(245, 94, 97) !important;
     color: white !important;
+    opacity: 85%;
+}
+
+.pink:hover {
+    opacity: 100%;
 }
 
 .card-img-overlay {
