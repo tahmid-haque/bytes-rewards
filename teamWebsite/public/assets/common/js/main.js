@@ -1,4 +1,4 @@
-$('#navbar-placeholder').load('/partials/navbar.html', () => {
+$('#navbar-placeholder').load('/assets/common/partials/navbar.html', () => {
     setDropdown();
     $(window).resize(setDropdown);
 
