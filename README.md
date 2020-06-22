@@ -24,4 +24,3 @@ Deliverable 2 we added User Stories and Personas, which are found here on our we
 ## Deliverable 3 Part 1
 
 For the first part of Deliverable 3 we added our Project Environment, Product Backlog, Release Plan, and Sprint Plan, which are found here on our website: [Project Environment & Backlogs](https://bytes-cs.web.app/deliverables/d3/projectEnvironmentBacklogs.html), or in this repository at [Repo Deliverable 3](teamWebsite/public/deliverables/d3/projectEnvironmentBacklogs.html).
-https://www.youtube.com/watch?v=-56x56UppqQ
