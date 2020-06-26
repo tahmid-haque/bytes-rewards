@@ -1,0 +1,65 @@
+body,
+html {
+    margin: 0;
+    font-family: sans-serif;
+}
+
+.content-flex-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+}
+
+.add-remove-container,
+.name-bingo-container {
+    text-align: center;
+}
+
+.clear-save-container{
+    align-self:center;
+}
+
+table,
+td {
+    border: 1px solid #aaa;
+}
+
+table {
+    border-collapse: collapse;
+    width: 100%;
+    padding: 5px;
+}
+
+
+td {
+    text-align: center;
+    padding: 25px;
+}
+
+form {
+    margin-top: 20px;
+}
+
+#content {
+    width: 85%;
+}
+
+.custom-select > select {
+    width: 100px;
+    overflow: hidden;
+    white-space: pre;
+    text-overflow: ellipsis;
+    -webkit-appearance: none;
+}
+
+.remove-select > select {
+    width: 85%;
+    overflow: hidden;
+    white-space: pre;
+    text-overflow: ellipsis;
+    -webkit-appearance: none;
+}
+h1 {
+    text-align: center;
+}

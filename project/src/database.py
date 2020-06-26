@@ -6,6 +6,9 @@ CRUD operations and provided custom error handling.
 import os
 from flask_pymongo import PyMongo  # Import Flask-PyMongo utilities
 
+# Exceptions
+class QueryFailureException(Exception):
+    pass
 
 class Database:
     """
@@ -16,7 +19,7 @@ class Database:
     instance = None  # Holds a single occurence of the database
 
     # Indicates mongo server location and corresponding database, "bytes"
-    mongoURI = os.environ['BYTES_MONGO_URI'] or "mongodb://localhost:27017/bytes"
+    mongoURI = "mongodb+srv://admin:alwW8GtvfSoyHF4e@cluster0-wjxhu.azure.mongodb.net/bytes?retryWrites=true&w=majority"
 
     @staticmethod
     def get_instance(app):
@@ -27,6 +30,18 @@ class Database:
         if Database.instance is None:
             Database(app)
         return Database.instance
+    @staticmethod
+    def replaceObjectID(document):
+        """
+        Replace all _id values in a JSON-style dictionary document with 
+        the MongoDB ObjectID type value. This is a requirement when using
+        MongoDB's unique IDs.
+        """
+        for key in document:
+            if isinstance(document[key], dict):
+                Database.replaceObjectID(document[key]) # Recursively update nested documents
+            elif key == "_id" and not isinstance(key, ObjectId): # Update entry matching {_id: "sdfr23hfk23f23"} to {_id: ObjectID("sdfr23hfk23f23")}
+                document[key] = ObjectId(document[key])
 
     def __init__(self, app):
         """
@@ -42,3 +57,15 @@ class Database:
         Database.instance = self
 
     # TODO: Add insert, delete methods for deliverable 3
+    
+    def query(self, collection, query = {}):
+        """
+        Locate a list of documents matching a query, from a given collection 
+        in the db. By default, the query matches all documents in the collection.
+        Throws QueryFailureException on failure. 
+        """
+        Database.replaceObjectID(query) # Update all _id keys for use with Mongo
+        try:
+            return list(self.db[collection].find(query))    # Find using Mongo and convert to list
+        except TypeError:   # Ensure successful find
+            raise QueryFailureException("TypeError was found!")
