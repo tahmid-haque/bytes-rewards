@@ -19,12 +19,12 @@
 
                 <form action="/remove-goal" method="POST">
                     <div class="remove-select">
-                        <select>
+                        <select name="g">
                             <option value="0">Goal to remove:</option>
-                                {% if goals: %}
-                                {% for g in goals %}
-                                    <option value={{ g['_id'] }}> 
-                                        {{ g["goal"] }}
+                                {% if user_goals: %}
+                                {% for g in user_goals %}
+                                    <option value="{{ g }}"> 
+                                        {{ g }}
                                     </option>
                                 {% endfor %}
                                 {% endif %}

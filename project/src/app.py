@@ -12,10 +12,22 @@ db = Database.get_instance(app)  # Get a database instance
 @app.route('/', methods=['POST', 'GET'])
 def index():
     try:
-        goals = db.query('goals')   # Retrieve list of all goals in goals database
-        return render_template('index.j2', goals = goals)   # Render the home page using the goals variable
+        #I used default user b/c we dont have accounts yet
+        goals, user = db.query('goals'), db.queryGoal('restaurant_users', {"username": "Victor Chang"})  # Retrieve list of all goals in goals database
+        return render_template('index.j2', goals = goals, user_goals = user)   # Render the home page using the goals variable
     except QueryFailureException:
         return "There was an issue locating your goals."
+
+@app.route('/remove-goal', methods=['POST'])
+def remove():
+    id = request.form.get('g')
+    try:
+        goals, user = db.query('goals'), db.deleteGoal('restaurant_users', {"username": "Victor Chang"}, id)  # Retrieve list of all goals in goals database
+        render_template('index.j2', user_goals = user)
+        return redirect('/')
+    except QueryFailureException:
+        return "There was an issue locating your goals."
+
 
 if __name__ == "__main__":
     app.run(host="localhost", port=8000, debug=True)
