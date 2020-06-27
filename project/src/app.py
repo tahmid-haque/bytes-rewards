@@ -23,7 +23,7 @@ def remove():
     id = request.form.get('g')
     try:
         goals, user = db.query('goals'), db.deleteGoal('restaurant_users', {"username": "Victor Chang"}, id)  # Retrieve list of all goals in goals database
-        render_template('index.j2', user_goals = user)
+        render_template('index.j2', user_goals = user) # Render the home page using the goals variable
         return redirect('/')
     except QueryFailureException:
         return "There was an issue locating your goals."

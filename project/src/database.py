@@ -72,22 +72,24 @@ class Database:
 
     def queryGoal(self, collection, query):
         """
-        Locate a list of documents matching a query, from a given collection 
-        in the db. By default, the query matches all documents in the collection.
+        Locate a document matching a query from a given collection 
+        in the db and locate the 'goals' field. The query corresponds to a unique user.
         Throws QueryFailureException on failure. 
         """
         Database.replaceObjectID(query) # Update all _id keys for use with Mongo
         try:
-            return (self.db[collection].find_one(query))['goals']  # Find using Mongo and convert to list
+            return (self.db[collection].find_one(query))['goals']  # Find user goals using Mongo 
         except TypeError:   # Ensure successful find
             raise QueryFailureException("TypeError was found!")
     
     def deleteGoal(self, collection, query, id):
-        Database.replaceObjectID(query)
-        print(id)
+        """
+        Locate the document matching a query from a given collection
+        in the db. Locate the goal from the id and remove it from the list.
+        Throws QueryFailureException on failure. 
+        """
+        Database.replaceObjectID(query) # Update all _id keys for use with Mongo
         try:
-            
-          
-            return (self.db[collection].update(query, { "$pull": {"goals": id}}))
+            return (self.db[collection].update(query, { "$pull": {"goals": id}})) #Removes identified goal from list
         except TypeError:   # Ensure successful find
             raise QueryFailureException("TypeError was found!")
