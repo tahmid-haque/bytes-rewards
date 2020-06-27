@@ -3,7 +3,7 @@ This file houses all databases-related components. It includes support for all
 CRUD operations and provided custom error handling.
 """
 
-import os
+import os, re
 from flask_pymongo import PyMongo  # Import Flask-PyMongo utilities
 
 # Exceptions
@@ -82,7 +82,7 @@ class Database:
         except TypeError:   # Ensure successful find
             raise QueryFailureException("TypeError was found!")
     
-    def deleteGoal(self, collection, query, id):
+    def deleteGoal(self, collection, query, value):
         """
         Locate the document matching a query from a given collection
         in the db. Locate the goal from the id and remove it from the list.
@@ -90,6 +90,20 @@ class Database:
         """
         Database.replaceObjectID(query) # Update all _id keys for use with Mongo
         try:
-            return (self.db[collection].update(query, { "$pull": {"goals": id}})) #Removes identified goal from list
+            return (self.db[collection].update(query, { "$pull": {"goals": value}})) #Removes identified goal from list
+        except TypeError:   # Ensure successful find
+            raise QueryFailureException("TypeError was found!")
+
+    def addGoal(self, collection, query, value, position):
+        """
+        Locate the document matching a query from a given collection
+        in the db. Locate the goal from the id and add it from the list.
+        Throws QueryFailureException on failure. 
+        """
+        if value == "0": #check that a value has been chosen
+            return None
+        goal = re.search('\'goal\': \'(.*?)\'', value).group(1) #search for goal
+        try:
+            return (self.db[collection].update(query, { "$push": {"goals": { "$each": [goal], "$position": position}}})) #Adds identified goal from list
         except TypeError:   # Ensure successful find
             raise QueryFailureException("TypeError was found!")

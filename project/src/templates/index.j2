@@ -37,17 +37,33 @@
             <div class ="name-bingo-container">
                 <form action="/">
                     <input type="text" name="bingo_board_name" placeholder="Enter Name of your Bingo Board">
+				</form>
                 <br><br>
+				<form action="/add-goal" method="POST">
                 <table>
                 <tr>
                     <td> 
+						<div class="custom-select">
+							<select name="a">
+								<option value="0">Select goal:</option>
+								{% if goals: %}
+								{% for a in goals %}
+									<option value="{{ a }}"> 
+										{{ a["goal"] }}
+									</option>
+								{% endfor %}
+								{% endif %}
+							</select>
+						</div>
+                    </td>
+                    <td> 
                         <div class="custom-select">
-                          <select>
+                        <select name="b">
                             <option value="0">Select goal:</option>
                             {% if goals: %}
-                            {% for g in goals %}
-                                <option value={{ g['_id'] }}> 
-                                    {{ g["goal"] }}
+                            {% for b in goals %}
+                                <option value="{{ b }}"> 
+                                    {{ b["goal"] }}
                                 </option>
                             {% endfor %}
                             {% endif %}
@@ -56,12 +72,12 @@
                     </td>
                     <td> 
                         <div class="custom-select">
-                        <select>
+                        <select name="c">
                             <option value="0">Select goal:</option>
                             {% if goals: %}
-                            {% for g in goals %}
-                                <option value={{ g['_id'] }}> 
-                                    {{ g["goal"] }}
+                            {% for c in goals %}
+                                <option value="{{ c }}"> 
+                                    {{ c["goal"] }}
                                 </option>
                             {% endfor %}
                             {% endif %}
@@ -70,12 +86,12 @@
                     </td>
                     <td> 
                         <div class="custom-select">
-                        <select>
+                        <select name="d">
                             <option value="0">Select goal:</option>
                             {% if goals: %}
-                            {% for g in goals %}
-                                <option value={{ g['_id'] }}> 
-                                    {{ g["goal"] }}
+                            {% for d in goals %}
+                                <option value="{{ d }}"> 
+                                    {{ d["goal"] }}
                                 </option>
                             {% endfor %}
                             {% endif %}
@@ -84,242 +100,12 @@
                     </td>
                     <td> 
                         <div class="custom-select">
-                        <select>
+                        <select name="e">
                             <option value="0">Select goal:</option>
                             {% if goals: %}
-                            {% for g in goals %}
-                                <option value={{ g['_id'] }}> 
-                                    {{ g["goal"] }}
-                                </option>
-                            {% endfor %}
-                            {% endif %}
-                          </select>
-                        </div>
-                    </td>
-                    <td> 
-                        <div class="custom-select">
-                        <select>
-                            <option value="0">Select goal:</option>
-                            {% if goals: %}
-                            {% for g in goals %}
-                                <option value={{ g['_id'] }}> 
-                                    {{ g["goal"] }}
-                                </option>
-                            {% endfor %}
-                            {% endif %}
-                          </select>
-                        </div>
-                    </td>
-                </tr>
-                        <tr>
-                    <td> 
-                        <div class="custom-select">
-                        <select>
-                            <option value="0">Select goal:</option>
-                            {% if goals: %}
-                            {% for g in goals %}
-                                <option value={{ g['_id'] }}> 
-                                    {{ g["goal"] }}
-                                </option>
-                            {% endfor %}
-                            {% endif %}
-                          </select>
-                        </div>
-                    </td>
-                    <td> 
-                        <div class="custom-select">
-                        <select>
-                            <option value="0">Select goal:</option>
-                            {% if goals: %}
-                            {% for g in goals %}
-                                <option value={{ g['_id'] }}> 
-                                    {{ g["goal"] }}
-                                </option>
-                            {% endfor %}
-                            {% endif %}
-                          </select>
-                        </div>
-                    </td>
-                    <td> 
-                        <div class="custom-select">
-                        <select>
-                            <option value="0">Select goal:</option>
-                            {% if goals: %}
-                            {% for g in goals %}
-                                <option value={{ g['_id'] }}> 
-                                    {{ g["goal"] }}
-                                </option>
-                            {% endfor %}
-                            {% endif %}
-                          </select>
-                        </div>
-                    </td>
-                    <td> 
-                        <div class="custom-select">
-                        <select>
-                            <option value="0">Select goal:</option>
-                            {% if goals: %}
-                            {% for g in goals %}
-                                <option value={{ g['_id'] }}> 
-                                    {{ g["goal"] }}
-                                </option>
-                            {% endfor %}
-                            {% endif %}
-                          </select>
-                        </div>
-                    </td>
-                    <td> 
-                        <div class="custom-select">
-                        <select>
-                            <option value="0">Select goal:</option>
-                            {% if goals: %}
-                            {% for g in goals %}
-                                <option value={{ g['_id'] }}> 
-                                    {{ g["goal"] }}
-                                </option>
-                            {% endfor %}
-                            {% endif %}
-                          </select>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td> 
-                        <div class="custom-select">
-                        <select>
-                            <option value="0">Select goal:</option>
-                            {% if goals: %}
-                            {% for g in goals %}
-                                <option value={{ g['_id'] }}> 
-                                    {{ g["goal"] }}
-                                </option>
-                            {% endfor %}
-                            {% endif %}
-                          </select>
-                        </div>
-                    </td>
-                    <td> 
-                        <div class="custom-select">
-                        <select>
-                            <option value="0">Select goal:</option>
-                            {% if goals: %}
-                            {% for g in goals %}
-                                <option value={{ g['_id'] }}> 
-                                    {{ g["goal"] }}
-                                </option>
-                            {% endfor %}
-                            {% endif %}
-                          </select>
-                        </div>
-                    </td>
-                    <td> 
-                        <div class="custom-select">
-                        <select>
-                            <option value="0">Select goal:</option>
-                            {% if goals: %}
-                            {% for g in goals %}
-                                <option value={{ g['_id'] }}> 
-                                    {{ g["goal"] }}
-                                </option>
-                            {% endfor %}
-                            {% endif %}
-                          </select>
-                        </div>
-                    </td>
-                    <td> 
-                        <div class="custom-select">
-                        <select>
-                            <option value="0">Select goal:</option>
-                            {% if goals: %}
-                            {% for g in goals %}
-                                <option value={{ g['_id'] }}> 
-                                    {{ g["goal"] }}
-                                </option>
-                            {% endfor %}
-                            {% endif %}
-                          </select>
-                        </div>
-                    </td>
-                    <td> 
-                        <div class="custom-select">
-                        <select>
-                            <option value="0">Select goal:</option>
-                            {% if goals: %}
-                            {% for g in goals %}
-                                <option value={{ g['_id'] }}> 
-                                    {{ g["goal"] }}
-                                </option>
-                            {% endfor %}
-                            {% endif %}
-                          </select>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td> 
-                        <div class="custom-select">
-                        <select>
-                            <option value="0">Select goal:</option>
-                            {% if goals: %}
-                            {% for g in goals %}
-                                <option value={{ g['_id'] }}> 
-                                    {{ g["goal"] }}
-                                </option>
-                            {% endfor %}
-                            {% endif %}
-                          </select>
-                        </div>
-                    </td>
-                    <td> 
-                        <div class="custom-select">
-                        <select>
-                            <option value="0">Select goal:</option>
-                            {% if goals: %}
-                            {% for g in goals %}
-                                <option value={{ g['_id'] }}> 
-                                    {{ g["goal"] }}
-                                </option>
-                            {% endfor %}
-                            {% endif %}
-                          </select>
-                        </div>
-                    </td>
-                    <td> 
-                        <div class="custom-select">
-                        <select>
-                            <option value="0">Select goal:</option>
-                            {% if goals: %}
-                            {% for g in goals %}
-                                <option value={{ g['_id'] }}> 
-                                    {{ g["goal"] }}
-                                </option>
-                            {% endfor %}
-                            {% endif %}
-                          </select>
-                        </div>
-                    </td>
-                    <td> 
-                        <div class="custom-select">
-                        <select>
-                            <option value="0">Select goal:</option>
-                            {% if goals: %}
-                            {% for g in goals %}
-                                <option value={{ g['_id'] }}> 
-                                    {{ g["goal"] }}
-                                </option>
-                            {% endfor %}
-                            {% endif %}
-                          </select>
-                        </div>
-                    </td>
-                    <td> 
-                        <div class="custom-select">
-                        <select>
-                            <option value="0">Select goal:</option>
-                            {% if goals: %}
-                            {% for g in goals %}
-                                <option value={{ g['_id'] }}> 
-                                    {{ g["goal"] }}
+                            {% for e in goals %}
+                                <option value="{{ e }}"> 
+                                    {{ e["goal"] }}
                                 </option>
                             {% endfor %}
                             {% endif %}
@@ -330,11 +116,25 @@
                         <tr>
                     <td> 
                         <div class="custom-select">
-                        <select>
+                        <select name="f">
+                            <option value="0">Select goal:</option>
+                            {% if goals: %}
+                            {% for f in goals %}
+                                <option value="{{ f }}"> 
+                                    {{ f["goal"] }}
+                                </option>
+                            {% endfor %}
+                            {% endif %}
+                          </select>
+                        </div>
+                    </td>
+                    <td> 
+                        <div class="custom-select">
+                        <select name="g">
                             <option value="0">Select goal:</option>
                             {% if goals: %}
                             {% for g in goals %}
-                                <option value={{ g['_id'] }}> 
+                                <option value="{{ g }}"> 
                                     {{ g["goal"] }}
                                 </option>
                             {% endfor %}
@@ -344,12 +144,12 @@
                     </td>
                     <td> 
                         <div class="custom-select">
-                        <select>
+                        <select name="h">
                             <option value="0">Select goal:</option>
                             {% if goals: %}
-                            {% for g in goals %}
-                                <option value={{ g['_id'] }}> 
-                                    {{ g["goal"] }}
+                            {% for h in goals %}
+                                <option value="{{ h }}"> 
+                                    {{ h["goal"] }}
                                 </option>
                             {% endfor %}
                             {% endif %}
@@ -358,12 +158,12 @@
                     </td>
                     <td> 
                         <div class="custom-select">
-                        <select>
+                        <select name="i">
                             <option value="0">Select goal:</option>
                             {% if goals: %}
-                            {% for g in goals %}
-                                <option value={{ g['_id'] }}> 
-                                    {{ g["goal"] }}
+                            {% for i in goals %}
+                                <option value="{{ i }}"> 
+                                    {{ i["goal"] }}
                                 </option>
                             {% endfor %}
                             {% endif %}
@@ -372,12 +172,28 @@
                     </td>
                     <td> 
                         <div class="custom-select">
-                        <select>
+                        <select name="j">
                             <option value="0">Select goal:</option>
                             {% if goals: %}
-                            {% for g in goals %}
-                                <option value={{ g['_id'] }}> 
-                                    {{ g["goal"] }}
+                            {% for j in goals %}
+                                <option value="{{ j }}"> 
+                                    {{ j["goal"] }}
+                                </option>
+                            {% endfor %}
+                            {% endif %}
+                          </select>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td> 
+                        <div class="custom-select">
+                        <select name="k">
+                            <option value="0">Select goal:</option>
+                            {% if goals: %}
+                            {% for k in goals %}
+                                <option value="{{ k }}"> 
+                                    {{ k["goal"] }}
                                 </option>
                             {% endfor %}
                             {% endif %}
@@ -386,12 +202,198 @@
                     </td>
                     <td> 
                         <div class="custom-select">
-                        <select>
+                        <select name="l">
                             <option value="0">Select goal:</option>
                             {% if goals: %}
-                            {% for g in goals %}
-                                <option value={{ g['_id'] }}> 
-                                    {{ g["goal"] }}
+                            {% for l in goals %}
+                                <option value="{{ l }}"> 
+                                    {{ l["goal"] }}
+                                </option>
+                            {% endfor %}
+                            {% endif %}
+                          </select>
+                        </div>
+                    </td>
+                    <td> 
+                        <div class="custom-select">
+                        <select name = "m">
+                            <option value="0">Select goal:</option>
+                            {% if goals: %}
+                            {% for m in goals %}
+                                <option value="{{ m }}"> 
+                                    {{ m["goal"] }}
+                                </option>
+                            {% endfor %}
+                            {% endif %}
+                          </select>
+                        </div>
+                    </td>
+                    <td> 
+                        <div class="custom-select">
+                        <select name="n">
+                            <option value="0">Select goal:</option>
+                            {% if goals: %}
+                            {% for n in goals %}
+                                <option value="{{ n }}"> 
+                                    {{ n["goal"] }}
+                                </option>
+                            {% endfor %}
+                            {% endif %}
+                          </select>
+                        </div>
+                    </td>
+                    <td> 
+                        <div class="custom-select">
+                        <select name="o">
+                            <option value="0">Select goal:</option>
+                            {% if goals: %}
+                            {% for o in goals %}
+                                <option value="{{ o }}"> 
+                                    {{ o["goal"] }}
+                                </option>
+                            {% endfor %}
+                            {% endif %}
+                          </select>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td> 
+                        <div class="custom-select">
+                        <select name="p">
+                            <option value="0">Select goal:</option>
+                            {% if goals: %}
+                            {% for p in goals %}
+                                <option value="{{ p }}"> 
+                                    {{ p["goal"] }}
+                                </option>
+                            {% endfor %}
+                            {% endif %}
+                          </select>
+                        </div>
+                    </td>
+                    <td> 
+                        <div class="custom-select">
+                        <select name="q">
+                            <option value="0">Select goal:</option>
+                            {% if goals: %}
+                            {% for q in goals %}
+                                <option value="{{ q }}"> 
+                                    {{ q["goal"] }}
+                                </option>
+                            {% endfor %}
+                            {% endif %}
+                          </select>
+                        </div>
+                    </td>
+                    <td> 
+                        <div class="custom-select">
+                        <select name="r">
+                            <option value="0">Select goal:</option>
+                            {% if goals: %}
+                            {% for r in goals %}
+                                <option value="{{ r }}"> 
+                                    {{ r["goal"] }}
+                                </option>
+                            {% endfor %}
+                            {% endif %}
+                          </select>
+                        </div>
+                    </td>
+                    <td> 
+                        <div class="custom-select">
+                        <select name="s">
+                            <option value="0">Select goal:</option>
+                            {% if goals: %}
+                            {% for s in goals %}
+                                <option value="{{ s }}"> 
+                                    {{ s["goal"] }}
+                                </option>
+                            {% endfor %}
+                            {% endif %}
+                          </select>
+                        </div>
+                    </td>
+                    <td> 
+                        <div class="custom-select">
+                        <select name="t">
+                            <option value="0">Select goal:</option>
+                            {% if goals: %}
+                            {% for t in goals %}
+                                <option value="{{ t }}"> 
+                                    {{ t["goal"] }}
+                                </option>
+                            {% endfor %}
+                            {% endif %}
+                          </select>
+                        </div>
+                    </td>
+                </tr>
+                        <tr>
+                    <td> 
+                        <div class="custom-select">
+                        <select name="u">
+                            <option value="0">Select goal:</option>
+                            {% if goals: %}
+                            {% for u in goals %}
+                                <option value="{{ u }}"> 
+                                    {{ u["goal"] }}
+                                </option>
+                            {% endfor %}
+                            {% endif %}
+                          </select>
+                        </div>
+                    </td>
+                    <td> 
+                        <div class="custom-select">
+                        <select name="v">
+                            <option value="0">Select goal:</option>
+                            {% if goals: %}
+                            {% for v in goals %}
+                                <option value="{{ v }}"> 
+                                    {{ v["goal"] }}
+                                </option>
+                            {% endfor %}
+                            {% endif %}
+                          </select>
+                        </div>
+                    </td>
+                    <td> 
+                        <div class="custom-select">
+                        <select name="w">
+                            <option value="0">Select goal:</option>
+                            {% if goals: %}
+                            {% for w in goals %}
+                                <option value="{{ w }}"> 
+                                    {{ w["goal"] }}
+                                </option>
+                            {% endfor %}
+                            {% endif %}
+                          </select>
+                        </div>
+                    </td>
+                    <td> 
+                        <div class="custom-select">
+                        <select name="x">
+                            <option value="0">Select goal:</option>
+                            {% if goals: %}
+                            {% for x in goals %}
+                                <option value="{{ x }}"> 
+                                    {{ x["goal"] }}
+                                </option>
+                            {% endfor %}
+                            {% endif %}
+                          </select>
+                        </div>
+                    </td>
+                    <td> 
+                        <div class="custom-select">
+                        <select name"y">
+                            <option value="0">Select goal:</option>
+                            {% if goals: %}
+                            {% for y in goals %}
+                                <option value="{{ y }}"> 
+                                    {{ y["goal"] }}
                                 </option>
                             {% endfor %}
                             {% endif %}
