@@ -4,10 +4,13 @@ CRUD operations and provided custom error handling.
 """
 
 import os, re
-from flask_pymongo import PyMongo  # Import Flask-PyMongo utilities
+from flask_pymongo import PyMongo, ObjectId # Import Flask-PyMongo utilities
 
 # Exceptions
 class QueryFailureException(Exception):
+    pass
+
+class UpdateFailureException(Exception):
     pass
 
 class Database:
@@ -30,6 +33,7 @@ class Database:
         if Database.instance is None:
             Database(app)
         return Database.instance
+
     @staticmethod
     def replaceObjectID(document):
         """
@@ -37,11 +41,13 @@ class Database:
         the MongoDB ObjectID type value. This is a requirement when using
         MongoDB's unique IDs.
         """
-        for key in document:
-            if isinstance(document[key], dict):
-                Database.replaceObjectID(document[key]) # Recursively update nested documents
-            elif key == "_id" and not isinstance(key, ObjectId): # Update entry matching {_id: "sdfr23hfk23f23"} to {_id: ObjectID("sdfr23hfk23f23")}
-                document[key] = ObjectId(document[key])
+        if isinstance(document, dict):
+            return {key: Database.replaceObjectID(val) for key, val in document.items()}
+        elif isinstance(document, list):
+            return [Database.replaceObjectID(val) for val in document]
+        elif isinstance(document, str) and ObjectId.is_valid(document): # Update entry matching {_id: "sdfr23hfk23f23"} to {_id: ObjectID("sdfr23hfk23f23")}
+            return ObjectId(document)
+        return document
 
     def __init__(self, app):
         """
@@ -64,46 +70,55 @@ class Database:
         in the db. By default, the query matches all documents in the collection.
         Throws QueryFailureException on failure. 
         """
-        Database.replaceObjectID(query) # Update all _id keys for use with Mongo
         try:
+            query = Database.replaceObjectID(query) # Update all _id keys for use with Mongo
             return list(self.db[collection].find(query))    # Find using Mongo and convert to list
-        except TypeError:   # Ensure successful find
-            raise QueryFailureException("TypeError was found!")
-
-    def queryGoal(self, collection, query):
-        """
-        Locate a document matching a query from a given collection 
-        in the db and locate the 'goals' field. The query corresponds to a unique user.
-        Throws QueryFailureException on failure. 
-        """
-        Database.replaceObjectID(query) # Update all _id keys for use with Mongo
-        try:
-            return (self.db[collection].find_one(query))['goals']  # Find user goals using Mongo 
-        except TypeError:   # Ensure successful find
+        except TypeError as e:   # Ensure successful find
+            print(e)
             raise QueryFailureException("TypeError was found!")
     
-    def deleteGoal(self, collection, query, value):
+    def update(self, collection, query, document):
         """
-        Locate the document matching a query from a given collection
-        in the db. Locate the goal from the id and remove it from the list.
-        Throws QueryFailureException on failure. 
+        Update the first document from a collection in the db who matches a given query. 
+        Throws UpdateFailureException on failure.
         """
-        Database.replaceObjectID(query) # Update all _id keys for use with Mongo
-        try:
-            return (self.db[collection].update(query, { "$pull": {"goals": value}})) #Removes identified goal from list
-        except TypeError:   # Ensure successful find
-            raise QueryFailureException("TypeError was found!")
+        query = Database.replaceObjectID(query) # Update all _id keys for use with Mongo
+        res = self.db[collection].update_one(query, document) # Update using Mongo
+        if not res.acknowledged:    # Ensure successful update
+            raise UpdateFailureException("Failed to update!")
 
-    def addGoal(self, collection, query, value, position):
-        """
-        Locate the document matching a query from a given collection
-        in the db. Locate the goal from the id and add it from the list.
-        Throws QueryFailureException on failure. 
-        """
-        if value == "0": #check that a value has been chosen
-            return None
-        goal = re.search('\'goal\': \'(.*?)\'', value).group(1) #search for goal
-        try:
-            return (self.db[collection].update(query, { "$push": {"goals": { "$each": [goal], "$position": position}}})) #Adds identified goal from list
-        except TypeError:   # Ensure successful find
-            raise QueryFailureException("TypeError was found!")
+    # def queryGoal(self, collection, query):
+    #     """
+    #     Locate a document matching a query from a given collection 
+    #     in the db and locate the 'goals' field. The query corresponds to a unique user.
+    #     Throws QueryFailureException on failure. 
+    #     """
+    #     try:
+    #         return (self.db[collection].find_one(query))['goals']  # Find user goals using Mongo 
+    #     except TypeError:   # Ensure successful find
+    #         raise QueryFailureException("TypeError was found!")
+    
+    # def deleteGoal(self, collection, query, value):
+    #     """
+    #     Locate the document matching a query from a given collection
+    #     in the db. Locate the goal from the id and remove it from the list.
+    #     Throws QueryFailureException on failure. 
+    #     """
+    #     try:
+    #         return (self.db[collection].update(query, { "$pull": {"goals": value}})) #Removes identified goal from list
+    #     except TypeError:   # Ensure successful find
+    #         raise QueryFailureException("TypeError was found!")
+
+    # def addGoal(self, collection, query, value, position):
+    #     """
+    #     Locate the document matching a query from a given collection
+    #     in the db. Locate the goal from the id and add it from the list.
+    #     Throws QueryFailureException on failure. 
+    #     """
+    #     if value == "0": #check that a value has been chosen
+    #         return None
+    #     goal = re.search('\'goal\': \'(.*?)\'', value).group(1) #search for goal
+    #     try:
+    #         return (self.db[collection].update(query, { "$push": {"goals": { "$each": [goal], "$position": position}}})) #Adds identified goal from list
+    #     except TypeError:   # Ensure successful find
+    #         raise QueryFailureException("TypeError was found!")
