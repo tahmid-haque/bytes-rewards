@@ -75,8 +75,8 @@ class Database:
     def query(self, collection, query={}):
         """
         Locate a list of documents matching a query, from a given collection
-        in the db. By default, the query matches all documents in the collection.
-        Throws QueryFailureException on failure.
+        in the db. By default, the query matches all documents in the 
+        collection. Throws QueryFailureException on failure.
         """
         try:
             query = Database.replace_object_id(
@@ -88,8 +88,8 @@ class Database:
 
     def update(self, collection, query, document):
         """
-        Update the first document from a collection in the db who matches a given query.
-        Throws UpdateFailureException on failure.
+        Update the first document from a collection in the db who matches a 
+        given query. Throws UpdateFailureException on failure.
         """
         query = Database.replace_object_id(
             query)  # Update all _id keys for use with Mongo
