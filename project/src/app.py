@@ -38,4 +38,4 @@ def save():
 
 
 if __name__ == "__main__":
-    app.run(host="localhost", port=os.environ["PORT"] or 8000, debug=True)
+    app.run(host="localhost", port=os.environ.get('PORT', 8000), debug=True)
