@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Bytes | Box and Line Diagram & Explanation</title>
+        <link rel="icon" href="/assets/common/logo.png" />
+
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css"
+        />
+        <link rel="stylesheet" href="/assets/common/css/teamStyle.css" />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;700&display=swap"
+            rel="stylesheet"
+        />
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/js/bootstrap.min.js"></script>
+    </head>
+
+    <body>
+        <span id="navbar-placeholder"></span>
+
+        <div class="container my-4">
+            <div class="jumbotron mb-4">
+                <h1 class="display-4">Box and Line Diagram & Explanation</h1>
+                <p class="lead">
+                    Here is our Box and Line Diagram and explanations of each component and dependency.
+                </p>
+            </div>
+
+            <div class="card border-dark h-100 mb-4">
+                <div class="card-header">Box and Line Diagram</div>
+                <div class="card-body">
+                    <div class="m-0 px-3 h-100">
+						<p>
+							The Box and Line Diagram is as follows or as a pdf <a href="/assets/d3/pdf/BoxAndLine.pdf"> here</a>:
+						</p>
+						<img
+                            src="/assets/d3/img/BoxAndLine.png"
+                            class="sprint-plan-img mb2"
+                        />
+                    </div>
+                </div>
+            </div>
+			
+			<div class="card border-dark h-100 mb-4">
+                <div class="card-header">Box and Line Diagram Component and Dependency Explanation</div>
+                <div class="card-body">
+                    <div class="m-0 px-3 h-100">
+						<hr>
+							<h5><strong>A) Website Interface</strong></h5>
+							<p>
+								The Website Interface subsystem contains multiple components.
+								These components are dependent on the Backend. The subsystem 
+								components and dependencies are further explained as follows:
+							</p>
+							<ul>
+								<li>
+									<b>The Login Interface</b>
+									<ul>
+										<p>
+											The Login Interface prompts the user to enter their 
+											username and password. An error message will appear 
+											if the username or password are incorrect. The Login
+											Interface is dependent on the Backend Communication 
+											component to respond to user interaction.
+
+										</p>
+									</ul>
+								</li>
+								<li>
+									<b>Restaurant Profile Summary</b>
+									<ul>
+										<p>
+											The Restaurant Profile Summary displays the 
+											restaurant’s goals and rewards. This component is 
+											dependent on the Backend Communication component to
+											access restaurant profile information.
+										</p>
+									</ul>
+								</li>
+								<li>
+									<b>Goals Editor</b>
+									<ul>
+										<p>
+											The Goals Editor allows the user to select a goal to 
+											update or delete. This component is dependent on the 
+											Backend Communication component to access restaurant 
+											goal information.
+										</p>
+									</ul>
+								</li>
+								<li>
+									<b>Rewards Editor</b>
+									<ul>
+										<p>
+											The Goals Editor allows the user to select a reward 
+											to update or delete. This component is dependent on 
+											the Backend Communication component to access 
+											restaurant reward information.
+										</p>
+									</ul>
+								</li>
+								<li>
+									<b>Backend Communication </b>
+									<ul>
+										<p>
+											The Backend Communication allows the interface to 
+											interact with the Backend subsystem. This component 
+											is dependent on the Website Frontend Communication 
+											component to access information and allow response 
+											to user interaction.
+										</p>
+									</ul>
+								</li>
+							</ul>
+						</hr>
+						<hr>
+							<h5><strong>B) Application Interface</strong></h5>
+							<p>
+								The Application Interface subsystem contains multiple components. 
+								These components are dependent on the Backend. The subsystem 
+								components and dependencies are further explained as follows:
+							</p>
+							<li>
+								<b>Login Page</b>
+								<ul>
+									<p>
+										The Login Page prompts customers to enter their username 
+										and password. An error message will appear if the username 
+										or password is incorrect. This component is dependent on 
+										the Backend Communication component to respond to user 
+										interaction.
+									</p>
+								</ul>
+							</li>
+							<li>
+								<b>List of Restaurant Boards Page</b>
+								<ul>
+									<p>
+										The List of Restaurant Boards Page shows the user a list 
+										of all the restaurant boards that are in progress. A 
+										restaurant board that is “in progress” has one or more 
+										goal completed. This component is dependent on the Backend 
+										Communication component to access user information.
+									</p>
+								</ul>
+							</li>
+							<li>
+								<b>Restaurant Board Page</b>
+								<ul>
+									<p>
+										The Board Page shows the user an individual restaurant 
+										game board. This component is dependent on the Backend 
+										Communication component to access game board information.
+									</p>
+								</ul>
+							</li>
+							<li>
+								<b>Compete with Friends Page</b>
+								<ul>
+									<p>
+										The Compete with Friends Page shows the user their ranking 
+										in comparison with their friends who use the application. 
+										This component is dependent on the Backend Communication 
+										component to access user information.
+									</p>
+								</ul>
+							</li>
+							<li>
+								<b>List of Rewards Earned Page</b>
+								<ul>
+									<p>
+										The List of Rewards Earned Page shows the user a list of 
+										all the rewards that they redeemed. This component is 
+										dependent on the Backend Communication component to access 
+										user reward information.
+									</p>
+								</ul>
+							</li>
+							<li>
+								<b>Backend Communication</b>
+								<ul>
+									<p>
+										The Backend Communication allows the interfaces to interact
+										with the Backend subsystem. This component is dependent on 
+										the Application Front End Communication component to 
+										access information and allow response to user interaction.
+									</p>
+								</ul>
+							</li>
+						</hr>
+						<hr>
+							<h5><strong>C) Backend</strong></h5>
+							<p>
+								The Backend subsystem contains multiple components. These 
+								components are dependent on the Database. The subsystem components 
+								and dependencies are further explained as follows:
+							</p>
+							<li>
+								<b>Website Frontend Communication</b>
+								<ul>
+									<p>
+										The Website Frontend Communication allows the Website 
+										Interface to interact with the Backend. This component is 
+										dependent on the User Authentication component and the 
+										Restaurant Profile Manager component.
+									</p>
+								</ul>
+							</li>
+							<li>
+								<b>Application Frontend Communication</b>
+								<ul>
+									<p>
+										The Application Frontend Communication allows the 
+										Application Interface to interact with the Backend. This 
+										component is dependent on the following components: User 
+										Authentication, Friend Reward Comparison, Goal Completion 
+										Modifier, and Reward Completion Modifier.
+									</p>
+								</ul>
+							</li>
+							<li>
+								<b>User Authentication</b>
+								<ul>
+									<p>
+										The User Authentication allows for the verification of 
+										inputted usernames and passwords. This component is 
+										dependent on the User Profile Management Component to 
+										access account information.
+									</p>
+								</ul>
+							</li>
+							<li>
+								<b>User Profile Management</b>
+								<ul>
+									<p>
+										The User Profile Management component allows for users 
+										to modify their account information. This component is 
+										dependent on the Restaurant Profile Management component, 
+										so that if a restaurant owner changes their user profile, 
+										the corresponding fields in the restaurant profile are 
+										updated as well. This component is dependent on the 
+										Database Communication component so that the User Account 
+										and Restaurant Profile databases are updated based on 
+										these modifications.
+									</p>
+								</ul>
+							</li>
+							<li>
+								<b>Restaurant Profile Management</b>
+								<ul>
+									<p>
+										The Restaurant Profile Management component allows for 
+										restaurant owner users to modify their restaurant profiles;
+										these modifications include changes to the goals and 
+										rewards they want to offer. This component is dependent on 
+										the Database Communication component so that the Restaurant 
+										Profile Database is updated based on these modifications.
+									</p>
+								</ul>
+							</li>
+							<li>
+								<b>Friend Reward Comparison</b>
+								<ul>
+									<p>
+										The Friend Reward Comparison ranks customer users based on 
+										the number of rewards earned compared to their friends. 
+										This component is dependent on the Database Communication 
+										component so that the Customer Profile Database is updated 
+										based on their rank.
+									</p>
+								</ul>
+							</li>
+							<li>
+								<b>Goal Completion Modifier</b>
+								<ul>
+									<p>
+										The Goal Completion Modifier component allows for the 
+										goals field of the Customer Profile Database to be updated 
+										when a goal is completed. This component is dependent on 
+										the Goal Completion Verification component so that 
+										restaurant owner users verify that the goal is completed. 
+										This component is dependent on the Database Communication 
+										component so that the Customer Profile Database is updated 
+										when a goal is completed.
+									</p>
+								</ul>
+							</li>
+							<li>
+								<b>Reward Completion Modifier</b>
+								<ul>
+									<p>
+										The Reward Completion Modifier component allows for the 
+										rewards field of the Customer Profile Database to be 
+										updated when a reward is redeemed. This component is 
+										dependent on the Reward Completion Verification component 
+										so that restaurant owner users verify that the reward is 
+										valid and redeemed. This component is dependent on the 
+										Database Communication component so that the Customer 
+										Profile Database is updated when a reward is redeemed.
+									</p>
+								</ul>
+							</li>
+							<li>
+								<b>Goal Completion Verification</b>
+								<ul>
+									<p>
+										The Goal Completion Verification component allows for 
+										restaurant owners to verify if a goal is completed by a 
+										customer.
+									</p>
+								</ul>
+							</li>
+							<li>
+								<b>Reward Completion Verification</b>
+								<ul>
+									<p>
+										The Reward Completion component allows for restaurant 
+										owners to verify if a reward is valid and redeemed by a 
+										customer.
+									</p>
+								</ul>
+							</li>
+							<li>
+								<b>Database Communication</b>
+								<ul>
+									<p>
+										The Database Communication allows for the Backend to 
+										communicate with the Databases. This component is dependent
+										on the Database subsystem so that it can communicate with 
+										the database components.
+									</p>
+								</ul>
+							</li>
+						</hr>
+						<hr>
+							<h5><strong>D) Database</strong></h5>
+							<p>
+								The Database subsystem contains the following components:
+							</p>
+							<li>
+								<b>User Account Database</b>
+								<ul>
+									<p>
+										The User Account Database stores user account information 
+										such as password and username.
+									</p>
+								</ul>
+							</li>
+							<li>
+								<b>Restaurant Profile Database</b>
+								<ul>
+									<p>
+										The Restaurant Profile Database stores restaurant 
+										information such as name of the restaurant, the username 
+										associated with the restaurant, the restaurant goals, and 
+										the restaurant rewards.
+									</p>
+								</ul>
+							</li>
+							<li>
+								<b>Game Goals Database</b>
+								<ul>
+									<p>
+										The Game Goals Database stores the premade goals used for 
+										the bingo loyalty game.
+									</p>
+								</ul>
+							</li>
+							<li>
+								<b>Game Rewards Database</b>
+								<ul>
+									<p>
+										The Games Rewards Database is used for storing rewards for 
+										the bingo loyalty game.
+									</p>
+								</ul>
+							</li>
+							<li>
+								<b>Customer Profile Database</b>
+								<ul>
+									<p>
+										The Customer Profile Database is used for storing customer 
+										user information such as username, active game boards, 
+										goals completed, rewards earned, and friends’ usernames.
+									</p>
+								</ul>
+							</li>
+						</hr>
+					</div>
+                </div>
+            </div>
+		</div>
+        <script src="/assets/common/js/main.js"></script>
+    </body>
+</html>
