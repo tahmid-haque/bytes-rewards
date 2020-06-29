@@ -27,6 +27,7 @@ For the first part of Deliverable 3 we added our Project Environment, Product Ba
 
 ## Deliverable 3 Part 2
 For the second part of Deliverable 3 we added the following:
+* Snapshots of the task board and burndown charts: [Sprint Progress](https://github.com/CSCC01/team_02-project/tree/deliverable3/sprintProgress)
 * Box and Line Diagram & Explanations, which is found on our website: [Box and Line Diagram & Explanations](https://bytes-cs.web.app/deliverables/d3/boxAndLine.html), or in this repository at [Repo Box and Line](teamWebsite/public/deliverables/d3/boxAndLine.html).
 * First Release Reflection, which is found on our website: [First Release Reflection](https://bytes-cs.web.app/deliverables/d3/firstReleaseReflection.html), or in this repository at [Repo First Release Reflection](teamWebsite/public/deliverables/d3/).
 * Updates to the Project Environment, and Backlogs based on the feedback we recieved, which is found on our website: [Project Environment & Backlogs](https://bytes-cs.web.app/deliverables/d3/projectEnvironmentBacklogs.html), or in this repository at [Repo Project Environment & Backlogs](teamWebsite/public/deliverables/d3/projectEnvironmentBacklogs.html).
