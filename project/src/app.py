@@ -3,6 +3,7 @@ This is the main component of our project. It is be used to connect the whole
 app together and provide a way to start a server.
 """
 
+import os
 from flask import Flask, render_template, request, redirect, flash
 from restaurant_profile_manager import RestaurantProfileManager
 
@@ -47,4 +48,4 @@ def signup():
 
 
 if __name__ == "__main__":
-    app.run(host="localhost", port=8000, debug=True)
+    app.run(host="localhost", port=os.environ.get('PORT', 8000), debug=True)

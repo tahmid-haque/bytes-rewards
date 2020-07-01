@@ -7,11 +7,16 @@ Welcome to the project repository of team_02, also known as Bytes.
 
 Our team website may be found at [https://bytes-cs.web.app/](https://bytes-cs.web.app/), where you can find a deployed website containing all major team information and deliverable content.
 
+## Sprint Progress
+
+Snapshots of the task board and burndown charts: [Sprint Progress](https://github.com/CSCC01/team_02-project/tree/master/sprintProgress)
+
 ## Table of Contents
 
 -   [Deliverable 1](#deliverable-1)
 -   [Deliverable 2](#deliverable-2)
 -   [Deliverable 3 Part 1](#deliverable-3-part-1)
+-   [Deliverable 3 Part 2](#deliverable-3-part-2)
 
 ## Deliverable 1
 
@@ -24,3 +29,11 @@ Deliverable 2 we added User Stories and Personas, which are found here on our we
 ## Deliverable 3 Part 1
 
 For the first part of Deliverable 3 we added our Project Environment, Product Backlog, Release Plan, and Sprint Plan, which are found here on our website: [Project Environment & Backlogs](https://bytes-cs.web.app/deliverables/d3/projectEnvironmentBacklogs.html), or in this repository at [Repo Deliverable 3](teamWebsite/public/deliverables/d3/projectEnvironmentBacklogs.html).
+
+## Deliverable 3 Part 2
+For the second part of Deliverable 3 we added the following:
+* Snapshots of the task board and burndown charts: [Sprint Progress](https://github.com/CSCC01/team_02-project/tree/master/sprintProgress)
+* Box and Line Diagram & Explanations, which is found on our website: [Box and Line Diagram & Explanations](https://bytes-cs.web.app/deliverables/d3/boxAndLine.html), or in this repository at [Repo Box and Line](teamWebsite/public/deliverables/d3/boxAndLine.html).
+* First Release Reflection, which is found on our website: [First Release Reflection](https://bytes-cs.web.app/deliverables/d3/firstReleaseReflection.html), or in this repository at [Repo First Release Reflection](teamWebsite/public/deliverables/d3/).
+* Updates to the Project Environment, and Backlogs based on the feedback we recieved, which is found on our website: [Project Environment & Backlogs](https://bytes-cs.web.app/deliverables/d3/projectEnvironmentBacklogs.html), or in this repository at [Repo Project Environment & Backlogs](teamWebsite/public/deliverables/d3/projectEnvironmentBacklogs.html).
+* Bingo loyalty game web interface that allows goal editing which has been deployed at [this link](https://bytes-cs.herokuapp.com/) and in this repository with test cases at [Repo web interface and test cases](https://github.com/CSCC01/team_02-project/tree/master/project)
