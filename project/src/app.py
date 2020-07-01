@@ -3,11 +3,11 @@ This is the main component of our project. It is be used to connect the whole
 app together and provide a way to start a server.
 """
 
-from flask import Flask, render_template, request, redirect
+from flask import Flask, render_template, request, redirect, flash
 from restaurant_profile_manager import RestaurantProfileManager
 
 app = Flask(__name__)  # Initialize a flask app using current file
-
+app.secret_key = b'averysecretkey'
 
 @app.route('/')
 def index():
@@ -37,12 +37,13 @@ def save():
     return redirect("/")
 
 
-@app.route('/signup')
+@app.route('/signup', methods=['GET', 'POST'])
 def signup():
-    message = ""
-    if 'message' in request.args:
-        message = request.args['message']
-    return render_template('create_account.j2', message = message)
+    if request.method == 'POST':
+        pass # Register user and do necessary redirect here
+    else:
+        #flash("An error has occurred!") # Use this to show error messages
+        return render_template('create_account.j2')
 
 
 if __name__ == "__main__":
