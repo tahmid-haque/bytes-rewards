@@ -1,0 +1,30 @@
+{% extends 'partials/base.j2' %} 
+
+{% block head %}
+    <title>Bytes | Create Account</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/login.css') }}" />
+{% endblock head %} 
+
+{% block body %} 
+    <div class="loginbox">
+    <img src="../static/resources/avatar.png" class="avatar" alt="">
+        <h1>Registration</h1>
+        <form method="post" action="/login.html">
+            <p>Full Name</p>
+            <input type="text" name="fullName" placeholder="Enter Full Name">
+            <p>Username</p>
+            <input type="text" name="username" placeholder="Enter Username">
+            <p>Password</p>
+            <input type="password" name="password" placeholder="Enter Password" id="password">
+            <input type="password" placeholder="Re-enter Password">
+            <p id="pass-guideline">Passwords should meet the following conditions:</p>
+            <ul>
+                <li>At least one uppercase character</li>
+                <li>At least one lowercase character</li>
+                <li>At least one number</li>
+                <li>Contain at least 8 characters</li>
+            </ul>
+            <input type="submit"  value="Register">
+        </form>
+    </div>
+{% endblock body %}

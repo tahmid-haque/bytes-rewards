@@ -37,5 +37,13 @@ def save():
     return redirect("/")
 
 
+@app.route('/signup')
+def signup():
+    message = ""
+    if 'message' in request.args:
+        message = request.args['message']
+    return render_template('create_account.j2', message = message)
+
+
 if __name__ == "__main__":
     app.run(host="localhost", port=8000, debug=True)
