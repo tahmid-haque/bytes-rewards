@@ -2,8 +2,8 @@
 This file houses the restaurant profile management interface.
 It is used to interact with the restaurant profile database.
 """
-
-from database import Database, QueryFailureException, UpdateFailureException
+from werkzeug.security import generate_password_hash, check_password_hash
+from database import Database, QueryFailureException, UpdateFailureException, InsertFailureException
 
 
 class RestaurantProfileManager:
@@ -13,12 +13,33 @@ class RestaurantProfileManager:
     bingo boards.
     """
 
-    def __init__(self, app, username):
+    def __init__(self, app, fullname, username, password):
         """
         Initialize the database object using the flask app.
         """
         self.db = Database.get_instance(app)
+        self.fullname = fullname
         self.username = username
+        self.password = password
+
+    def set_new_profile(self, fullname, username, password):
+        try:
+            hashed_password = generate_password_hash(password, method='sha256')
+            self.db.insert('restaurant_users', {"fullname": fullname,
+                                                    "username": username,
+                                                    "password": hashed_password})
+        except InsertFailureException: 
+            return "There was an issue creating a new user profile."
+
+    def check_user_exists(self, username):
+        """
+        Return True if the user exists in the database.
+        """
+        try:
+            restaurant_user = self.db.query('restaurant_users', {'username': username})
+            return len(restaurant_user) != 0
+        except QueryFailureException:
+            print ("Something's wrong with the query.")
 
     def get_shared_goals(self):
         """
@@ -48,7 +69,9 @@ class RestaurantProfileManager:
         try:
             profile = self.db.query('restaurant_users',
                                     {"username": self.username})
-            return profile[0]["bingo_board"]
+            if len(profile) == 0:
+                print ("Something's wrong with Victor. He's not being queried properly. TODO")
+            # return profile[0]["bingo_board"]
         except QueryFailureException:
             print("There was an issue retrieving a bingo board.")
             return {}
@@ -62,7 +85,9 @@ class RestaurantProfileManager:
             board = Database.replace_object_id(board)
 
             self.db.update(
-                'restaurant_users', {"username": self.username},
+                'restaurant_users', {"fullname": self.fullname,
+                                     "username": self.username,
+                                     "password": self.password},
                 {'$set': {
                     "bingo_board": {
                         "name": name,
