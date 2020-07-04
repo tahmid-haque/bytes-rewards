@@ -2,32 +2,44 @@
 This file houses the restaurant profile management interface.
 It is used to interact with the restaurant profile database.
 """
+from flask_login import UserMixin
 from werkzeug.security import generate_password_hash, check_password_hash
 from database import Database, QueryFailureException, UpdateFailureException, InsertFailureException
 
 
-class RestaurantProfileManager:
+class RestaurantProfileManager(UserMixin):
     """
     This class generates a restaurant profile manager, capable of managing
     one restaurant profile. Some of the things it manages include goals and
     bingo boards.
     """
 
-    def __init__(self, app, fullname, username, password):
+    def __init__(self, app, username):
         """
         Initialize the database object using the flask app.
         """
         self.db = Database.get_instance(app)
-        self.fullname = fullname
+        self.id = u"" # Overwritten by get_id()
+        self.fullname = ""
         self.username = username
-        self.password = password
+        self.hashed_pw = ""
+
+    def check_password(self, password):
+        """
+        Check if given password matches hash.
+        """
+        return check_password_hash(self.hashed_pw, password)
 
     def set_new_profile(self, fullname, username, password):
+        """
+        Create a new profile in the database given the credentials of this instance.
+        """
         try:
-            hashed_password = generate_password_hash(password, method='sha256')
+            self.hashed_pw = generate_password_hash(password, method='sha256')
+            self.fullname = fullname
             self.db.insert('restaurant_users', {"fullname": fullname,
                                                     "username": username,
-                                                    "password": hashed_password})
+                                                    "hashed_password": self.hashed_pw})
         except InsertFailureException: 
             return "There was an issue creating a new user profile."
 
@@ -40,6 +52,19 @@ class RestaurantProfileManager:
             return len(restaurant_user) != 0
         except QueryFailureException:
             print ("Something's wrong with the query.")
+
+    def get_user(self, username):
+        """
+        Update an instance to fully represent a user.
+        """
+        try:
+            restaurant_user = self.db.query('restaurant_users', {'username': username})
+            if len(restaurant_user) > 0:
+                self.fullname = restaurant_user[0]['fullname']
+                self.username = username
+                self.hashed_pw = restaurant_user[0]['hashed_password']
+        except QueryFailureException:
+            return "There was an issue retrieving user credentials."
 
     def get_shared_goals(self):
         """
@@ -69,9 +94,9 @@ class RestaurantProfileManager:
         try:
             profile = self.db.query('restaurant_users',
                                     {"username": self.username})
-            if len(profile) == 0:
+            if len(profile) == 0: # Nothing was queried for some reason.
                 print ("Something's wrong with Victor. He's not being queried properly. TODO")
-            # return profile[0]["bingo_board"]
+            return profile[0]["bingo_board"]
         except QueryFailureException:
             print("There was an issue retrieving a bingo board.")
             return {}
@@ -85,9 +110,7 @@ class RestaurantProfileManager:
             board = Database.replace_object_id(board)
 
             self.db.update(
-                'restaurant_users', {"fullname": self.fullname,
-                                     "username": self.username,
-                                     "password": self.password},
+                'restaurant_users', {"username": self.username},
                 {'$set': {
                     "bingo_board": {
                         "name": name,
