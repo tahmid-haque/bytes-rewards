@@ -1,0 +1,26 @@
+Reviewer: Junaid
+Date: July 5, 2020
+
+Notes: 
+This peer review is for the account creation features. This review
+comments on and gives any feedback related to the backend and frontend.
+Styling has also been looked at and is according to the style checker.
+
+Frontend/Webdesign
+-----------------
+- Color scheme is good
+- matches the mockup
+- navigation is easy for a user
+
+
+Feature Functionality
+-------------
+- Alerts are popping up as they should
+- Messages are clear to the user when they do something wrong
+- Duplicate accounts are not being created
+
+
+Code
+----
+- Style check was performed
+- Tested account creation and is working as intended
