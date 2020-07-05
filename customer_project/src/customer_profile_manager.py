@@ -32,7 +32,8 @@ class CustomerProfileManager(UserMixin):
 
     def set_new_profile(self, fullname, password):
         """
-        Create a new profile in the database given the credentials of this instance.
+        Create a new profile in the database given the credentials of this
+        instance.
         """
         try:
             self.hashed_pw = generate_password_hash(password, method='sha256')
@@ -62,8 +63,9 @@ class CustomerProfileManager(UserMixin):
         Update an instance to fully represent a user.
         """
         try:
-            customer_user = self.db.query('customers',
-                                          {'username': self.username})
+            customer_user = self.db.query('customers', {
+                'username': self.username
+            })
             if len(customer_user) > 0:
                 self.fullname = customer_user[0]['fullname']
                 self.hashed_pw = customer_user[0]['hashed_password']
