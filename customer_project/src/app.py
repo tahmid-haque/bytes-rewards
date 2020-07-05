@@ -4,7 +4,7 @@ app together and provide a way to start a server.
 """
 
 import os
-from flask import Flask, render_template, request, redirect, flash
+from flask import Flask, render_template, request, redirect, flash, url_for
 from flask_login import LoginManager, current_user, login_user, login_required, logout_user
 from werkzeug.security import generate_password_hash, check_password_hash
 from customer_profile_manager import CustomerProfileManager
@@ -54,9 +54,9 @@ def customer_login():
     else:
         return render_template('customer_login.j2')
 
-@app.route("/logout")
+@app.route("/customer_logout")
 @login_required
-def logout():
+def customer_logout():
     """
     Logs out current user.
     """
@@ -78,7 +78,7 @@ def customer_signup():
             return render_template('customer_create_account.j2') # Let user try again
         else:
             # If they're successful, insert into database
-            possible_user.set_new_profile(fullname, password)
+            possible_user.set_new_profile(fullname, password) 
             return redirect("/customer_login")
     else:
         return render_template('customer_create_account.j2')
