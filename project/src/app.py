@@ -22,7 +22,7 @@ def load_user(username):
     Load user from database.
     """
     possible_user = RestaurantProfileManager(app, username)
-    possible_user.get_user(username)
+    possible_user.get_user()
     return possible_user
 
 
@@ -33,17 +33,17 @@ def index():
     When retrieving this route, get a restaurant profile's goals and bingo
     board. Render these items together to show a bingo editor.
     """
-    # TODO: Changing Victor's profile created a bug. Just changed it to current_user.
-    # rpm = RestaurantProfileManager(app, "VChang")
 
-    # goals = current_user.get_goals()
+    # TODO: We have a bug here.
+    # rpm = RestaurantProfileManager(app, "VChang")
+    # rpm.get_user()
+    # goals = rpm.get_goals()
     # # There's an issue on the next line. See line 97 in restaurant_profile_manager.py
-    # bingo_board = current_user.get_bingo_board()
+    # bingo_board = rpm.get_bingo_board()
     # return render_template('index.j2',
     #                        goals=goals,
     #                        board_name=bingo_board["name"],
     #                        board=bingo_board["board"])
-
     # for now redirect to signup, if you get here, then login and signup worked.
     return redirect("/signup")
 
@@ -75,9 +75,8 @@ def login():
         password = request.form["password"]
         possible_user = RestaurantProfileManager(app, username)
         if possible_user.check_user_exists(username):
-            possible_user.get_user(
-                username)  # Update the possible user with credentials
-            if (possible_user and possible_user.check_password(password)):
+            possible_user.get_user()  # Update the possible user with credentials
+            if possible_user and possible_user.check_password(password):
                 login_user(possible_user
                           )  # If username and password are correct, login
                 return redirect("/")
@@ -111,7 +110,7 @@ def signup():
             return render_template('create_account.j2')  # Let user try again
 
         # If they're successful, insert into database
-        possible_user.set_new_profile(fullname, username, password)
+        possible_user.set_new_profile(fullname, password)
         return redirect("/login")
     return render_template('create_account.j2')
 
