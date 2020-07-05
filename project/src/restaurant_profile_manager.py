@@ -19,7 +19,7 @@ class RestaurantProfileManager(UserMixin):
         Initialize the database object using the flask app.
         """
         self.db = Database.get_instance(app)
-        self.id = u"" # Overwritten by get_id()
+        self.id = u""  # Overwritten by get_id()
         self.fullname = ""
         self.username = username
         self.hashed_pw = ""
@@ -37,10 +37,13 @@ class RestaurantProfileManager(UserMixin):
         try:
             self.hashed_pw = generate_password_hash(password, method='sha256')
             self.fullname = fullname
-            self.db.insert('restaurant_users', {"fullname": fullname,
-                                                    "username": username,
-                                                    "hashed_password": self.hashed_pw})
-        except InsertFailureException: 
+            self.db.insert(
+                'restaurant_users', {
+                    "fullname": fullname,
+                    "username": username,
+                    "hashed_password": self.hashed_pw
+                })
+        except InsertFailureException:
             return "There was an issue creating a new user profile."
 
     def check_user_exists(self, username):
@@ -48,17 +51,19 @@ class RestaurantProfileManager(UserMixin):
         Return True if the user exists in the database.
         """
         try:
-            restaurant_user = self.db.query('restaurant_users', {'username': username})
+            restaurant_user = self.db.query('restaurant_users',
+                                            {'username': username})
             return len(restaurant_user) != 0
         except QueryFailureException:
-            print ("Something's wrong with the query.")
+            print("Something's wrong with the query.")
 
     def get_user(self, username):
         """
         Update an instance to fully represent a user.
         """
         try:
-            restaurant_user = self.db.query('restaurant_users', {'username': username})
+            restaurant_user = self.db.query('restaurant_users',
+                                            {'username': username})
             if len(restaurant_user) > 0:
                 self.fullname = restaurant_user[0]['fullname']
                 self.username = username
@@ -94,8 +99,10 @@ class RestaurantProfileManager(UserMixin):
         try:
             profile = self.db.query('restaurant_users',
                                     {"username": self.username})
-            if len(profile) == 0: # Nothing was queried for some reason.
-                print ("Something's wrong with Victor. He's not being queried properly. TODO")
+            if len(profile) == 0:  # Nothing was queried for some reason.
+                print(
+                    "Something's wrong with Victor. He's not being queried properly. TODO"
+                )
             return profile[0]["bingo_board"]
         except QueryFailureException:
             print("There was an issue retrieving a bingo board.")

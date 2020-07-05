@@ -109,5 +109,5 @@ class Database:
         Throws InsertFailureException on failure.
         """
         res = self.db[collection].insert_one(document)  # Insert using Mongo
-        if not res.acknowledged:    # Ensure successful insert
+        if not res.acknowledged:  # Ensure successful insert
             raise InsertFailureException("Failed to insert!")

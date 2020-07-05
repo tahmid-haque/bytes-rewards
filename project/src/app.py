@@ -4,26 +4,27 @@ app together and provide a way to start a server.
 """
 
 import os
-from flask import Flask, render_template, request, redirect, flash, url_for
+from flask import Flask, render_template, request, redirect, flash
 from flask_login import LoginManager, current_user, login_user, login_required, logout_user
-from werkzeug.security import generate_password_hash, check_password_hash
 from restaurant_profile_manager import RestaurantProfileManager
 
 app = Flask(__name__)  # Initialize a flask app using current file
 app.secret_key = b'averysecretkey'
 login_manager = LoginManager()
-login_manager.init_app(app) # Initialize login manager for flask app
-login_manager.login_view = 'login' # Redirect to login, as login is required
-login_manager.session_protection = "strong" # Strengthen session cookie protection
+login_manager.init_app(app)  # Initialize login manager for flask app
+login_manager.login_view = 'login'  # Redirect to login, as login is required
+login_manager.session_protection = "strong"  # Strengthen session cookie protection
+
 
 @login_manager.user_loader
 def load_user(username):
-	"""
-	Load user from database.
-	"""
-	possible_user = RestaurantProfileManager(app, username)
-	possible_user.get_user(username)
-	return possible_user
+    """
+    Load user from database.
+    """
+    possible_user = RestaurantProfileManager(app, username)
+    possible_user.get_user(username)
+    return possible_user
+
 
 @app.route('/')
 @login_required
@@ -34,15 +35,17 @@ def index():
     """
     # TODO: Changing Victor's profile created a bug. Just changed it to current_user.
     # rpm = RestaurantProfileManager(app, "VChang")
-    '''
-    goals = current_user.get_goals()
-    bingo_board = current_user.get_bingo_board() #<- There's an issue here. See line 97 in restaurant_profile_manager.py
-    return render_template('index.j2',
-                           goals=goals,
-                           board_name=bingo_board["name"],
-                           board=bingo_board["board"])
-    '''
-    return redirect("/signup") # for now redirect to signup, if you get here, then login and signup worked.
+
+    # goals = current_user.get_goals()
+    # # There's an issue on the next line. See line 97 in restaurant_profile_manager.py
+    # bingo_board = current_user.get_bingo_board()
+    # return render_template('index.j2',
+    #                        goals=goals,
+    #                        board_name=bingo_board["name"],
+    #                        board=bingo_board["board"])
+
+    # for now redirect to signup, if you get here, then login and signup worked.
+    return redirect("/signup")
 
 
 @app.route('/save', methods=['POST'])
@@ -57,6 +60,7 @@ def save():
     current_user.set_bingo_board(name, board)
     return redirect("/")
 
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     """
@@ -64,20 +68,22 @@ def login():
     Otherwise prompt user and require them to try again.
     """
     if current_user.is_authenticated:
-        return(redirect("/"))
+        return redirect("/")
+
     if request.method == 'POST':
         username = request.form["username"]
         password = request.form["password"]
         possible_user = RestaurantProfileManager(app, username)
         if possible_user.check_user_exists(username):
-            possible_user.get_user(username) # Update the possible user with credentials
+            possible_user.get_user(
+                username)  # Update the possible user with credentials
             if (possible_user and possible_user.check_password(password)):
-                login_user(possible_user) # If username and password are correct, login
+                login_user(possible_user
+                          )  # If username and password are correct, login
                 return redirect("/")
-        flash("Incorrect username or password. Please try again.") 
-        return render_template('login.j2')
-    else:
-        return render_template('login.j2')
+        flash("Incorrect username or password. Please try again.")
+    return render_template('login.j2')
+
 
 @app.route("/logout")
 @login_required
@@ -87,6 +93,7 @@ def logout():
     """
     logout_user()
     return redirect('/login')
+
 
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
@@ -98,14 +105,15 @@ def signup():
         username = request.form["username"]
         password = request.form["password"]
         possible_user = RestaurantProfileManager(app, username)
-        if possible_user.check_user_exists(username): # A user already exists with this username.
+        if possible_user.check_user_exists(
+                username):  # A user already exists with this username.
             flash("This username is taken. Please choose a new one.")
-            return render_template('create_account.j2') # Let user try again
-        else:
-        	possible_user.set_new_profile(fullname, username, password) # If they're successful, insert into database
-        	return redirect("/login")
-    else:
-        return render_template('create_account.j2')
+            return render_template('create_account.j2')  # Let user try again
+
+        # If they're successful, insert into database
+        possible_user.set_new_profile(fullname, username, password)
+        return redirect("/login")
+    return render_template('create_account.j2')
 
 
 if __name__ == "__main__":

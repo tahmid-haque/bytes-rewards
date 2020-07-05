@@ -1,0 +1,27 @@
+Reviewer: Tahmid
+Date: July 5, 2020
+
+Notes: 
+This peer review only reviews the code that's used by the login feature as well as general
+styling issues mentioned by the auto formatter. Any issues that were mentioned by the auto
+formatter or are very simple to solve, have been resolved by the reviewer.
+Lastly, this review only discusses current/potential issues within the software. 
+Anything not mentioned here is assumed have passed the review.
+
+Functionality
+-------------
+- Usernames are case sensitive, this could be frustrating for users
+- The title for login page "Login Here" could be better, "here" seems unnecessary 
+
+
+Code
+----
+restaurant_profile_manager.py:
+- set_new_profile() has conflicting return values
+- get_user() has conflicting return values
+- check_user_exists() does not mention the potential for an exception to be thrown in docstring
+- Unclear on what UserMixin does for RestaurantProfileManager, provide a comment
+- Unsure of whether or not get_user() truly requires username as param,
+  already included in __init__()
+- Unsure of whether or not set_new_profile() truly requires username as param,
+  already included in __init__()
