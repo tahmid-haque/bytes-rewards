@@ -18,6 +18,12 @@ class UpdateFailureException(Exception):
     """
 
 
+class InsertFailureException(Exception):
+    """
+    Exception class used to indicate failure inserting into a database.
+    """
+
+
 class Database:
     """
     This class holds all database communication components. It is responsible
@@ -96,3 +102,12 @@ class Database:
         res = self.db[collection].update_one(query, document)
         if not res.acknowledged:
             raise UpdateFailureException("Failed to update!")
+
+    def insert(self, collection, document):
+        """
+        Insert a single document into the given collection within the db.
+        Throws InsertFailureException on failure.
+        """
+        res = self.db[collection].insert_one(document)  # Insert using Mongo
+        if not res.acknowledged:  # Ensure successful insert
+            raise InsertFailureException("Failed to insert!")
