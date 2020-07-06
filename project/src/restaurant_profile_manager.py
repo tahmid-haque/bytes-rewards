@@ -105,7 +105,7 @@ class RestaurantProfileManager(UserMixin):
                                     {"username": self.username})
             if len(profile) == 0:  # Nothing was queried for some reason.
                 print(
-                    "Something's wrong with Victor. He's not being queried properly. TODO"
+                    "Goes into this block. TODO"
                 )
             return profile[0]["bingo_board"]
         except QueryFailureException:

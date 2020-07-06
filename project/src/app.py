@@ -33,19 +33,11 @@ def index():
     When retrieving this route, get a restaurant profile's goals and bingo
     board. Render these items together to show a bingo editor.
     """
-
-    # TODO: We have a bug here.
-    # rpm = RestaurantProfileManager(app, "VChang")
-    # rpm.get_user()
-    # goals = rpm.get_goals()
-    # # There's an issue on the next line. See line 97 in restaurant_profile_manager.py
-    # bingo_board = rpm.get_bingo_board()
-    # return render_template('index.j2',
-    #                        goals=goals,
-    #                        board_name=bingo_board["name"],
-    #                        board=bingo_board["board"])
-    # for now redirect to signup, if you get here, then login and signup worked.
-    return redirect("/signup")
+    goals = current_user.get_goals(
+    )  # current_user is loaded from load_user so get goals
+    # There's an issue on the next line. See line 106 in restaurant_profile_manager.py TODO
+    # bingo_board = current_user.get_bingo_board()
+    return render_template('index.j2', goals=goals, board_name="", board={})
 
 
 @app.route('/save', methods=['POST'])
@@ -75,10 +67,10 @@ def login():
         password = request.form["password"]
         possible_user = RestaurantProfileManager(app, username)
         if possible_user.check_user_exists(username):
-            possible_user.get_user()  # Update the possible user with credentials
+            possible_user.get_user(
+            )  # Update the possible user with credentials
             if possible_user and possible_user.check_password(password):
-                login_user(possible_user
-                          )  # If username and password are correct, login
+                login_user(possible_user)  # If username and password are correct, login
                 return redirect("/")
         flash("Incorrect username or password. Please try again.")
     return render_template('login.j2')
@@ -97,7 +89,8 @@ def logout():
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
     """
-    When posting to this page, verify if user already exists. If not, redirect to login.
+    When posting to this page, verify if user already exists.
+    If user does not exist and form follows format, redirect to login.
     """
     if request.method == 'POST':
         fullname = request.form["fullName"]
@@ -108,7 +101,6 @@ def signup():
                 username):  # A user already exists with this username.
             flash("This username is taken. Please choose a new one.")
             return render_template('create_account.j2')  # Let user try again
-
         # If they're successful, insert into database
         possible_user.set_new_profile(fullname, password)
         return redirect("/login")
