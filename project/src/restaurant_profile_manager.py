@@ -16,6 +16,7 @@ class RestaurantProfileManager(UserMixin):
     bingo boards. It inherits from UserMixin to properly integrate with the
     features of flask_login.
     """
+
     def __init__(self, app, username):
         """
         Initialize the database object using the flask app.
@@ -23,7 +24,7 @@ class RestaurantProfileManager(UserMixin):
         self.db = Database.get_instance(app)
         self.id = u""  # Overwritten by get_id() in UserMixin
         self.fullname = ""
-        self.username = username
+        self.username = username.lower()
         self.hashed_pw = ""
 
     def check_password(self, password):
@@ -49,14 +50,14 @@ class RestaurantProfileManager(UserMixin):
         except InsertFailureException:
             print("There was an issue creating a new user profile.")
 
-    def check_user_exists(self, username):
+    def check_user_exists(self):
         """
         Return True if the user exists in the database.
         If there is an issue with the query, throws QueryFailureException.
         """
         try:
             restaurant_user = self.db.query('restaurant_users',
-                                            {'username': username})
+                                            {'username': self.username})
             return len(restaurant_user) != 0
         except QueryFailureException:
             print("Something's wrong with the query.")
@@ -103,14 +104,12 @@ class RestaurantProfileManager(UserMixin):
         try:
             profile = self.db.query('restaurant_users',
                                     {"username": self.username})
-            if len(profile) == 0:  # Nothing was queried for some reason.
-                print(
-                    "Goes into this block. TODO"
-                )
             return profile[0]["bingo_board"]
+        except KeyError:  # New User, no bingo board found
+            return {"name": "", "board": []}
         except QueryFailureException:
             print("There was an issue retrieving a bingo board.")
-            return {}
+            return {"name": "", "board": []}
 
     def set_bingo_board(self, name, board):
         """
@@ -130,3 +129,9 @@ class RestaurantProfileManager(UserMixin):
                 }})
         except UpdateFailureException:
             print("There was an issue updating a bingo board.")
+
+    def get_id(self):
+        """
+        Retrieves the username for flask-login.
+        """
+        return self.username
