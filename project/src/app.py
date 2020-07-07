@@ -106,6 +106,12 @@ def signup():
         return redirect("/login")
     return render_template('create_account.j2')
 
+@app.route('/view-profile')
+def view_profile():
+    """
+    Displays the current user's restaurant profile page.
+    """
+    return render_template('view_profile.j2')
 
 if __name__ == "__main__":
     app.run(host="localhost", port=os.environ.get('PORT', 8000), debug=True)
