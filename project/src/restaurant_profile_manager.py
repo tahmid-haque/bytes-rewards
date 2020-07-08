@@ -21,7 +21,6 @@ class RestaurantProfileManager(UserMixin):
         Initialize the database object using the flask app.
         """
         self.db = Database.get_instance(app)
-        self.id = u""  # Overwritten by get_id() in UserMixin
         self.fullname = ""
         self.username = username
         self.hashed_pw = ""
@@ -44,7 +43,20 @@ class RestaurantProfileManager(UserMixin):
                 'restaurant_users', {
                     "fullname": fullname,
                     "username": self.username,
-                    "hashed_password": self.hashed_pw
+                    "hashed_password": self.hashed_pw,
+                    "restaurant_name": "",
+                    "categories": [],
+                    "image_url": "",
+                    "description": "",
+                    "phone_num": "",
+                    "address": "",
+                    "goals": [],
+                    "rewards": [],
+                    "bingo_board": {
+                        "name":"",
+                        "board":[]
+                    },
+                    "ready_to_view": False
                 })
         except InsertFailureException:
             print("There was an issue creating a new user profile.")
@@ -131,6 +143,12 @@ class RestaurantProfileManager(UserMixin):
         except UpdateFailureException:
             print("There was an issue updating a bingo board.")
 
+    def get_id(self):
+        """
+        Retrieves the username for flask-login.
+        """
+        return self.username
+
     def get_restaurant_info(self):
         """
         Return the necessary information of the restaurant
@@ -139,11 +157,7 @@ class RestaurantProfileManager(UserMixin):
         """
         try:
             profile = self.db.query('restaurant_users',
-                                        {'username': self.username,
-                                         'fullname': self.fullname,
-                                         })
-            if len(profile) == 0:
-                raise QueryFailureException # The query didn't return anything
+                                    {'username': self.username})
             return {
                 "rest_name": profile[0]["restaurant_name"],
                 "address": profile[0]["address"],

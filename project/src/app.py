@@ -35,9 +35,11 @@ def index():
     """
     goals = current_user.get_goals(
     )  # current_user is loaded from load_user so get goals
-    # There's an issue on the next line. See line 106 in restaurant_profile_manager.py TODO
-    # bingo_board = current_user.get_bingo_board()
-    return render_template('index.j2', goals=goals, board_name="", board={})
+    bingo_board = current_user.get_bingo_board()
+    return render_template('index.j2',
+                           goals=goals,
+                           board_name=bingo_board["name"],
+                           board=bingo_board["board"])
 
 
 @app.route('/save', methods=['POST'])
@@ -46,7 +48,6 @@ def save():
     When posting to this route, save a bingo board to the restaurant profile
     using the request body. Redirect to the bingo editor on completion.
     """
-    # rpm = RestaurantProfileManager(app, "VChang")
     name = request.form["board_name"]
     board = request.form.getlist("board[]")
     current_user.set_bingo_board(name, board)
@@ -114,12 +115,12 @@ def view_profile():
     rest_info = current_user.get_restaurant_info()
     if rest_info != {}: # Only get the rest info if available.
         return render_template('view_profile.j2',
-                                    restaurant_name=rest_info["rest_name"],
-                                    address=rest_info["address"],
-                                    phone_number=rest_info["phone_number"],
-                                    categories=rest_info["categories"],
-                                    rest_img=rest_info["rest_img"],
-                                    description=rest_info["description"])
+                               restaurant_name=rest_info["rest_name"],
+                               address=rest_info["address"],
+                               phone_number=rest_info["phone_number"],
+                               categories=rest_info["categories"],
+                               rest_img=rest_info["rest_img"],
+                               description=rest_info["description"])
     else: # Otherwise return default
         return render_template('view_profile.j2')
 
