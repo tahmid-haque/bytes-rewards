@@ -111,7 +111,17 @@ def view_profile():
     """
     Displays the current user's restaurant profile page.
     """
-    return render_template('view_profile.j2')
+    rest_info = current_user.get_restaurant_info()
+    if rest_info != {}: # Only get the rest info if available.
+        return render_template('view_profile.j2',
+                                    restaurant_name=rest_info["rest_name"],
+                                    address=rest_info["address"],
+                                    phone_number=rest_info["phone_number"],
+                                    categories=rest_info["categories"],
+                                    rest_img=rest_info["rest_img"],
+                                    description=rest_info["description"])
+    else: # Otherwise return default
+        return render_template('view_profile.j2')
 
 if __name__ == "__main__":
     app.run(host="localhost", port=os.environ.get('PORT', 8000), debug=True)

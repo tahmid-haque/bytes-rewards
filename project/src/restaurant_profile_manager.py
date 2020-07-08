@@ -130,3 +130,28 @@ class RestaurantProfileManager(UserMixin):
                 }})
         except UpdateFailureException:
             print("There was an issue updating a bingo board.")
+
+    def get_restaurant_info(self):
+        """
+        Return the necessary information of the restaurant
+        owner's restaurant. Throws QueryFailureException if
+        restaurant info is not available.
+        """
+        try:
+            profile = self.db.query('restaurant_users',
+                                        {'username': self.username,
+                                         'fullname': self.fullname,
+                                         })
+            if len(profile) == 0:
+                raise QueryFailureException # The query didn't return anything
+            return {
+                "rest_name": profile[0]["restaurant_name"],
+                "address": profile[0]["address"],
+                "phone_number": profile[0]["phone_num"],
+                "categories": profile[0]["categories"],
+                "rest_img": profile[0]["image_url"],
+                "description": profile[0]["description"]
+            }
+        except QueryFailureException:
+            print("There was an issue trying to get restaurant info.")
+            return {}
