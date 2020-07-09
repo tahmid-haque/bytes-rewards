@@ -72,3 +72,14 @@ class CustomerProfileManager(UserMixin):
             return "Got user successfully."
         except QueryFailureException:
             return "There was an issue retrieving user credentials."
+
+    def get_restaurant_profiles(self):
+        """
+        Get all restaurant profiles that are ready to be viewed.
+        """
+        try:
+            restaurant_profiles = self.db.query('restaurant_users', {"ready_to_view": True})
+            return restaurant_profiles
+        except QueryFailureException:
+            print("Something's wrong with the query.")
+            return []
