@@ -101,8 +101,7 @@ class RestaurantProfileManager(UserMixin):
         Return a bingo board attached to the current restaurant user.
         """
         try:
-            profile = self.db.query('restaurant_users',
-                                    {"username": self.id})
+            profile = self.db.query('restaurant_users', {"username": self.id})
             return profile[0]["bingo_board"]
         except KeyError:  # New User, no bingo board found
             return {"name": "", "board": []}
@@ -128,3 +127,29 @@ class RestaurantProfileManager(UserMixin):
                 }})
         except UpdateFailureException:
             print("There was an issue updating a bingo board.")
+
+    def get_profile(self):
+        """
+        Return the restaurant user's profile.
+        """
+        try:
+            user = self.db.query('restaurant_users', {"username": self.id})[0]
+            return user["profile"]
+        except KeyError:  # New User, no profile found
+            return {}
+        except QueryFailureException:
+            print("There was an issue retrieving a profile")
+            return {}
+
+    def update_profile(self, profile):
+        """
+        Update the restaurant user's profile using the data provided in profile.
+        """
+        profile['is_public'] = 'is_public' in profile
+        try:
+            self.db.update('restaurant_users', {"username": self.id},
+                           {'$set': {
+                               "profile": profile
+                           }})
+        except UpdateFailureException:
+            print("There was an issue updating a profile.")

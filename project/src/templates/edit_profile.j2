@@ -18,11 +18,11 @@
                 {% endif %}
             {% endwith %}
         </p>
-        <form method="post" action="/signup">
+        <form method="post" action="/profile/save">
             <p>Restaurant Name</p>
             <input
                 type="text"
-                name="restaurant_name"
+                name="name"
                 maxlength="50"
                 placeholder="Simple Bytes"
                 required
@@ -43,8 +43,8 @@
                 maxlength='128'
                 required
             />
-            <img id="restaurant-image" class="scale-out hidden" src="https://source.unsplash.com/random" alt="">
-
+            <img id="restaurant-image" class="scale-out hidden" src="" alt="">
+            
             <p>Description</p>
             <textarea name="description" placeholder="Simple food. Amazing taste." maxlength='1000' required></textarea>
 
@@ -73,17 +73,21 @@
             <input
                 type="text"
                 name="location[city]"
+                minlength='1'
                 maxlength='50'
                 placeholder='Toronto'
                 required
+                readonly
             />
             <p>Province</p>
             <input
                 type="text"
                 name="location[province]"
+                minlength='2'
                 maxlength='2'
                 placeholder='ON'
                 required
+                readonly
             />           
             <p id="checkbox-container">
                 <span id="checkbox-label">Set Public:</span>
@@ -95,62 +99,26 @@
             </p>       
             <input type="submit" value="Submit">
         </form>
-            {% if true %}
+            {% if profile %}
+            <form action="/">
                 <button id="back">Back</button>
+            </form>
             {% endif %}
     </div>
 
-    <script>
-        document.querySelectorAll('textarea').forEach(e => {
-            e.oninput = () => {e.style.height = e.scrollHeight + "px";};
-        });
+    {% if profile %}
+        <script>
+            const inputs = document.querySelectorAll("input, textarea");
+            inputs[0].value = "{{ profile["name"] }}";
+            inputs[1].value = "{{ profile["category"] }}";
+            inputs[2].value = "{{ profile["image"] }}";
+            inputs[3].value = "{{ profile["description"] }}";
+            inputs[4].value = "{{ profile["phone_number"] }}";
+            inputs[5].value = "{{ profile["location"]["address"] }}";
+            inputs[6].value = "{{ profile["location"]["postal_code"] }}";
+            inputs[9].checked = {{ ("" ~ profile['is_public']).lower() }};
+        </script>
+    {% endif %}
 
-        const postal_code = /[A-Z]\d[A-Z]\d[A-Z]\d/;
-        location_inputs = document.querySelectorAll("input[disabled]");
-
-        postal_input = document.querySelector('input[name="location[postal_code]"]');
-        postal_input.oninput = () => {
-            value = postal_input.value.toUpperCase();
-            postal_input.value = value;
-            if (value.match(postal_code) !== null) {
-                fetch("https://geocoder.ca/" + value + "?json=1")
-                    .then(res => res.json())
-                    .then(data => {
-                        if (!('error' in data)) {
-                            location_inputs[0].value = data.standard.city;
-                            location_inputs[1].value = data.standard.prov;
-                        }
-                    })
-            }
-            else {
-                location_inputs[0].value = ""
-                location_inputs[1].value = "";
-            }
-        };
-
-        let rest_img = document.querySelector('#restaurant-image');
-        function showImage() {
-            rest_img.classList.remove("scale-out");
-            rest_img.classList.remove("hidden");
-            rest_img.classList.add("scale-in");
-        }
-
-        function hideImage() {
-            rest_img.classList.remove("scale-in");
-            rest_img.classList.add("scale-out");
-            setTimeout(() => {rest_img.classList.add("hidden");}, 500)
-        }
-
-        let url_input = document.querySelector('input[type="url"]');
-        rest_img.onerror = hideImage;
-        url_input.onchange = () => {
-            rest_img.src = url_input.value;
-            setTimeout(() => {
-                if (rest_img.complete && rest_img.height > 0) {
-                    showImage();
-                }
-                else hideImage();
-            }, 1000);
-        };
-    </script>
+    <script src="{{ url_for('static', filename='js/edit_profile.js') }}"></script>
 {% endblock body %}

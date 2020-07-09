@@ -129,6 +129,7 @@ input[type='submit']:hover {
 }
 
 textarea {
+    outline: none;
     margin: 5px 0 20px 0;
     padding: 8px 2px;
     width: 100%;
@@ -146,7 +147,7 @@ textarea {
     min-height: 40px;
 }
 
-input:disabled {
+input:read-only {
     border-bottom: 2px solid #777;
 }
 
