@@ -110,5 +110,15 @@ def signup():
     return render_template('create_account.j2')
 
 
+@app.route('/profile/edit')
+@login_required
+def edit_profile():
+    """
+    When posting to this page, verify if user already exists.
+    If user does not exist and form follows format, redirect to login.
+    """
+    return render_template('edit_profile.j2')
+
+
 if __name__ == "__main__":
     app.run(host="localhost", port=os.environ.get('PORT', 8000), debug=True)

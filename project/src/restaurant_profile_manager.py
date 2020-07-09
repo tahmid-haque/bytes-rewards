@@ -22,9 +22,8 @@ class RestaurantProfileManager(UserMixin):
         Initialize the database object using the flask app.
         """
         self.db = Database.get_instance(app)
-        self.id = u""  # Overwritten by get_id() in UserMixin
+        self.id = username.lower()
         self.fullname = ""
-        self.username = username.lower()
         self.hashed_pw = ""
 
     def check_password(self, password):
@@ -44,7 +43,7 @@ class RestaurantProfileManager(UserMixin):
             self.db.insert(
                 'restaurant_users', {
                     "fullname": fullname,
-                    "username": self.username,
+                    "username": self.id,
                     "hashed_password": self.hashed_pw
                 })
         except InsertFailureException:
@@ -57,7 +56,7 @@ class RestaurantProfileManager(UserMixin):
         """
         try:
             restaurant_user = self.db.query('restaurant_users',
-                                            {'username': self.username})
+                                            {'username': self.id})
             return len(restaurant_user) != 0
         except QueryFailureException:
             print("Something's wrong with the query.")
@@ -69,7 +68,7 @@ class RestaurantProfileManager(UserMixin):
         """
         try:
             restaurant_user = self.db.query('restaurant_users',
-                                            {'username': self.username})
+                                            {'username': self.id})
             if len(restaurant_user) > 0:
                 self.fullname = restaurant_user[0]['fullname']
                 self.hashed_pw = restaurant_user[0]['hashed_password']
@@ -103,7 +102,7 @@ class RestaurantProfileManager(UserMixin):
         """
         try:
             profile = self.db.query('restaurant_users',
-                                    {"username": self.username})
+                                    {"username": self.id})
             return profile[0]["bingo_board"]
         except KeyError:  # New User, no bingo board found
             return {"name": "", "board": []}
@@ -120,7 +119,7 @@ class RestaurantProfileManager(UserMixin):
             board = Database.replace_object_id(board)
 
             self.db.update(
-                'restaurant_users', {"username": self.username},
+                'restaurant_users', {"username": self.id},
                 {'$set': {
                     "bingo_board": {
                         "name": name,
@@ -129,9 +128,3 @@ class RestaurantProfileManager(UserMixin):
                 }})
         except UpdateFailureException:
             print("There was an issue updating a bingo board.")
-
-    def get_id(self):
-        """
-        Retrieves the username for flask-login.
-        """
-        return self.username
