@@ -6,6 +6,7 @@
 {% endblock head %} 
 
 {% block body %} 
+	<a href="{{ url_for('logout') }}">Logout</a>
     <div class="content">
         <h1>Bingo Editor (Web) </h1>
             <div class ="name-bingo-container">                
@@ -21,7 +22,7 @@
                     {% endif %}
                     required
                 >
-
+				
                 <table>
                     {% for i in range(25) %}
                         {% if i % 5 == 0 %}
@@ -29,7 +30,54 @@
                         {% endif %}
 
                         <td> 
+						
                             <div class="custom-select">
+								{% if i % 5 == 4 %}
+									<div class="vertical-padding">
+										<div class="reward-select">
+											<select name="board_reward[]" required>
+												<option value="" hidden>Select reward:</option>
+												{% if rewards: %}
+												{% for a in rewards %}
+													<option value="{{ a['_id'] }}"
+														{% for j in range(5) %}
+															{% if board_reward[j] == a['_id'] %}
+																selected
+															{% endif %}
+														{% endfor %}
+													> 
+														{{ a["reward"] }}
+													</option>
+												{% endfor %}
+												{% endif %}
+											</select>
+										</div>
+									</div>
+								{% endif %}
+								{% if i >= 20 %}
+									<div class="reward-padding">
+										<div class="reward-select">
+											<select name="board_reward[]" required>
+												<option value="" hidden>Select reward:</option>
+												{% if rewards: %}
+												{% for a in rewards %}
+													<option value="{{ a['_id'] }}"
+														{% for j in range(4, 10) %}
+															{% if board_reward[j] == a['_id'] %}
+																selected
+															{% endif %}
+														{% endfor %}
+													> 
+														{{ a["reward"] }}
+													</option>
+												{% endfor %}
+												{% endif %}
+											</select>
+										</div>
+									</div>
+								{% endif %}
+							
+								
                                 <select name="board[]" required>
                                     <option value="" hidden>Select goal:</option>
                                     {% if goals: %}
@@ -45,13 +93,66 @@
                                     {% endif %}
                                 </select>
                             </div>
+							{% if i == 4 %}
+								<div class="first-padding">
+									<div class="reward-select">
+										<select name="board_reward[]" required>
+											<option value="" hidden>Select reward:</option>
+											{% if rewards: %}
+											{% for a in rewards %}
+												<option value="{{ a['_id'] }}"
+													{% if board_reward[10] == a['_id'] %}
+														selected
+													{% endif %}
+												> 
+													{{ a["reward"] }}
+												</option>
+											{% endfor %}
+											{% endif %}
+										</select>
+									</div>
+								</div>
+							{% endif %}
+							{% if i == 23 %}
+								<div class="last-padding">
+									<div class="reward-select">
+										<select name="board_reward[]" required>
+											<option value="" hidden>Select reward:</option>
+													{% if rewards: %}
+														{% for a in rewards %}
+															<option value="{{ a['_id'] }}"
+																{% if board_reward[11] == a['_id'] %}
+																	selected
+																{% endif %}
+															> 
+																{{ a["reward"] }}
+															</option>
+														{% endfor %}
+													{% endif %}
+										</select>
+									</div>
+								</div>
+						{% endif %}	
                         </td>
-
+						
                         {% if i % 5 == 4 %}
                             </tr>
-                        {% endif %}
+                        {% endif %}  
                     {% endfor %}
                 </table>
+				
+				
+            </div>
+			<div>
+				
+				
+					
+				
+				
+
+				
+		
+               
             </div>
 
             <div class="clear-save-container">

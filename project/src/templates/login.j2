@@ -6,6 +6,7 @@
 {% endblock head %} 
 
 {% block body %} 
+	<a href="{{ url_for('logout') }}">Logout</a>
     <div class="loginbox">
         <img src="{{ url_for('static', filename='resources/avatar.png') }}" class="avatar" alt="">
         <h1>Login Here</h1>

@@ -16,6 +16,7 @@ class RestaurantProfileManager(UserMixin):
     bingo boards. It inherits from UserMixin to properly integrate with the
     features of flask_login.
     """
+
     def __init__(self, app, username):
         """
         Initialize the database object using the flask app.
@@ -23,7 +24,7 @@ class RestaurantProfileManager(UserMixin):
         self.db = Database.get_instance(app)
         self.id = u""  # Overwritten by get_id() in UserMixin
         self.fullname = ""
-        self.username = username
+        self.username = username.lower()
         self.hashed_pw = ""
 
     def check_password(self, password):
@@ -49,14 +50,14 @@ class RestaurantProfileManager(UserMixin):
         except InsertFailureException:
             print("There was an issue creating a new user profile.")
 
-    def check_user_exists(self, username):
+    def check_user_exists(self):
         """
         Return True if the user exists in the database.
         If there is an issue with the query, throws QueryFailureException.
         """
         try:
             restaurant_user = self.db.query('restaurant_users',
-                                            {'username': username})
+                                            {'username': self.username})
             return len(restaurant_user) != 0
         except QueryFailureException:
             print("Something's wrong with the query.")
@@ -103,30 +104,63 @@ class RestaurantProfileManager(UserMixin):
         try:
             profile = self.db.query('restaurant_users',
                                     {"username": self.username})
-            if len(profile) == 0:  # Nothing was queried for some reason.
-                print(
-                    "Goes into this block. TODO"
-                )
+            print(profile[0]["bingo_board"])
             return profile[0]["bingo_board"]
+        except KeyError:  # New User, no bingo board found
+            return {"name": "", "board": []}
         except QueryFailureException:
             print("There was an issue retrieving a bingo board.")
-            return {}
+            return {"name": "", "board": [], "board_reward": []}
 
-    def set_bingo_board(self, name, board):
+    def set_bingo_board(self, name, board, board_reward):
         """
         Update the restaurant user's bingo board using the given name and
         board.
         """
         try:
             board = Database.replace_object_id(board)
+            board_reward = Database.replace_object_id(board_reward)
+            print("username " +self.username)
+            print("reward " + str(board_reward))
 
             self.db.update(
                 'restaurant_users', {"username": self.username},
                 {'$set': {
                     "bingo_board": {
                         "name": name,
-                        "board": board
+                        "board": board,
+                        "board_reward": board_reward
                     }
                 }})
         except UpdateFailureException:
             print("There was an issue updating a bingo board.")
+			
+    def get_shared_rewards(self):
+        """
+        Return a list of all rewards that are shared among all restaurant
+        profiles. This includes the curated list of goals created by the
+        Bytes team.
+        """
+        try:
+            shared_rewards = self.db.query('rewards')
+            shared_reward_ids = []
+            for i in shared_rewards:
+                shared_reward_ids.append(i['_id'])
+            return self.db.query('rewards', {"_id": {"$in": shared_reward_ids}})
+        except QueryFailureException:
+            print("There was an issue retrieving rewards.")
+            return []
+	
+    def get_rewards(self):
+        """
+        Return a list of all goals that the current restaurant user can use
+        within their profile.
+        """
+        return self.get_shared_rewards()
+
+
+    def get_id(self):
+        """
+        Retrieves the username for flask-login.
+        """
+        return self.username

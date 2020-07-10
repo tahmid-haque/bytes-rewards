@@ -35,9 +35,14 @@ def index():
     """
     goals = current_user.get_goals(
     )  # current_user is loaded from load_user so get goals
-    # There's an issue on the next line. See line 106 in restaurant_profile_manager.py TODO
-    # bingo_board = current_user.get_bingo_board()
-    return render_template('index.j2', goals=goals, board_name="", board={})
+    bingo_board = current_user.get_bingo_board()
+    rewards = current_user.get_rewards()
+    return render_template('index.j2',
+                           goals=goals,
+                           board_name=bingo_board["name"],
+                           rewards=rewards,
+                           board=bingo_board["board"],
+                           board_reward=bingo_board["board_reward"])
 
 
 @app.route('/save', methods=['POST'])
@@ -49,7 +54,8 @@ def save():
     # rpm = RestaurantProfileManager(app, "VChang")
     name = request.form["board_name"]
     board = request.form.getlist("board[]")
-    current_user.set_bingo_board(name, board)
+    board_reward = request.form.getlist("board_reward[]")
+    current_user.set_bingo_board(name, board, board_reward)
     return redirect("/")
 
 
@@ -66,11 +72,12 @@ def login():
         username = request.form["username"]
         password = request.form["password"]
         possible_user = RestaurantProfileManager(app, username)
-        if possible_user.check_user_exists(username):
+        if possible_user.check_user_exists():
             possible_user.get_user(
             )  # Update the possible user with credentials
             if possible_user and possible_user.check_password(password):
-                login_user(possible_user)  # If username and password are correct, login
+                login_user(possible_user
+                          )  # If username and password are correct, login
                 return redirect("/")
         flash("Incorrect username or password. Please try again.")
     return render_template('login.j2')
@@ -98,7 +105,7 @@ def signup():
         password = request.form["password"]
         possible_user = RestaurantProfileManager(app, username)
         if possible_user.check_user_exists(
-                username):  # A user already exists with this username.
+        ):  # A user already exists with this username.
             flash("This username is taken. Please choose a new one.")
             return render_template('create_account.j2')  # Let user try again
         # If they're successful, insert into database

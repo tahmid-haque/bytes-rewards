@@ -14,6 +14,7 @@ html {
 }
 
 .clear-save-container {
+	padding-top: 65px;
     margin: 2rem auto;
     width: min-content;
     display: flex;
@@ -61,6 +62,45 @@ td {
     white-space: pre;
     text-overflow: ellipsis;
     -webkit-appearance: none;
+}
+
+.reward-select > select {
+    width: 100px;
+    overflow: hidden;
+    white-space: pre;
+    text-overflow: ellipsis;
+    -webkit-appearance: none;
+	position: absolute;
+}
+
+.reward-container {
+
+    width: min-content;
+    display: flex;
+}
+
+.reward-padding {
+	padding-top: 65px;
+	padding-right: 40px;	
+	position: absolute;
+}
+
+.first-padding { 	
+	border-collapse: separate;
+	padding-left: 250px;
+	margin-bottom: 250px;
+	position: absolute;
+}
+
+.last-padding {
+	padding-top: 45px;
+	padding-left: 340px;	
+	position: absolute;
+}
+
+.vertical-padding {
+	position: absolute;
+	padding-left: 160px;	
 }
 
 h1 {
