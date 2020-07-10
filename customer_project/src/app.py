@@ -42,7 +42,7 @@ def customer_login():
     redirect to homepage. Otherwise prompt user and require them to try again.
     """
     if current_user.is_authenticated:
-        render_template('view_profiles.j2')
+        return redirect(url_for('.view_profiles'))
     if request.method == 'POST':
         username = request.form["username"]
         password = request.form["password"]
@@ -54,8 +54,7 @@ def customer_login():
                 login_user(possible_user
                           )  # If username and password are correct, login
                 name = possible_user.fullname
-                return redirect(
-                    url_for('.view_profiles', username=username, name=name))
+                return redirect(url_for('.view_profiles'))
         flash("Incorrect username or password. Please try again.")
         return render_template('customer_login.j2')
     return render_template('customer_login.j2')
@@ -99,13 +98,9 @@ def view_profiles():
     """
     Allows users to view restaurant profiles that are ready for viewing.
     """
-    username = request.args['username']
-    name = request.args['name']
-    user = CustomerProfileManager(app, username)
+    user = CustomerProfileManager(app, current_user.username)
     restaurant_profiles = user.get_restaurant_profiles()
-    return render_template('view_profiles.j2',
-                           profiles=restaurant_profiles,
-                           name=name)
+    return render_template('view_profiles.j2', profiles=restaurant_profiles)
 
 
 if __name__ == "__main__":

@@ -1,39 +1,47 @@
 {% extends 'partials/base.j2' %} 
 
 {% block head %}
-    <title>Customer | Login</title>
+    <title>Customer | View Profiles</title>
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='customer_css/view_profiles.css') }}" />
 {% endblock head %} 
 
 {% block body %} 
     <div class ="mainbox">
-		<a href="{{ url_for('customer_login') }}">Logout</a>
-        <h1>Welcome, {{ name }}!</h1>
-		<h1>Choose a Game Board<h1>
+		<div class="logout-button">
+			<a href="{{ url_for('customer_logout') }}">Logout</a>
+        </div>
+		<h1>Welcome!</h1>
+		<h1>Choose a Game Board</h1>
 		{% if profiles: %}
-			{% for profile in profiles %}
+			{% for id, profile in profiles.items() %}
 				<div class ="profilecard">
 					{% for key, value in profile.items() %}
-						{% if key == "restaurant_name" %}
-							<h2>{{ value }}<h2>
+						{% if key == "name" %}
+							<h2>{{ value }}</h2>
 						{% endif %}
-						{% if key == "categories" %}
-							<h3>{{ value|join(", ") }}<h3>
+						{% if key == "category" %}
+							<div class="item-padding">
+								<h3>{{ value }}</h3>
+							</div>
 						{% endif %}
-						{% if key == "image_url" %}
-							<img src="{{ value }}" class="image"/>
+						{% if key == "image" %}
+							<div class="item-padding">
+								<img src="{{ value }}" class="image"/>
+							</div>
 						{% endif %}
 					{% endfor %}
-					<div class="button-container">
-						<div class="learnmore">
-							<a href="{{ url_for('view_profiles') }}">Learn More</a>
-						</div>
-						<div class="viewgame">
-							<a href="{{ url_for('view_profiles') }}">View Game Board</a>
+					<div class="item-padding">
+						<div class="button-container">
+							<div class="learnmore">
+								<a href="{{ url_for('view_profiles') }}">Learn More</a>
+							</div>
+							<div class="viewgame">
+								<a href="{{ url_for('view_profiles') }}">View Game Board</a>
+							</div>
 						</div>
 					</div>
 				</div>
 			{% endfor %}
-			{% endif %}
+		{% endif %}
     </div>
 {% endblock body %}

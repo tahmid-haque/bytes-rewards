@@ -8,7 +8,7 @@ body {
 }
 
 .mainbox {
-    margin: 120px auto 70px auto;
+    margin: 30px auto 30px auto;
     width: 320px;
     height: min-content;
     background: #000080;
@@ -17,6 +17,7 @@ body {
     position: relative;
     box-sizing: border-box;
     padding: 30px 30px 30px 30px;
+	border-radius: 4px;
 }
 
 h1 {
@@ -58,7 +59,8 @@ h3 {
     text-decoration: none;
     font-size: 12px;
     line-height: 20px;
-    color: #DCDCDC	
+    color: dimgray;
+	font-weight: bold;
 }
 
 .mainbox a:hover {
@@ -73,11 +75,16 @@ h3 {
     color: #fff;
     position: relative;
     box-sizing: border-box;
-    padding: 5px 5px 5px 5px;
+    padding: 10px 10px 10px 10px;
+	border-radius: 4px;
 }
 
 .profilecard-padding {
 	padding-top: 20px;
+}
+
+.item-padding {
+	padding-top: 5px;
 }
 
 .profilecard a {
@@ -86,6 +93,18 @@ h3 {
     text-align: left;
     font-size: 12px;
 	color: dimgray;
+}
+
+.logout-button {
+    border: none;
+    outline: none;
+    height: min-content;
+	width: 60px;
+    background: #fff;
+	text-align: center;
+    font-size: 12px;
+    border-radius: 10px;
+	box-shadow: 1px 1px 1px #0000CD;
 }
 
 .learnmore {
@@ -119,8 +138,12 @@ h3 {
 }
 
 .image {
-    width: 240px;
+    width: 220px;
     height: 130px;
+	border: 1px solid #fff;
+	background: #fff;
+    border-radius: 4px;
+    padding: 5px;
 }
 
 .guideline {
