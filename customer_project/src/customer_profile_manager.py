@@ -63,9 +63,8 @@ class CustomerProfileManager(UserMixin):
         Update an instance to fully represent a user.
         """
         try:
-            customer_user = self.db.query('customers', {
-                'username': self.username
-            })
+            customer_user = self.db.query('customers',
+                                          {'username': self.username})
             if len(customer_user) > 0:
                 self.fullname = customer_user[0]['fullname']
                 self.hashed_pw = customer_user[0]['hashed_password']
@@ -78,7 +77,11 @@ class CustomerProfileManager(UserMixin):
         Get all restaurant profiles that are ready to be viewed.
         """
         try:
-            restaurant_profiles = self.db.query('restaurant_users', {"ready_to_view": True})
+            restaurant_owners = self.db.query('restaurant_users',
+                                              {'profile.is_public': True})
+            restaurant_profiles = []
+            for profile in restaurant_owners:
+                restaurant_profiles.append(profile['profile'])
             return restaurant_profiles
         except QueryFailureException:
             print("Something's wrong with the query.")

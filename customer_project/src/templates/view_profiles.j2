@@ -7,20 +7,20 @@
 
 {% block body %} 
     <div class ="mainbox">
-		<a href="{{ url_for('customer_login') }}">Logout</a>
+		<a href="{{ url_for('customer_logout') }}">Logout</a>
         <h1>Welcome, {{ name }}!</h1>
 		<h1>Choose a Game Board<h1>
 		{% if profiles: %}
 			{% for profile in profiles %}
 				<div class ="profilecard">
 					{% for key, value in profile.items() %}
-						{% if key == "restaurant_name" %}
+						{% if key == "name" %}
 							<h2>{{ value }}<h2>
 						{% endif %}
-						{% if key == "categories" %}
-							<h3>{{ value|join(", ") }}<h3>
+						{% if key == "category" %}
+							<h3>{{ value }}<h3>
 						{% endif %}
-						{% if key == "image_url" %}
+						{% if key == "image" %}
 							<img src="{{ value }}" class="image"/>
 						{% endif %}
 					{% endfor %}
@@ -34,6 +34,6 @@
 					</div>
 				</div>
 			{% endfor %}
-			{% endif %}
+		{% endif %}
     </div>
 {% endblock body %}

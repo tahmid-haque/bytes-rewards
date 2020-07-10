@@ -5,7 +5,7 @@ the whole app together and provide a way to start a server.
 
 import os
 from flask import Flask, render_template, request, redirect, flash, url_for
-from flask_login import LoginManager, current_user, login_user, login_required, logout_user
+from flask_login import LoginManager, login_user, login_required, logout_user
 from customer_profile_manager import CustomerProfileManager
 
 app = Flask(__name__)  # Initialize a flask app using current file
@@ -41,8 +41,6 @@ def customer_login():
     When posting to this page, verify the credentials provided. If valid,
     redirect to homepage. Otherwise prompt user and require them to try again.
     """
-    if current_user.is_authenticated:
-        render_template('view_profiles.j2')
     if request.method == 'POST':
         username = request.form["username"]
         password = request.form["password"]
