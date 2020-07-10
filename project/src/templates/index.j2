@@ -33,7 +33,7 @@
 						
                             <div class="custom-select">
 								{% if i % 5 == 4 %}
-									<div class="vertical-padding">
+									<div class="vertical-reward-padding">
 										<div class="reward-select">
 											<select name="board_reward[]" required>
 												<option value="" hidden>Select reward:</option>
@@ -55,7 +55,7 @@
 									</div>
 								{% endif %}
 								{% if i >= 20 %}
-									<div class="reward-padding">
+									<div class="horizontal-reward-padding">
 										<div class="reward-select">
 											<select name="board_reward[]" required>
 												<option value="" hidden>Select reward:</option>
@@ -94,7 +94,7 @@
                                 </select>
                             </div>
 							{% if i == 4 %}
-								<div class="first-padding">
+								<div class="first-reward-padding">
 									<div class="reward-select">
 										<select name="board_reward[]" required>
 											<option value="" hidden>Select reward:</option>
@@ -114,21 +114,21 @@
 								</div>
 							{% endif %}
 							{% if i == 23 %}
-								<div class="last-padding">
+								<div class="last-reward-padding">
 									<div class="reward-select">
 										<select name="board_reward[]" required>
 											<option value="" hidden>Select reward:</option>
-													{% if rewards: %}
-														{% for a in rewards %}
-															<option value="{{ a['_id'] }}"
-																{% if board_reward[11] == a['_id'] %}
-																	selected
-																{% endif %}
-															> 
-																{{ a["reward"] }}
-															</option>
-														{% endfor %}
-													{% endif %}
+											{% if rewards: %}
+												{% for a in rewards %}
+													<option value="{{ a['_id'] }}"
+														{% if board_reward[11] == a['_id'] %}
+															selected
+														{% endif %}
+													> 
+														{{ a["reward"] }}
+													</option>
+												{% endfor %}
+											{% endif %}
 										</select>
 									</div>
 								</div>

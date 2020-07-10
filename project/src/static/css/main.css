@@ -74,31 +74,29 @@ td {
 }
 
 .reward-container {
-
     width: min-content;
     display: flex;
 }
 
-.reward-padding {
+.horizontal-reward-padding {
 	padding-top: 65px;
 	padding-right: 40px;	
 	position: absolute;
 }
 
-.first-padding { 	
-	border-collapse: separate;
-	padding-left: 250px;
+.first-reward-padding { 	
+	padding-left: 160px;
 	margin-bottom: 250px;
 	position: absolute;
 }
 
-.last-padding {
+.last-reward-padding {
 	padding-top: 45px;
 	padding-left: 340px;	
 	position: absolute;
 }
 
-.vertical-padding {
+.vertical-reward-padding {
 	position: absolute;
 	padding-left: 160px;	
 }

@@ -107,7 +107,7 @@ class RestaurantProfileManager(UserMixin):
             print(profile[0]["bingo_board"])
             return profile[0]["bingo_board"]
         except KeyError:  # New User, no bingo board found
-            return {"name": "", "board": []}
+            return {"name": "", "board": [], "board_reward": []}
         except QueryFailureException:
             print("There was an issue retrieving a bingo board.")
             return {"name": "", "board": [], "board_reward": []}
