@@ -149,23 +149,28 @@ class RestaurantProfileManager(UserMixin):
         """
         return self.username
 
-    def get_restaurant_info(self):
+    def get_profile(self):
         """
-        Return the necessary information of the restaurant
-        owner's restaurant. Throws QueryFailureException if
-        restaurant info is not available.
+        Return the restaurant user's profile.
         """
         try:
-            profile = self.db.query('restaurant_users',
-                                    {'username': self.username})
-            return {
-                "rest_name": profile[0]["restaurant_name"],
-                "address": profile[0]["address"],
-                "phone_number": profile[0]["phone_num"],
-                "categories": profile[0]["categories"],
-                "rest_img": profile[0]["image_url"],
-                "description": profile[0]["description"]
-            }
-        except QueryFailureException:
-            print("There was an issue trying to get restaurant info.")
+            user = self.db.query('restaurant_users', {"username": self.id})[0]
+            return user["profile"]
+        except KeyError:  # New User, no profile found
             return {}
+        except QueryFailureException:
+            print("There was an issue retrieving a profile")
+            return {}
+
+    def update_profile(self, profile):
+        """
+        Update the restaurant user's profile using the data provided in profile.
+        """
+        profile['is_public'] = 'is_public' in profile
+        try:
+            self.db.update('restaurant_users', {"username": self.id},
+                           {'$set': {
+                               "profile": profile
+                           }})
+        except UpdateFailureException:
+            print("There was an issue updating a profile.")

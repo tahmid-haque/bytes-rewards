@@ -107,19 +107,22 @@ def signup():
         return redirect("/login")
     return render_template('create_account.j2')
 
-@app.route('/view-profile')
+@app.route('/profile')
 def view_profile():
     """
     Displays the current user's restaurant profile page.
     """
-    rest_info = current_user.get_restaurant_info()
+    rest_info = current_user.get_profile()
+    address =''
+    for lc in rest_info["location"]: # Get all elements of location
+        address += rest_info["location"][lc] + ' '
     if rest_info != {}: # Only get the rest info if available.
         return render_template('view_profile.j2',
-                               restaurant_name=rest_info["rest_name"],
-                               address=rest_info["address"],
+                               restaurant_name=rest_info["name"],
+                               address=address[:-1], # Remove trailing whitespace
                                phone_number=rest_info["phone_number"],
-                               categories=rest_info["categories"],
-                               rest_img=rest_info["rest_img"],
+                               categories=rest_info["category"],
+                               rest_img=rest_info["image"],
                                description=rest_info["description"])
     else: # Otherwise return default
         return render_template('view_profile.j2')
