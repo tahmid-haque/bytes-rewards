@@ -123,8 +123,6 @@ def view_profile():
                                category=rest_info["category"],
                                rest_img=rest_info["image"],
                                description=rest_info["description"])
-    else: # Otherwise return default
-        return render_template('view_profile.j2')
 
 @app.route('/profile/edit')
 @login_required
