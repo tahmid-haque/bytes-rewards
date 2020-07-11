@@ -10,10 +10,12 @@
 		<a href="{{ url_for('customer_logout') }}">Logout</a>
         <h1>Welcome, {{ name }}!</h1>
 		<h1>Choose a Game Board<h1>
-		{% if profiles: %}
-			{% for profile in profiles %}
+		{% if users: %}
+			{% for user in users %}
+					{% for k, v in user.items() %}
+					  {% if k == "profile" %}
 				<div class ="profilecard">
-					{% for key, value in profile.items() %}
+					  {% for key,value in v.items() %} 
 						{% if key == "name" %}
 							<h2>{{ value }}<h2>
 						{% endif %}
@@ -29,10 +31,13 @@
 							<a href="{{ url_for('view_profiles') }}">Learn More</a>
 						</div>
 						<div class="viewgame">
-							<a href="{{ url_for('view_profiles') }}">View Game Board</a>
+							<a href="/view_board/{{ user["_id"] }}">View Game Board</a>
 						</div>
 					</div>
 				</div>
+
+					{% endif %}
+					{% endfor %}
 			{% endfor %}
 		{% endif %}
     </div>

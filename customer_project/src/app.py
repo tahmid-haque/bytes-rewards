@@ -14,6 +14,8 @@ login_manager = LoginManager()
 login_manager.init_app(app)  # Initialize login manager for flask app
 login_manager.login_view = 'login'  # Redirect to login, as login is required
 login_manager.session_protection = "strong"
+
+
 # Strengthen session cookie protection
 
 
@@ -50,7 +52,7 @@ def customer_login():
             )  # Update the possible user with credentials
             if (possible_user and possible_user.check_password(password)):
                 login_user(possible_user
-                          )  # If username and password are correct, login
+                           )  # If username and password are correct, login
                 name = possible_user.fullname
                 return redirect(
                     url_for('.view_profiles', username=username, name=name))
@@ -97,13 +99,38 @@ def view_profiles():
     """
     Allows users to view restaurant profiles that are ready for viewing.
     """
-    username = request.args['username']
+    username = login_manager.user_loader
     name = request.args['name']
     user = CustomerProfileManager(app, username)
-    restaurant_profiles = user.get_restaurant_profiles()
+    restaurant_users = user.get_restaurant_users()
+
     return render_template('view_profiles.j2',
-                           profiles=restaurant_profiles,
+                           users=restaurant_users,
                            name=name)
+
+
+@app.route('/view_board/<string:id>', methods=['GET', 'POST'])
+@login_required
+def view_board(id):
+    """
+    Allows users to view restaurant board that they have selected.
+    """
+    username = login_manager.user_loader
+    user = CustomerProfileManager(app, username)
+    goals = []
+    name = ""
+    rewards = []
+    restaurant_users = user.get_restaurant_users()
+    for restaurant_user in restaurant_users:
+        if str(restaurant_user["_id"]) == id:
+            name = restaurant_user["bingo_board"]["name"]
+            goal_ids = restaurant_user["bingo_board"]["board"]
+            for id in goal_ids:
+                for goal in user.get_goals():
+                    if goal["_id"] == id:
+                        goals.append(goal["goal"])
+            rewards = restaurant_user["bingo_board"]["board_reward"]
+    return render_template('view_game_board.j2', goals=goals, name=name, rewards=rewards)
 
 
 if __name__ == "__main__":
