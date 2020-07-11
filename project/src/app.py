@@ -107,6 +107,7 @@ def signup():
     return render_template('create_account.j2')
 
 @app.route('/profile')
+@login_required
 def view_profile():
     """
     Displays the current user's restaurant profile page.
