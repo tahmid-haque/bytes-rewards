@@ -85,15 +85,15 @@ td {
 }
 
 .first-reward-padding { 	
-	padding-left: 160px;
-	margin-bottom: 250px;
-	position: absolute;
+	left: 104px;
+	bottom: 100px;
+	position: relative;
 }
 
 .last-reward-padding {
-	padding-top: 45px;
-	padding-left: 340px;	
-	position: absolute;
+	left: 283px;
+	top: 46px;
+	position: relative;
 }
 
 .vertical-reward-padding {
