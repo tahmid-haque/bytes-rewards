@@ -21,8 +21,8 @@ class RestaurantProfileManager(UserMixin):
         Initialize the database object using the flask app.
         """
         self.db = Database.get_instance(app)
+        self.id = username.lower()
         self.fullname = ""
-        self.username = username
         self.hashed_pw = ""
 
     def check_password(self, password):
@@ -42,33 +42,40 @@ class RestaurantProfileManager(UserMixin):
             self.db.insert(
                 'restaurant_users', {
                     "fullname": fullname,
-                    "username": self.username,
+                    "username": self.id,
                     "hashed_password": self.hashed_pw,
-                    "restaurant_name": "",
-                    "categories": [],
-                    "image_url": "",
-                    "description": "",
-                    "phone_num": "",
-                    "address": "",
+                    "profile":{
+                        "name": "Restaurant Name",
+                        "category": "Category",
+                        "image": "",
+                        "description": "Description",
+                        "phone_number": "Phone Number",
+                        "is_public": False,
+                        "location":{
+                            "address": "Address",
+                            "postal_code": "Postal Code",
+                            "city": "City",
+                            "province": "Province"
+                        }
+                    },
                     "goals": [],
                     "rewards": [],
                     "bingo_board": {
                         "name":"",
                         "board":[]
-                    },
-                    "ready_to_view": False
+                    }
                 })
         except InsertFailureException:
             print("There was an issue creating a new user profile.")
 
-    def check_user_exists(self, username):
+    def check_user_exists(self):
         """
         Return True if the user exists in the database.
         If there is an issue with the query, throws QueryFailureException.
         """
         try:
             restaurant_user = self.db.query('restaurant_users',
-                                            {'username': username})
+                                            {'username': self.id})
             return len(restaurant_user) != 0
         except QueryFailureException:
             print("Something's wrong with the query.")
@@ -80,7 +87,7 @@ class RestaurantProfileManager(UserMixin):
         """
         try:
             restaurant_user = self.db.query('restaurant_users',
-                                            {'username': self.username})
+                                            {'username': self.id})
             if len(restaurant_user) > 0:
                 self.fullname = restaurant_user[0]['fullname']
                 self.hashed_pw = restaurant_user[0]['hashed_password']
@@ -113,16 +120,13 @@ class RestaurantProfileManager(UserMixin):
         Return a bingo board attached to the current restaurant user.
         """
         try:
-            profile = self.db.query('restaurant_users',
-                                    {"username": self.username})
-            if len(profile) == 0:  # Nothing was queried for some reason.
-                print(
-                    "Goes into this block. TODO"
-                )
+            profile = self.db.query('restaurant_users', {"username": self.id})
             return profile[0]["bingo_board"]
+        except KeyError:  # New User, no bingo board found
+            return {"name": "", "board": []}
         except QueryFailureException:
             print("There was an issue retrieving a bingo board.")
-            return {}
+            return {"name": "", "board": []}
 
     def set_bingo_board(self, name, board):
         """
@@ -133,7 +137,7 @@ class RestaurantProfileManager(UserMixin):
             board = Database.replace_object_id(board)
 
             self.db.update(
-                'restaurant_users', {"username": self.username},
+                'restaurant_users', {"username": self.id},
                 {'$set': {
                     "bingo_board": {
                         "name": name,
@@ -142,12 +146,6 @@ class RestaurantProfileManager(UserMixin):
                 }})
         except UpdateFailureException:
             print("There was an issue updating a bingo board.")
-
-    def get_id(self):
-        """
-        Retrieves the username for flask-login.
-        """
-        return self.username
 
     def get_profile(self):
         """
