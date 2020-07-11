@@ -37,15 +37,17 @@ def index():
     )  # current_user is loaded from load_user so get goals
     bingo_board = current_user.get_bingo_board()
     rewards = current_user.get_rewards()
-    return render_template('index.j2',
-                           goals=goals,
-                           board_name=bingo_board["name"],
-                           rewards=rewards,
-                           board=bingo_board["board"],
-                           board_reward=bingo_board["board_reward"])
+    return render_template(
+        'index.j2',
+        goals=goals,
+        board_name=bingo_board["name"],
+        rewards=rewards,
+        board=bingo_board["board"],
+        board_reward=bingo_board["board_reward"])
 
 
 @app.route('/save', methods=['POST'])
+@login_required
 def save():
     """
     When posting to this route, save a bingo board to the restaurant profile

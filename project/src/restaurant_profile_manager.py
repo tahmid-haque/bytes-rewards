@@ -56,8 +56,9 @@ class RestaurantProfileManager(UserMixin):
         If there is an issue with the query, throws QueryFailureException.
         """
         try:
-            restaurant_user = self.db.query('restaurant_users',
-                                            {'username': self.username})
+            restaurant_user = self.db.query('restaurant_users', {
+                'username': self.username
+            })
             return len(restaurant_user) != 0
         except QueryFailureException:
             print("Something's wrong with the query.")
@@ -68,8 +69,9 @@ class RestaurantProfileManager(UserMixin):
         If there is an issue with the query, throws QueryFailureException.
         """
         try:
-            restaurant_user = self.db.query('restaurant_users',
-                                            {'username': self.username})
+            restaurant_user = self.db.query('restaurant_users', {
+                'username': self.username
+            })
             if len(restaurant_user) > 0:
                 self.fullname = restaurant_user[0]['fullname']
                 self.hashed_pw = restaurant_user[0]['hashed_password']
@@ -83,8 +85,9 @@ class RestaurantProfileManager(UserMixin):
         Bytes team.
         """
         try:
-            shared_goal_ids = self.db.query('goals',
-                                            {"shared": True})[0]["goals"]
+            shared_goal_ids = self.db.query('goals', {
+                "shared": True
+            })[0]["goals"]
             return self.db.query('goals', {"_id": {"$in": shared_goal_ids}})
         except QueryFailureException:
             print("There was an issue retrieving goals.")
@@ -102,8 +105,9 @@ class RestaurantProfileManager(UserMixin):
         Return a bingo board attached to the current restaurant user.
         """
         try:
-            profile = self.db.query('restaurant_users',
-                                    {"username": self.username})
+            profile = self.db.query('restaurant_users', {
+                "username": self.username
+            })
             print(profile[0]["bingo_board"])
             return profile[0]["bingo_board"]
         except KeyError:  # New User, no bingo board found
@@ -120,21 +124,21 @@ class RestaurantProfileManager(UserMixin):
         try:
             board = Database.replace_object_id(board)
             board_reward = Database.replace_object_id(board_reward)
-            print("username " +self.username)
+            print("username " + self.username)
             print("reward " + str(board_reward))
 
-            self.db.update(
-                'restaurant_users', {"username": self.username},
-                {'$set': {
+            self.db.update('restaurant_users', {"username": self.username}, {
+                '$set': {
                     "bingo_board": {
                         "name": name,
                         "board": board,
                         "board_reward": board_reward
                     }
-                }})
+                }
+            })
         except UpdateFailureException:
             print("There was an issue updating a bingo board.")
-			
+
     def get_shared_rewards(self):
         """
         Return a list of all rewards that are shared among all restaurant
@@ -150,14 +154,13 @@ class RestaurantProfileManager(UserMixin):
         except QueryFailureException:
             print("There was an issue retrieving rewards.")
             return []
-	
+
     def get_rewards(self):
         """
         Return a list of all goals that the current restaurant user can use
         within their profile.
         """
         return self.get_shared_rewards()
-
 
     def get_id(self):
         """
