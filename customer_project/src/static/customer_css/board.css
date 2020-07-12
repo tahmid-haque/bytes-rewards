@@ -15,14 +15,16 @@ html {
 
 table {
     border-collapse: collapse;
-    width: 100%;
+    width: 50%;
     padding: 5px;
 }
 
 td {
     border: 1px solid #aaa;
     text-align: center;
-    padding: 2rem;
+    padding: 1rem;
+    width: 25px;
+    height: 25px;
 }
 
 .content {
@@ -42,6 +44,6 @@ h1 {
 
 .back {
     position: absolute;
-    left: 300px;
+    left: 400px;
     top: 50px;
 }
