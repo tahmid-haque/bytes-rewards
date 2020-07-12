@@ -73,32 +73,51 @@ td {
 	position: absolute;
 }
 
-.reward-container {
-    width: min-content;
-    display: flex;
-}
-
-.horizontal-reward-padding {
-	padding-top: 65px;
-	padding-right: 40px;	
-	position: absolute;
+.reward-select-table > select {
+    width: 100px;
+    overflow: hidden;
+    white-space: pre;
+    text-overflow: ellipsis;
+    -webkit-appearance: none;
 }
 
 .first-reward-padding { 	
-	left: 104px;
-	bottom: 100px;
+	left: 100px;
+	bottom: 80px;
 	position: relative;
 }
 
 .last-reward-padding {
-	left: 283px;
-	top: 46px;
+	left: 100px;
+	top: 86px;
 	position: relative;
 }
 
 .vertical-reward-padding {
 	position: absolute;
 	padding-left: 160px;	
+}
+
+table.goal {
+    border-collapse: collapse;
+    width: 100%;
+    padding: 5px;
+}
+
+td {
+    text-align: center;
+    padding: 2rem;
+}
+
+table.reward,
+td.reward {
+    border: 1px solid #ffff;
+}
+
+table.reward {
+    border-collapse: collapse;
+    width: 100%;
+    padding: 5px;
 }
 
 h1 {

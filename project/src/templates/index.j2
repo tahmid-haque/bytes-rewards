@@ -22,8 +22,9 @@
                     {% endif %}
                     required
                 >
-				
-                <table>
+		
+                <table class="goal">
+					{% set count = 0 %}
                     {% for i in range(25) %}
                         {% if i % 5 == 0 %}
                             </tr>
@@ -32,6 +33,26 @@
                         <td> 
 						
                             <div class="custom-select">
+								{% if i == 4 %}
+									<div class="first-reward-padding">
+										<div class="reward-select">
+											<select name="board_reward[]" required>
+												<option value="" hidden>Select reward:</option>
+												{% if rewards: %}
+												{% for a in rewards %}
+													<option value="{{ a['_id'] }}"
+														{% if i == 4 and board_reward[0] == a['_id'] %}
+															selected
+														{% endif %}
+													> 
+														{{ a["reward"] }}
+													</option>
+												{% endfor %}
+												{% endif %}
+											</select>
+										</div>
+									</div>
+								{% endif %}
 								{% if i % 5 == 4 %}
 									<div class="vertical-reward-padding">
 										<div class="reward-select">
@@ -40,11 +61,21 @@
 												{% if rewards: %}
 												{% for a in rewards %}
 													<option value="{{ a['_id'] }}"
-														{% for j in range(5) %}
-															{% if board_reward[j] == a['_id'] %}
-																selected
-															{% endif %}
-														{% endfor %}
+														{% if i == 4 and board_reward[1] == a['_id'] %}
+															selected
+														{% endif %}
+														{% if i == 9 and board_reward[2] == a['_id'] %}
+															selected
+														{% endif %}
+														{% if i == 14 and board_reward[3] == a['_id'] %}
+															selected
+														{% endif %}
+														{% if i == 19 and board_reward[4] == a['_id'] %}
+															selected
+														{% endif %}
+														{% if i == 24 and board_reward[5] == a['_id'] %}
+															selected
+														{% endif %}
 													> 
 														{{ a["reward"] }}
 													</option>
@@ -54,30 +85,31 @@
 										</div>
 									</div>
 								{% endif %}
-								{% if i >= 20 %}
-									<div class="horizontal-reward-padding">
+																		
+								
+								{% if i == 24 %}
+									<div class="last-reward-padding">
 										<div class="reward-select">
 											<select name="board_reward[]" required>
 												<option value="" hidden>Select reward:</option>
 												{% if rewards: %}
-												{% for a in rewards %}
-													<option value="{{ a['_id'] }}"
-														{% for j in range(4, 10) %}
-															{% if board_reward[j] == a['_id'] %}
+													{% for a in rewards %}
+														<option value="{{ a['_id'] }}"
+															{% if i == 24 and board_reward[6] == a['_id'] %}
 																selected
 															{% endif %}
+														> 
+															{{ a["reward"] }}
 														{% endfor %}
-													> 
-														{{ a["reward"] }}
 													</option>
-												{% endfor %}
+													
 												{% endif %}
 											</select>
 										</div>
 									</div>
+									{% set count = count + 1 %}
 								{% endif %}
 							
-								
                                 <select name="board[]" required>
                                     <option value="" hidden>Select goal:</option>
                                     {% if goals: %}
@@ -93,46 +125,8 @@
                                     {% endif %}
                                 </select>
                             </div>
-							{% if i == 4 %}
-								<div class="first-reward-padding">
-									<div class="reward-select">
-										<select name="board_reward[]" required>
-											<option value="" hidden>Select reward:</option>
-											{% if rewards: %}
-											{% for a in rewards %}
-												<option value="{{ a['_id'] }}"
-													{% if board_reward[10] == a['_id'] %}
-														selected
-													{% endif %}
-												> 
-													{{ a["reward"] }}
-												</option>
-											{% endfor %}
-											{% endif %}
-										</select>
-									</div>
-								</div>
-							{% endif %}
-							{% if i == 23 %}
-								<div class="last-reward-padding">
-									<div class="reward-select">
-										<select name="board_reward[]" required>
-											<option value="" hidden>Select reward:</option>
-											{% if rewards: %}
-												{% for a in rewards %}
-													<option value="{{ a['_id'] }}"
-														{% if board_reward[11] == a['_id'] %}
-															selected
-														{% endif %}
-													> 
-														{{ a["reward"] }}
-													</option>
-												{% endfor %}
-											{% endif %}
-										</select>
-									</div>
-								</div>
-						{% endif %}	
+							
+						
                         </td>
 						
                         {% if i % 5 == 4 %}
@@ -143,17 +137,37 @@
 				
 				
             </div>
-			<div>
-				
-				
-					
-				
-				
 
-				
+			
+			<table class="reward">
+				{% for j in range(5) %}
+					{% if j % 5 == 0 %}
+						</tr>
+					{% endif %}
+					<td class="reward">
+						<div class="reward-select-table">
+							<select name="board_reward[]" required>
+								<option value="" hidden>Select reward:</option>
+									{% if rewards: %}
+										{% for a in rewards %}
+											<option value="{{ a['_id'] }}"
+												{% if board_reward|length > (7+(j%5)) and board_reward[(7+(j%5))] == a['_id'] %}
+													selected
+												{% endif %}
+											> 
+											{{ a["reward"] }}
+										{% endfor %}
+									{% endif %}
+								</option>
+							</select>
+						</div>
+					</td>
+					{% if j % 5 == 4 %}
+						</tr>
+					{% endif %}
+				{% endfor %}
+			</table>
 		
-               
-            </div>
 
             <div class="clear-save-container">
                 <button type="button" value="Clear">Clear</button>
