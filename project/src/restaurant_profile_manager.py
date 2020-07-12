@@ -108,7 +108,6 @@ class RestaurantProfileManager(UserMixin):
             profile = self.db.query('restaurant_users', {
                 "username": self.username
             })
-            print(profile[0]["bingo_board"])
             return profile[0]["bingo_board"]
         except KeyError:  # New User, no bingo board found
             return {"name": "", "board": [], "board_reward": []}
@@ -124,8 +123,6 @@ class RestaurantProfileManager(UserMixin):
         try:
             board = Database.replace_object_id(board)
             board_reward = Database.replace_object_id(board_reward)
-            print("username " + self.username)
-            print("reward " + str(board_reward))
 
             self.db.update('restaurant_users', {"username": self.username}, {
                 '$set': {
