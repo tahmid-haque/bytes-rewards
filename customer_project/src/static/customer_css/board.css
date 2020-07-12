@@ -15,20 +15,20 @@ html {
 
 table {
     border-collapse: collapse;
-    width: 50%;
+    width: 10%;
     padding: 5px;
 }
 
 td {
     border: 1px solid #aaa;
     text-align: center;
-    padding: 0.5rem;
+    padding: 0.2rem;
     width: 25px;
     height: 25px;
 }
 
 .content {
-    width: 85%;
+    width: 300px;
     margin: 0 auto;
     max-width: 900px;
 }
@@ -43,13 +43,12 @@ h1 {
 }
 
 .back {
-    position: absolute;
-    left: 400px;
-    top: 50px;
+    position: relative;
+
 }
 
 img {
-    width: 75px;
+    width: 40px;
     margin: 0px;
     padding: 0px;
 }
