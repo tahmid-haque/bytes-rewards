@@ -27,14 +27,20 @@
                         	<td title= "{{goals[i] }}" ><img src="../static/customer_resources/x.png"></td>
 
                         {% if i % 5 == 4 %}
+			  {% if i == 24 %}
+			    <td title="{{rewards[5]}}" class = "reward"><img src="../static/customer_resources/gift.jpg"></td>
+                            </tr>
+			  {% else %}
 			    <td title="{{rewards[(i%4)+1]}}" class = "reward"><img src="../static/customer_resources/gift.jpg"></td>
                             </tr>
+			  {% endif %}
                         {% endif %}
                     {% endfor %}
 		    <tr class = "reward"> 
-			{% for i in range(6) %}
-				<td title="{{rewards[i+6]}}" class="reward"><img src="../static/customer_resources/gift.jpg"></td>
+			{% for i in range(5) %}
+				<td title="{{rewards[i+7]}}" class="reward"><img src="../static/customer_resources/gift.jpg"></td>
 			{% endfor %}
+		        <td title="{{rewards[6]}}" class="reward"><img src="../static/customer_resources/gift.jpg"></td>
 		   </tr>
                 </table>
 

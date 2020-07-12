@@ -118,11 +118,11 @@ def view_board(id):
     username = login_manager.user_loader
     user = CustomerProfileManager(app, username)
     goals = []
-    name = ""
+    name = "Board is unavailable"
     rewards = []
     restaurant_users = user.get_restaurant_users()
     for restaurant_user in restaurant_users:
-        if str(restaurant_user["_id"]) == id:
+        if str(restaurant_user["_id"]) == id and restaurant_user["profile"]["is_public"] is True:
             name = restaurant_user["bingo_board"]["name"]
             goal_ids = restaurant_user["bingo_board"]["board"]
             for id in goal_ids:
