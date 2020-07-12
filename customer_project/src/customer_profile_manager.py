@@ -74,10 +74,21 @@ class CustomerProfileManager(UserMixin):
 
     def get_goals(self):
         """
-        Get all restaurant profiles that are ready to be viewed.
+        Get all goals from database
         """
         try:
             goals = self.db.query('goals')
+            return goals
+        except QueryFailureException:
+            print("Something's wrong with the query.")
+            return []
+
+    def get_rewards(self):
+        """
+        Get all rewards from database
+        """
+        try:
+            goals = self.db.query('rewards')
             return goals
         except QueryFailureException:
             print("Something's wrong with the query.")

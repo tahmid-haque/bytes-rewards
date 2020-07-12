@@ -129,7 +129,11 @@ def view_board(id):
                 for goal in user.get_goals():
                     if goal["_id"] == id:
                         goals.append(goal["goal"])
-            rewards = restaurant_user["bingo_board"]["board_reward"]
+            reward_ids = restaurant_user["bingo_board"]["board_reward"]
+            for id in reward_ids:
+                for reward in user.get_rewards():
+                    if reward["_id"] == id:
+                        rewards.append(reward["reward"])
     return render_template('view_game_board.j2', goals=goals, name=name, rewards=rewards)
 
 

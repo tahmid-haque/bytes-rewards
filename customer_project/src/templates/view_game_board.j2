@@ -15,23 +15,23 @@
 		        {% for i in range(5) %}
 				<td class="reward"></td>
 			{% endfor %}
-			<td class="reward">reward</td>
+			<td class="reward">{{rewards[0]}}</td>
 		    </tr>
                     {% for i in range(25) %}
                         {% if i % 5 == 0 %}
                             <tr>
                         {% endif %}
 
-                        	<td>{{ goals[i] }}</td>
+                        	<td title= "{{goals[i] }}" >{{goals[i]}}</td>
 
                         {% if i % 5 == 4 %}
-			    <td class = "reward">reward</td>
+			    <td class = "reward">{{rewards[(i%4)+1]}}</td>
                             </tr>
                         {% endif %}
                     {% endfor %}
 		    <tr class = "reward"> 
 			{% for i in range(6) %}
-				<td class="reward">reward</td>
+				<td class="reward">{{rewards[i+6]}}</td>
 			{% endfor %}
 		   </tr>
                 </table>
