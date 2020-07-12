@@ -22,7 +22,7 @@ table {
 td {
     border: 1px solid #aaa;
     text-align: center;
-    padding: 1rem;
+    padding: 0.5rem;
     width: 25px;
     height: 25px;
 }
@@ -46,4 +46,10 @@ h1 {
     position: absolute;
     left: 400px;
     top: 50px;
+}
+
+img {
+    width: 75px;
+    margin: 0px;
+    padding: 0px;
 }
