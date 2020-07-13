@@ -16,6 +16,7 @@ class RestaurantProfileManager(UserMixin):
     bingo boards. It inherits from UserMixin to properly integrate with the
     features of flask_login.
     """
+
     def __init__(self, app, username):
         """
         Initialize the database object using the flask app.
@@ -43,27 +44,7 @@ class RestaurantProfileManager(UserMixin):
                 'restaurant_users', {
                     "fullname": fullname,
                     "username": self.id,
-                    "hashed_password": self.hashed_pw,
-                    "profile":{
-                        "name": "Restaurant Name",
-                        "category": "Category",
-                        "image": "",
-                        "description": "Description",
-                        "phone_number": "Phone Number",
-                        "is_public": False,
-                        "location":{
-                            "address": "Address",
-                            "postal_code": "Postal Code",
-                            "city": "City",
-                            "province": "Province"
-                        }
-                    },
-                    "goals": [],
-                    "rewards": [],
-                    "bingo_board": {
-                        "name":"",
-                        "board":[]
-                    }
+                    "hashed_password": self.hashed_pw
                 })
         except InsertFailureException:
             print("There was an issue creating a new user profile.")

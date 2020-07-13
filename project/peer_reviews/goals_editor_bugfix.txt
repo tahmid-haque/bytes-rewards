@@ -1,0 +1,22 @@
+Reviewer: Jodi
+Date: July 7, 2020
+
+Notes: 
+This peer review is for the restaurant game board editor bugfix. This review
+comments on and gives any feedback related to the backend and frontend.
+Styling has also been looked at and is according to the style checker.
+
+Frontend/Webdesign
+-----------------
+- No changes
+
+
+Feature Functionality
+-------------
+- Restaurant users can view, edit, and save their game board when they are
+logged in, as intended.
+
+
+Code
+----
+- Style check was performed and passed
