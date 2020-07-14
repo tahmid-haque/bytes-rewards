@@ -30,7 +30,12 @@ function updateLocation() {
         fetch('https://geocoder.ca/' + value + '?json=1')
             .then((res) => res.json())
             .then((data) => {
-                if (!('error' in data)) {
+                console.log(data.standard.city);
+                if (
+                    !('error' in data) &&
+                    typeof data.standard.city === 'string' &&
+                    typeof data.standard.prov === 'string'
+                ) {
                     updateLocationInputs(
                         data.standard.city,
                         data.standard.prov

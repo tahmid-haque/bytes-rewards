@@ -38,4 +38,4 @@ def save():
     board = request.form.getlist("board[]")
     board_reward = request.form.getlist("board_reward[]")
     current_user.set_bingo_board(name, board, board_reward)
-    return redirect("/")
+    return redirect("/board")

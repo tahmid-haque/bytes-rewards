@@ -73,9 +73,7 @@ def test_save_profile_route_logged_in(client):
             "description":
                 "It's a pretty good bbq place.",
             "phone_number":
-                "4166543785",
-            "is_public":
-                "on",
+                "416-654-3785",
             "location[address]":
                 "1265 Military Trail",
             "location[postal_code]":
@@ -115,9 +113,9 @@ def test_get_profile_old_user():
         "description":
             "It's a pretty good bbq place.",
         "phone_number":
-            "4166543785",
+            "416-654-3785",
         "is_public":
-            True,
+            False,
         "location": {
             "address": "1265 Military Trail",
             "postal_code": "M1C1A4",
@@ -135,11 +133,15 @@ def test_update_profile():
     """
     rpm = RestaurantProfileManager("unittestuser")
     old_profile = rpm.get_profile()
-
+    
     new_profile = old_profile.copy()
     new_profile["name"] = old_profile["name"] + "edited"
+    if not old_profile['is_public']:
+        new_profile.pop('is_public', None)
     rpm.update_profile(new_profile)
 
     assert rpm.get_profile() == new_profile
 
+    if not old_profile['is_public']:
+        old_profile.pop('is_public', None)
     rpm.update_profile(old_profile)

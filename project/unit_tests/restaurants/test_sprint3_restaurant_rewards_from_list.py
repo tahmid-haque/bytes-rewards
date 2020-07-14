@@ -136,22 +136,22 @@ def test_get_rewards_from_board():
     Test that the get_bingo_board() function in restaurant_profile_manager.py 
     retrieves a user's list of rewards on their bingo board.
     """
-    rpm = RestaurantProfileManager("vchang")
+    rpm = RestaurantProfileManager("unittestuser")
     board = rpm.get_bingo_board()
     rewards = board["board_reward"]
     expected_rewards = [
+        ObjectId('5f03aa437aae4a086d810107'),
+        ObjectId('5f03a9b57aae4a086d8100fe'),
+        ObjectId('5f03a9c87aae4a086d8100ff'),
+        ObjectId('5f03a9ec7aae4a086d810101'),
+        ObjectId('5f03aa507aae4a086d810108'),
+        ObjectId('5f03a9c87aae4a086d8100ff'),
+        ObjectId('5f03aa287aae4a086d810105'),
         ObjectId('5f03a9967aae4a086d8100fd'),
-        ObjectId('5f03a9967aae4a086d8100fd'),
-        ObjectId('5f03a9967aae4a086d8100fd'),
-        ObjectId('5f03a9967aae4a086d8100fd'),
-        ObjectId('5f03a9967aae4a086d8100fd'),
-        ObjectId('5f03a9967aae4a086d8100fd'),
-        ObjectId('5f03a9967aae4a086d8100fd'),
-        ObjectId('5f03a9967aae4a086d8100fd'),
-        ObjectId('5f03a9967aae4a086d8100fd'),
-        ObjectId('5f03a9967aae4a086d8100fd'),
-        ObjectId('5f03a9967aae4a086d8100fd'),
-        ObjectId('5f03a9967aae4a086d8100fd')
+        ObjectId('5f03a9fd7aae4a086d810102'),
+        ObjectId('5f03a9fd7aae4a086d810102'),
+        ObjectId('5f03a9fd7aae4a086d810102'),
+        ObjectId('5f03a9ec7aae4a086d810101')
     ]
     assert rewards == expected_rewards
 

@@ -39,7 +39,7 @@ def test_get_profile():
     profile = rpm.get_profile()
     expected_profile = {
         "name":
-            "Cinco De Mayo",
+            "Cinco de Mayo",
         "category":
             "Mexican",
         "image":
