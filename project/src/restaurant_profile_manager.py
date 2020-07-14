@@ -82,8 +82,9 @@ class RestaurantProfileManager(UserMixin):
         Bytes team.
         """
         try:
-            shared_goal_ids = self.db.query('goals',
-                                            {"shared": True})[0]["goals"]
+            shared_goal_ids = self.db.query('goals', {
+                "shared": True
+            })[0]["goals"]
             return self.db.query('goals', {"_id": {"$in": shared_goal_ids}})
         except QueryFailureException:
             print("There was an issue retrieving goals.")
@@ -104,30 +105,63 @@ class RestaurantProfileManager(UserMixin):
             profile = self.db.query('restaurant_users', {"username": self.id})
             return profile[0]["bingo_board"]
         except KeyError:  # New User, no bingo board found
-            return {"name": "", "board": []}
+            return {"name": "", "board": [], "board_reward": []}
         except QueryFailureException:
             print("There was an issue retrieving a bingo board.")
-            return {"name": "", "board": []}
+            return {"name": "", "board": [], "board_reward": []}
 
-    def set_bingo_board(self, name, board):
+
+    def set_bingo_board(self, name, board, board_reward):
         """
         Update the restaurant user's bingo board using the given name and
         board.
         """
         try:
             board = Database.replace_object_id(board)
-
+            board_reward = Database.replace_object_id(board_reward)
             self.db.update(
                 'restaurant_users', {"username": self.id},
                 {'$set': {
                     "bingo_board": {
                         "name": name,
-                        "board": board
+                        "board": board,
+                        "board_reward": board_reward
                     }
-                }})
+                }
+            })
         except UpdateFailureException:
             print("There was an issue updating a bingo board.")
 
+
+    def get_shared_rewards(self):
+        """
+        Return a list of all rewards that are shared among all restaurant
+        profiles. This includes the curated list of goals created by the
+        Bytes team.
+        """
+        try:
+            shared_rewards = self.db.query('rewards')
+            shared_reward_ids = []
+            for i in shared_rewards:
+                shared_reward_ids.append(i['_id'])
+            return self.db.query('rewards', {"_id": {"$in": shared_reward_ids}})
+        except QueryFailureException:
+            print("There was an issue retrieving rewards.")
+            return []
+
+    def get_rewards(self):
+        """
+        Return a list of all goals that the current restaurant user can use
+        within their profile.
+        """
+        return self.get_shared_rewards()
+
+    def get_id(self):
+        """
+        Retrieves the username for flask-login.
+        """
+        return self.username
+      
     def get_profile(self):
         """
         Return the restaurant user's profile.
@@ -153,3 +187,4 @@ class RestaurantProfileManager(UserMixin):
                            }})
         except UpdateFailureException:
             print("There was an issue updating a profile.")
+   
