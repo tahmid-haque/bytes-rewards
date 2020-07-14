@@ -101,7 +101,9 @@ class CustomerProfileManager(UserMixin):
         try:
             restaurant_owners = self.db.query('restaurant_users',
                                               {'profile.is_public': True})
-            return {owner["_id"]: owner["profile"] for owner in restaurant_owners}
+            return {
+                owner["_id"]: owner["profile"] for owner in restaurant_owners
+            }
         except QueryFailureException:
             print("Something's wrong with the query.")
             return []

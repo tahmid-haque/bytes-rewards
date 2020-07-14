@@ -26,30 +26,23 @@ def load_user(username):
     return possible_user
 
 
-@app.route('/')
+@app.route('/board')
 @login_required
-def index():
+def view_board():
     """
     When retrieving this route, get a restaurant profile's goals and bingo
     board. Render these items together to show a bingo editor.
     """
-    return redirect("/profile")
-
-
-@app.route('/board')
-@login_required
-def view_board():
     goals = current_user.get_goals(
     )  # current_user is loaded from load_user so get goals
     bingo_board = current_user.get_bingo_board()
     rewards = current_user.get_rewards()
-    return render_template(
-        'restaurants/view_game_board.j2',
-        goals=goals,
-        board_name=bingo_board["name"],
-        rewards=rewards,
-        board=bingo_board["board"],
-        board_reward=bingo_board["board_reward"])
+    return render_template('restaurants/view_game_board.j2',
+                           goals=goals,
+                           board_name=bingo_board["name"],
+                           rewards=rewards,
+                           board=bingo_board["board"],
+                           board_reward=bingo_board["board_reward"])
 
 
 @app.route('/save', methods=['POST'])
@@ -114,13 +107,16 @@ def signup():
         if possible_user.check_user_exists(
         ):  # A user already exists with this username.
             flash("This username is taken. Please choose a new one.")
-            return render_template('restaurants/create_account.j2')  # Let user try again
+            return render_template(
+                'restaurants/create_account.j2')  # Let user try again
         # If they're successful, insert into database
         possible_user.set_new_profile(fullname, password)
         login_user(possible_user)
         return redirect("/profile/edit")
     return render_template('restaurants/create_account.j2')
 
+
+@app.route('/')
 @app.route('/profile')
 @login_required
 def view_profile():
@@ -132,15 +128,16 @@ def view_profile():
         flash("Please create a restaurant profile to continue.")
         return redirect("/profile/edit")
     return render_template('restaurants/view_profile.j2',
-                            restaurant_name=rest_info["name"],
-                            address=rest_info["location"]["address"],
-                            city=rest_info["location"]["city"],
-                            province=rest_info["location"]["province"],
-                            postal_code=rest_info["location"]["postal_code"],
-                            phone_number=rest_info["phone_number"],
-                            category=rest_info["category"],
-                            rest_img=rest_info["image"],
-                            description=rest_info["description"])
+                           restaurant_name=rest_info["name"],
+                           address=rest_info["location"]["address"],
+                           city=rest_info["location"]["city"],
+                           province=rest_info["location"]["province"],
+                           postal_code=rest_info["location"]["postal_code"],
+                           phone_number=rest_info["phone_number"],
+                           category=rest_info["category"],
+                           rest_img=rest_info["image"],
+                           description=rest_info["description"])
+
 
 @app.route('/profile/edit')
 @login_required

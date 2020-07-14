@@ -2,13 +2,12 @@
 This file houses the unit test suite for the customer view restaurant profile page"
 """
 
-
 import os
 import sys
 import pytest
 from bson.objectid import ObjectId
-sys.path.insert(1, os.path.join(os.path.dirname(__file__), '../src'))   # Import the src folder
-
+sys.path.insert(1, os.path.join(os.path.dirname(__file__),
+                                '../src'))  # Import the src folder
 
 from rewards_app import app
 from customer_profile_manager import CustomerProfileManager
@@ -45,7 +44,7 @@ def test_get_restaurant_profiles():
     rpm = CustomerProfileManager(app, "unitTestUser")
     profiles = rpm.get_restaurant_profiles()
     expected_fields = ["name", "category", "image", "is_public"]
-    
+
     has_id = True
     has_fields = True
     is_public = True
@@ -61,5 +60,5 @@ def test_get_restaurant_profiles():
         if profiles[key]["is_public"] == False:
             is_public = False
             break
-        
+
     assert len(profiles) > 0 and has_id and has_fields and is_public

@@ -13,10 +13,7 @@ app.secret_key = b'averysecretkey'
 login_manager = LoginManager()
 login_manager.init_app(app)  # Initialize login manager for flask app
 login_manager.login_view = 'login'  # Redirect to login, as login is required
-login_manager.session_protection = "strong"
-
-
-# Strengthen session cookie protection
+login_manager.session_protection = "strong"  # Strengthen session cookie protection
 
 
 @login_manager.user_loader
@@ -54,8 +51,7 @@ def login():
             )  # Update the possible user with credentials
             if (possible_user and possible_user.check_password(password)):
                 login_user(possible_user
-                           )  # If username and password are correct, login
-                name = possible_user.fullname
+                          )  # If username and password are correct, login
                 return redirect(url_for('.view_profiles'))
         flash("Incorrect username or password. Please try again.")
         return render_template('rewards/login.j2')
@@ -102,12 +98,13 @@ def view_profiles():
     """
     user = CustomerProfileManager(app, current_user.username)
     restaurant_profiles = user.get_restaurant_profiles()
-    return render_template('rewards/view_profiles.j2', profiles=restaurant_profiles)
+    return render_template('rewards/view_profiles.j2',
+                           profiles=restaurant_profiles)
 
 
-@app.route('/view_board/<string:id>', methods=['GET', 'POST'])
+@app.route('/view_board/<string:obj_id>', methods=['GET', 'POST'])
 @login_required
-def view_board(id):
+def view_board(obj_id):
     """
     Allows users to view restaurant board that they have selected.
     """
@@ -117,19 +114,23 @@ def view_board(id):
     rewards = []
     restaurant_users = user.get_restaurant_users()
     for restaurant_user in restaurant_users:
-        if str(restaurant_user["_id"]) == id and restaurant_user["profile"]["is_public"] is True:
+        if str(restaurant_user["_id"]
+              ) == obj_id and restaurant_user["profile"]["is_public"] is True:
             board_name = restaurant_user["bingo_board"]["name"]
             goal_ids = restaurant_user["bingo_board"]["board"]
-            for id in goal_ids:
+            for goal_id in goal_ids:
                 for goal in user.get_goals():
-                    if goal["_id"] == id:
+                    if goal["_id"] == goal_id:
                         goals.append(goal["goal"])
             reward_ids = restaurant_user["bingo_board"]["board_reward"]
-            for id in reward_ids:
+            for reward_id in reward_ids:
                 for reward in user.get_rewards():
-                    if reward["_id"] == id:
+                    if reward["_id"] == reward_id:
                         rewards.append(reward["reward"])
-    return render_template('rewards/view_game_board.j2', goals=goals, name=board_name, rewards=rewards)
+    return render_template('rewards/view_game_board.j2',
+                           goals=goals,
+                           name=board_name,
+                           rewards=rewards)
 
 
 if __name__ == "__main__":

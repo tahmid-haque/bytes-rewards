@@ -82,9 +82,8 @@ class RestaurantProfileManager(UserMixin):
         Bytes team.
         """
         try:
-            shared_goal_ids = self.db.query('goals', {
-                "shared": True
-            })[0]["goals"]
+            shared_goal_ids = self.db.query('goals',
+                                            {"shared": True})[0]["goals"]
             return self.db.query('goals', {"_id": {"$in": shared_goal_ids}})
         except QueryFailureException:
             print("There was an issue retrieving goals.")
@@ -110,7 +109,6 @@ class RestaurantProfileManager(UserMixin):
             print("There was an issue retrieving a bingo board.")
             return {"name": "", "board": [], "board_reward": []}
 
-
     def set_bingo_board(self, name, board, board_reward):
         """
         Update the restaurant user's bingo board using the given name and
@@ -119,9 +117,8 @@ class RestaurantProfileManager(UserMixin):
         try:
             board = Database.replace_object_id(board)
             board_reward = Database.replace_object_id(board_reward)
-            self.db.update(
-                'restaurant_users', {"username": self.id},
-                {'$set': {
+            self.db.update('restaurant_users', {"username": self.id}, {
+                '$set': {
                     "bingo_board": {
                         "name": name,
                         "board": board,
@@ -131,7 +128,6 @@ class RestaurantProfileManager(UserMixin):
             })
         except UpdateFailureException:
             print("There was an issue updating a bingo board.")
-
 
     def get_shared_rewards(self):
         """
