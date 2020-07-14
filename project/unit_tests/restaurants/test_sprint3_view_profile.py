@@ -6,10 +6,10 @@ import os
 import sys
 import pytest
 sys.path.insert(1, os.path.join(os.path.dirname(__file__),
-                                '../src'))  # Import the src folder
+                                '../../src'))  # Import the src folder
 
 from restaurants_app import app
-from restaurant_profile_manager import RestaurantProfileManager
+from modules.restaurant_profile_manager import RestaurantProfileManager
 
 
 @pytest.fixture
@@ -28,15 +28,14 @@ def test_view_profile_route_logged_in(client):
     """
     client.post("/login", data={"username": "janedoe", "password": "Aa123456"})
     res = client.get("/profile", follow_redirects=True)
-    assert b"werkzeug.routing.BuildError" not in res.data
-    assert b"Choose a Game Board" in res.data
+    assert b"Edit Profile" in res.data
 
 
 def test_get_profile():
     """
     Test that a user is able to retrieve their profile when they are logged in.
     """
-    rpm = RestaurantProfileManager(app, "janedoe")
+    rpm = RestaurantProfileManager("janedoe")
     profile = rpm.get_profile()
     expected_profile = {
         "name":

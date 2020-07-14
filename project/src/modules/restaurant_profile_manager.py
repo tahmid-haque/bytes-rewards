@@ -2,78 +2,24 @@
 This file houses the restaurant profile management interface.
 It is used to interact with the restaurant profile database.
 """
-# Import flask_login's base User class for proper integration
-from flask_login import UserMixin
-# Import for secure password storage
-from werkzeug.security import generate_password_hash, check_password_hash
-from database import Database, QueryFailureException, UpdateFailureException, InsertFailureException
+
+from modules.profile_manager import ProfileManager
+from modules.database import Database, QueryFailureException, UpdateFailureException
 
 
-class RestaurantProfileManager(UserMixin):
+class RestaurantProfileManager(ProfileManager):
     """
     This class generates a restaurant profile manager, capable of managing
     one restaurant profile. Some of the things it manages include goals and
-    bingo boards. It inherits from UserMixin to properly integrate with the
-    features of flask_login.
+    bingo boards. It inherits from ProfileManager to perform basic
+    creation/load operations.
     """
 
-    def __init__(self, app, username):
+    def __init__(self, username):
         """
-        Initialize the database object using the flask app.
+        Initialize a restaurant user profile using the username.
         """
-        self.db = Database.get_instance(app)
-        self.id = username.lower()
-        self.fullname = ""
-        self.hashed_pw = ""
-
-    def check_password(self, password):
-        """
-        Check if given password matches hash.
-        """
-        return check_password_hash(self.hashed_pw, password)
-
-    def set_new_profile(self, fullname, password):
-        """
-        Create a new profile in the database given the credentials of this instance.
-        If unable to insert, throws InsertFailureException.
-        """
-        try:
-            self.hashed_pw = generate_password_hash(password, method='sha256')
-            self.fullname = fullname
-            self.db.insert(
-                'restaurant_users', {
-                    "fullname": fullname,
-                    "username": self.id,
-                    "hashed_password": self.hashed_pw
-                })
-        except InsertFailureException:
-            print("There was an issue creating a new user profile.")
-
-    def check_user_exists(self):
-        """
-        Return True if the user exists in the database.
-        If there is an issue with the query, throws QueryFailureException.
-        """
-        try:
-            restaurant_user = self.db.query('restaurant_users',
-                                            {'username': self.id})
-            return len(restaurant_user) != 0
-        except QueryFailureException:
-            print("Something's wrong with the query.")
-
-    def get_user(self):
-        """
-        Update an instance to fully represent a user.
-        If there is an issue with the query, throws QueryFailureException.
-        """
-        try:
-            restaurant_user = self.db.query('restaurant_users',
-                                            {'username': self.id})
-            if len(restaurant_user) > 0:
-                self.fullname = restaurant_user[0]['fullname']
-                self.hashed_pw = restaurant_user[0]['hashed_password']
-        except QueryFailureException:
-            print("There was an issue retrieving user credentials.")
+        ProfileManager.__init__(self, username, 'restaurant_users')
 
     def get_shared_goals(self):
         """
@@ -177,3 +123,22 @@ class RestaurantProfileManager(UserMixin):
                            }})
         except UpdateFailureException:
             print("There was an issue updating a profile.")
+
+    def get_public_users(self):
+        """
+        Get all restaurant users that have a public profile.
+        """
+        try:
+            restaurant_owners = self.db.query('restaurant_users',
+                                              {'profile.is_public': True})
+            return restaurant_owners
+        except QueryFailureException:
+            print("Something's wrong with the query.")
+            return []
+
+    def get_public_profiles(self):
+        """
+        Get all restaurant profiles that are set to public.
+        """
+        users = self.get_public_users()
+        return {owner["_id"]: owner["profile"] for owner in users}

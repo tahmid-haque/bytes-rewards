@@ -1,13 +1,13 @@
-{% extends 'partials/base.j2' %} 
+{% extends 'base.j2' %} 
 
 {% block head %}
     <title>Bytes | Edit Profile</title>
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='restaurants/css/login.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/login.css') }}" />
 {% endblock head %} 
 
 {% block body %} 
     <div class="loginbox">
-        <img src="{{ url_for('static', filename='restaurants/resources/cutlery.png') }}" class="avatar" alt="">
+        <img src="{{ url_for('static', filename='resources/cutlery.png') }}" class="avatar" alt="">
         <h1>Edit Profile</h1>
         <p id="message" 
             {% with messages = get_flashed_messages() %}
@@ -120,5 +120,5 @@
         </script>
     {% endif %}
 
-    <script src="{{ url_for('static', filename='restaurants/js/edit_profile.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/edit_profile.js') }}"></script>
 {% endblock body %}

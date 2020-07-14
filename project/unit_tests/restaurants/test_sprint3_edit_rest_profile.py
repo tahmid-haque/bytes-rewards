@@ -6,10 +6,9 @@ import os
 import sys
 import pytest
 sys.path.insert(1, os.path.join(os.path.dirname(__file__),
-                                '../src'))  # Import the src folder
-
+                                '../../src'))  # Import the src folder
 from restaurants_app import app
-from restaurant_profile_manager import RestaurantProfileManager
+from modules.restaurant_profile_manager import RestaurantProfileManager
 
 
 @pytest.fixture
@@ -94,7 +93,7 @@ def test_get_profile_new_user():
     Test that the get_profile() function in restaurant_profile_manager.py retrieves an
     empty profile when a new user is detected.
     """
-    rpm = RestaurantProfileManager(app, "newuser")
+    rpm = RestaurantProfileManager("newuser")
     profile = rpm.get_profile()
     assert profile == {}
 
@@ -104,7 +103,7 @@ def test_get_profile_old_user():
     Test that the get_profile() function in restaurant_profile_manager.py retrieves a user's
     profile given that they have set up their profile before.
     """
-    rpm = RestaurantProfileManager(app, "unittestuser")
+    rpm = RestaurantProfileManager("unittestuser")
     profile = rpm.get_profile()
     expected_profile = {
         "name":
@@ -134,7 +133,7 @@ def test_update_profile():
     Test that the update_profile() function in restaurant_profile_manager.py can be used to update
     a user's profile to the given profile.
     """
-    rpm = RestaurantProfileManager(app, "unittestuser")
+    rpm = RestaurantProfileManager("unittestuser")
     old_profile = rpm.get_profile()
 
     new_profile = old_profile.copy()

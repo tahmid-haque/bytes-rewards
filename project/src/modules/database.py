@@ -4,6 +4,7 @@ CRUD operations and provided custom error handling.
 """
 
 from flask_pymongo import PyMongo, ObjectId  # Import Flask-PyMongo utilities
+from flask import current_app
 
 
 class QueryFailureException(Exception):
@@ -37,13 +38,13 @@ class Database:
                "azure.mongodb.net/bytes?retryWrites=true&w=majority"
 
     @staticmethod
-    def get_instance(app):
+    def get_instance():
         """
         Return the database instance if it has been instantiated.
         Otherwise, instantiate an instance and integrate with given Flask app.
         """
         if Database.instance is None:
-            Database(app)
+            Database()
         return Database.instance
 
     @staticmethod
@@ -65,7 +66,7 @@ class Database:
             return ObjectId(document)
         return document
 
-    def __init__(self, app):
+    def __init__(self):
         """
         Initialize the database object and integrate with the Flask app.
         """
@@ -74,8 +75,8 @@ class Database:
                 getInstance.")
 
         # Integrate Mongo w/ Flask and save database to object
-        app.config["MONGO_URI"] = Database.mongoURI
-        self.db = PyMongo(app).db
+        current_app.config["MONGO_URI"] = Database.mongoURI
+        self.db = PyMongo(current_app).db
         Database.instance = self
 
     def query(self, collection, query={}):

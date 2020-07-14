@@ -1,13 +1,13 @@
-{% extends 'partials/base.j2' %} 
+{% extends 'base.j2' %} 
 
 {% block head %}
     <title>Bytes | Login</title>
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='restaurants/css/login.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/login.css') }}" />
 {% endblock head %} 
 
 {% block body %} 
     <div class="loginbox">
-        <img src="{{ url_for('static', filename='restaurants/resources/avatar.png') }}" class="avatar" alt="">
+        <img src="{{ url_for('static', filename='resources/avatar.png') }}" class="avatar" alt="">
         <h1>Login Here</h1>
         <p id="message" 
             {% with messages = get_flashed_messages() %}
@@ -25,6 +25,6 @@
             <input type="password" name="password" placeholder="Enter Password">
             <input type="submit"  value="Login">
         </form>
-        <a href="{{ url_for('signup') }}">Create a New Account</a>
+        <a href="/signup">Create a New Account</a>
     </div>
 {% endblock body %}

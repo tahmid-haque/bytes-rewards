@@ -7,10 +7,10 @@ import sys
 import pytest
 from bson.objectid import ObjectId
 sys.path.insert(1, os.path.join(os.path.dirname(__file__),
-                                '../src'))  # Import the src folder
+                                '../../src'))  # Import the src folder
 
 from rewards_app import app
-from customer_profile_manager import CustomerProfileManager
+from modules.restaurant_profile_manager import RestaurantProfileManager
 
 
 @pytest.fixture
@@ -32,7 +32,7 @@ def test_edit_profile_route_logged_in(client):
                     "username": "unitTestUser",
                     "password": "Password!"
                 })
-    res = client.get("/view_profiles", follow_redirects=True)
+    res = client.get("/profiles", follow_redirects=True)
     assert b"Choose a Game Board" in res.data
 
 
@@ -41,8 +41,8 @@ def test_get_restaurant_profiles():
     Test that get_restaurant_profiles() function in customer_profile_manager.py retreives all
     restaurant profile fields that are public.
     """
-    rpm = CustomerProfileManager(app, "unitTestUser")
-    profiles = rpm.get_restaurant_profiles()
+    rpm = RestaurantProfileManager("unitTestUser")
+    profiles = rpm.get_public_profiles()
     expected_fields = ["name", "category", "image", "is_public"]
 
     has_id = True

@@ -7,10 +7,10 @@ import os
 import sys
 import pytest
 sys.path.insert(1, os.path.join(os.path.dirname(__file__),
-                                '../src'))  # Import the src folder
+                                '../../src'))  # Import the src folder
 
 from restaurants_app import app
-from restaurant_profile_manager import RestaurantProfileManager
+from modules.restaurant_profile_manager import RestaurantProfileManager
 
 
 @pytest.fixture
@@ -28,7 +28,7 @@ def test_get_rewards_new_user():
     Test that the get_bingo_board() function in restaurant_profile_manager.py 
     retrieves an empty board and reward list when a new user is detected.
     """
-    rpm = RestaurantProfileManager(app, "newuser")
+    rpm = RestaurantProfileManager("newuser")
     rewards = (rpm.get_bingo_board())["board_reward"]
     assert rewards == []
 
@@ -38,7 +38,7 @@ def test_get_shared_rewards():
     Test that get_shared_rewards() function in restaurant_profile_manager.py
     retrieves the list of shared rewards from the database.
     """
-    rpm = RestaurantProfileManager(app, "vchang")
+    rpm = RestaurantProfileManager("vchang")
     shared = rpm.get_shared_rewards()
     expected_shared = [{
         '_id': ObjectId("5f03a9967aae4a086d8100fd"),
@@ -87,7 +87,7 @@ def test_get_rewards_old_user():
     Test that get_rewards() inrestaurant_profile_manager.py for an existin
     user retrieves a list of their available rewards.
     """
-    rpm = RestaurantProfileManager(app, "vchang")
+    rpm = RestaurantProfileManager("vchang")
     rewards = rpm.get_rewards()
     expected_rewards = [{
         '_id': ObjectId("5f03a9967aae4a086d8100fd"),
@@ -136,7 +136,7 @@ def test_get_rewards_from_board():
     Test that the get_bingo_board() function in restaurant_profile_manager.py 
     retrieves a user's list of rewards on their bingo board.
     """
-    rpm = RestaurantProfileManager(app, "vchang")
+    rpm = RestaurantProfileManager("vchang")
     board = rpm.get_bingo_board()
     rewards = board["board_reward"]
     expected_rewards = [
@@ -175,14 +175,14 @@ def test_index_route_logged_in(client):
                 })
     res = client.get("/", follow_redirects=True)
     assert b"Please log in to access this page" not in res.data
-    assert b"Bingo Board" in res.data
+    assert b"Edit Profile" in res.data
 
 
 def test_save_rewards_no_login(client):
     """
     Test that a user is unable to save a game board unless they are logged in.
     """
-    res = client.post("/save", follow_redirects=True)
+    res = client.post("/board/save", follow_redirects=True)
     assert b'Please log in to access this page' in res.data
 
 
@@ -191,7 +191,7 @@ def test_set_board_rewards():
     Test that the set_bingo_board() function in restaurant_profile_manager.py 
     can be used to update a user's list of rewards.
     """
-    rpm = RestaurantProfileManager(app, "vchang")
+    rpm = RestaurantProfileManager("vchang")
     old_rewards = (rpm.get_bingo_board())["board_reward"]
     board = (rpm.get_bingo_board())["board"]
     name = (rpm.get_bingo_board())["name"]
