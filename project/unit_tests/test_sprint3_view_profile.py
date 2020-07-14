@@ -9,7 +9,7 @@ import pytest
 sys.path.insert(1, os.path.join(os.path.dirname(__file__), '../src'))   # Import the src folder
 
 
-from app import app
+from restaurants_app import app
 from restaurant_profile_manager import RestaurantProfileManager
 
 

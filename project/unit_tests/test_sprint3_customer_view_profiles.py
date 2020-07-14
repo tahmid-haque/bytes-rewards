@@ -10,7 +10,7 @@ from bson.objectid import ObjectId
 sys.path.insert(1, os.path.join(os.path.dirname(__file__), '../src'))   # Import the src folder
 
 
-from app import app
+from rewards_app import app
 from customer_profile_manager import CustomerProfileManager
 
 
@@ -28,7 +28,7 @@ def test_edit_profile_route_logged_in(client):
     """
     Test that customer view restaurant profile page loads when the user is logged in.
     """
-    client.post("/customer_login",
+    client.post("/login",
                 data={
                     "username": "unitTestUser",
                     "password": "Password!"
