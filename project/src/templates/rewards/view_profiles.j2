@@ -1,0 +1,47 @@
+{% extends 'base.j2' %} 
+
+{% block head %}
+    <title>Customer | View Profiles</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/view_profiles.css') }}" />
+{% endblock head %} 
+
+{% block body %} 
+    <div class ="mainbox">
+		<div class="logout-button">
+			<a href="/logout">Logout</a>
+        </div>
+		<h1>Welcome!</h1>
+		<h1>Choose a Game Board</h1>
+		{% if profiles: %}
+			{% for id, profile in profiles.items() %}
+				<div class ="profilecard">
+					{% for key, value in profile.items() %}
+						{% if key == "name" %}
+							<h2>{{ value }}</h2>
+						{% endif %}
+						{% if key == "category" %}
+							<div class="item-padding">
+								<h3>{{ value }}</h3>
+							</div>
+						{% endif %}
+						{% if key == "image" %}
+							<div class="item-padding">
+								<img src="{{ value }}" class="image"/>
+							</div>
+						{% endif %}
+					{% endfor %}
+					<div class="item-padding">
+						<div class="button-container">
+							<div class="learnmore">
+								<a href="/profiles">Learn More</a>
+							</div>
+							<div class="viewgame">
+								<a href="/profiles/{{id}}/board">View Game Board</a>
+							</div>
+						</div>
+					</div>
+				</div>
+			{% endfor %}
+		{% endif %}
+    </div>
+{% endblock body %}

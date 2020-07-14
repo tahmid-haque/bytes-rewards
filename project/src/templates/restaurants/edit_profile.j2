@@ -1,0 +1,124 @@
+{% extends 'base.j2' %} 
+
+{% block head %}
+    <title>Bytes | Edit Profile</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/login.css') }}" />
+{% endblock head %} 
+
+{% block body %} 
+    <div class="loginbox">
+        <img src="{{ url_for('static', filename='resources/cutlery.png') }}" class="avatar" alt="">
+        <h1>Edit Profile</h1>
+        <p id="message" 
+            {% with messages = get_flashed_messages() %}
+                {% if not messages %}
+                    class="hidden">
+                {% else %}
+                    >{{messages[0]}}
+                {% endif %}
+            {% endwith %}
+        </p>
+        <form method="post" action="/profile/save">
+            <p>Restaurant Name</p>
+            <input
+                type="text"
+                name="name"
+                maxlength="50"
+                placeholder="Simple Bytes"
+                required
+            />
+            <p>Category (Optional)</p>
+            <input
+                type="text"
+                name="category"
+                maxlength="100"
+                pattern="[a-zA-Z0-9\s-/,]{1,100}"
+                placeholder="American/Comfort"
+            />
+            <p>Image</p>
+            <input
+                type="url"
+                name="image"
+                placeholder="https://images.com/restaurant.jpg"
+                maxlength='128'
+                required
+            />
+            <img id="restaurant-image" class="scale-out hidden" src="" alt="">
+            
+            <p>Description</p>
+            <textarea name="description" placeholder="Simple food. Amazing taste." maxlength='1000' required></textarea>
+
+            <h1>Contact Information</h1>
+            <p>Phone Number</p>
+            <input
+                type="tel"
+                name="phone_number"
+                maxlength="12"
+                pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
+                placeholder="416-555-5555"
+                required
+            />
+            <p>Address</p>
+            <textarea name="location[address]" placeholder="290 Bremner Blvd" maxlength='128' required></textarea>
+            <p>Postal Code</p>
+            <input
+                type="text"
+                name="location[postal_code]"
+                pattern="[A-Za-z][0-9][A-Za-z][0-9][A-Za-z][0-9]"
+                placeholder="M5V3L9"
+                maxlength='6'
+                required
+            />
+            <p>City</p>
+            <input
+                type="text"
+                name="location[city]"
+                minlength='1'
+                maxlength='50'
+                placeholder='Toronto'
+                required
+                readonly
+            />
+            <p>Province</p>
+            <input
+                type="text"
+                name="location[province]"
+                minlength='2'
+                maxlength='2'
+                placeholder='ON'
+                required
+                readonly
+            />           
+            <p id="checkbox-container">
+                <span id="checkbox-label">Set Public:</span>
+                <input
+                    type="checkbox"
+                    name="is_public"
+                    id="checkbox"
+                />   
+            </p>       
+            <input type="submit" value="Submit">
+        </form>
+            {% if profile %}
+            <form action="/">
+                <button id="back">Back</button>
+            </form>
+            {% endif %}
+    </div>
+
+    {% if profile %}
+        <script>
+            const inputs = document.querySelectorAll("input, textarea");
+            inputs[0].value = "{{ profile["name"] }}";
+            inputs[1].value = "{{ profile["category"] }}";
+            inputs[2].value = "{{ profile["image"] }}";
+            inputs[3].value = "{{ profile["description"] }}";
+            inputs[4].value = "{{ profile["phone_number"] }}";
+            inputs[5].value = "{{ profile["location"]["address"] }}";
+            inputs[6].value = "{{ profile["location"]["postal_code"] }}";
+            inputs[9].checked = {{ ("" ~ profile['is_public']).lower() }};
+        </script>
+    {% endif %}
+
+    <script src="{{ url_for('static', filename='js/edit_profile.js') }}"></script>
+{% endblock body %}
