@@ -22,9 +22,8 @@ class RestaurantProfileManager(UserMixin):
         Initialize the database object using the flask app.
         """
         self.db = Database.get_instance(app)
-        self.id = u""  # Overwritten by get_id() in UserMixin
+        self.id = username.lower()
         self.fullname = ""
-        self.username = username.lower()
         self.hashed_pw = ""
 
     def check_password(self, password):
@@ -44,7 +43,7 @@ class RestaurantProfileManager(UserMixin):
             self.db.insert(
                 'restaurant_users', {
                     "fullname": fullname,
-                    "username": self.username,
+                    "username": self.id,
                     "hashed_password": self.hashed_pw
                 })
         except InsertFailureException:
@@ -56,9 +55,8 @@ class RestaurantProfileManager(UserMixin):
         If there is an issue with the query, throws QueryFailureException.
         """
         try:
-            restaurant_user = self.db.query('restaurant_users', {
-                'username': self.username
-            })
+            restaurant_user = self.db.query('restaurant_users',
+                                            {'username': self.id})
             return len(restaurant_user) != 0
         except QueryFailureException:
             print("Something's wrong with the query.")
@@ -69,9 +67,8 @@ class RestaurantProfileManager(UserMixin):
         If there is an issue with the query, throws QueryFailureException.
         """
         try:
-            restaurant_user = self.db.query('restaurant_users', {
-                'username': self.username
-            })
+            restaurant_user = self.db.query('restaurant_users',
+                                            {'username': self.id})
             if len(restaurant_user) > 0:
                 self.fullname = restaurant_user[0]['fullname']
                 self.hashed_pw = restaurant_user[0]['hashed_password']
@@ -105,15 +102,14 @@ class RestaurantProfileManager(UserMixin):
         Return a bingo board attached to the current restaurant user.
         """
         try:
-            profile = self.db.query('restaurant_users', {
-                "username": self.username
-            })
+            profile = self.db.query('restaurant_users', {"username": self.id})
             return profile[0]["bingo_board"]
         except KeyError:  # New User, no bingo board found
             return {"name": "", "board": [], "board_reward": []}
         except QueryFailureException:
             print("There was an issue retrieving a bingo board.")
             return {"name": "", "board": [], "board_reward": []}
+
 
     def set_bingo_board(self, name, board, board_reward):
         """
@@ -123,9 +119,9 @@ class RestaurantProfileManager(UserMixin):
         try:
             board = Database.replace_object_id(board)
             board_reward = Database.replace_object_id(board_reward)
-
-            self.db.update('restaurant_users', {"username": self.username}, {
-                '$set': {
+            self.db.update(
+                'restaurant_users', {"username": self.id},
+                {'$set': {
                     "bingo_board": {
                         "name": name,
                         "board": board,
@@ -135,6 +131,7 @@ class RestaurantProfileManager(UserMixin):
             })
         except UpdateFailureException:
             print("There was an issue updating a bingo board.")
+
 
     def get_shared_rewards(self):
         """
@@ -164,3 +161,30 @@ class RestaurantProfileManager(UserMixin):
         Retrieves the username for flask-login.
         """
         return self.username
+      
+    def get_profile(self):
+        """
+        Return the restaurant user's profile.
+        """
+        try:
+            user = self.db.query('restaurant_users', {"username": self.id})[0]
+            return user["profile"]
+        except KeyError:  # New User, no profile found
+            return {}
+        except QueryFailureException:
+            print("There was an issue retrieving a profile")
+            return {}
+
+    def update_profile(self, profile):
+        """
+        Update the restaurant user's profile using the data provided in profile.
+        """
+        profile['is_public'] = 'is_public' in profile
+        try:
+            self.db.update('restaurant_users', {"username": self.id},
+                           {'$set': {
+                               "profile": profile
+                           }})
+        except UpdateFailureException:
+            print("There was an issue updating a profile.")
+   

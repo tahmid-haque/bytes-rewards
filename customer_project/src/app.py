@@ -1,12 +1,11 @@
 """
-This is the main component of our customer project. It is be used to connect 
+This is the main component of our customer project. It is be used to connect
 the whole app together and provide a way to start a server.
 """
 
 import os
 from flask import Flask, render_template, request, redirect, flash, url_for
 from flask_login import LoginManager, current_user, login_user, login_required, logout_user
-from werkzeug.security import generate_password_hash, check_password_hash
 from customer_profile_manager import CustomerProfileManager
 
 app = Flask(__name__)  # Initialize a flask app using current file
@@ -43,7 +42,7 @@ def customer_login():
     redirect to homepage. Otherwise prompt user and require them to try again.
     """
     if current_user.is_authenticated:
-        render_template('customer_main.j2')
+        return redirect(url_for('.view_profiles'))
     if request.method == 'POST':
         username = request.form["username"]
         password = request.form["password"]
@@ -54,12 +53,11 @@ def customer_login():
             if (possible_user and possible_user.check_password(password)):
                 login_user(possible_user
                           )  # If username and password are correct, login
-                return render_template(
-                    'customer_main.j2', name=possible_user.fullname)
+                name = possible_user.fullname
+                return redirect(url_for('.view_profiles'))
         flash("Incorrect username or password. Please try again.")
         return render_template('customer_login.j2')
-    else:
-        return render_template('customer_login.j2')
+    return render_template('customer_login.j2')
 
 
 @app.route("/customer_logout")
@@ -75,7 +73,7 @@ def customer_logout():
 @app.route('/customer_signup', methods=['GET', 'POST'])
 def customer_signup():
     """
-    When posting to this page, verify if user already exists. If not, redirect 
+    When posting to this page, verify if user already exists. If not, redirect
     to login.
     """
     if request.method == 'POST':
@@ -88,12 +86,21 @@ def customer_signup():
             flash("This username is taken. Please choose a new one.")
             return render_template(
                 'customer_create_account.j2')  # Let user try again
-        else:
-            # If they're successful, insert into database
-            possible_user.set_new_profile(fullname, password)
-            return redirect("/customer_login")
-    else:
-        return render_template('customer_create_account.j2')
+        # If they're successful, insert into database
+        possible_user.set_new_profile(fullname, password)
+        return redirect("/customer_login")
+    return render_template('customer_create_account.j2')
+
+
+@app.route('/view_profiles', methods=['GET', 'POST'])
+@login_required
+def view_profiles():
+    """
+    Allows users to view restaurant profiles that are ready for viewing.
+    """
+    user = CustomerProfileManager(app, current_user.username)
+    restaurant_profiles = user.get_restaurant_profiles()
+    return render_template('view_profiles.j2', profiles=restaurant_profiles)
 
 
 if __name__ == "__main__":
