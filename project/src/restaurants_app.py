@@ -33,20 +33,18 @@ def index():
     When retrieving this route, get a restaurant profile's goals and bingo
     board. Render these items together to show a bingo editor.
     """
-    # This route will need to be updated with the restaurant summary page
-    # Move goals editor to different route
+    return redirect("/profile")
 
-    profile = current_user.get_profile()
-    if profile == {}:
-        flash("Please create a restaurant profile to continue.")
-        return redirect("/profile/edit")
 
+@app.route('/board')
+@login_required
+def view_board():
     goals = current_user.get_goals(
     )  # current_user is loaded from load_user so get goals
     bingo_board = current_user.get_bingo_board()
     rewards = current_user.get_rewards()
     return render_template(
-        'restaurants/index.j2',
+        'restaurants/view_game_board.j2',
         goals=goals,
         board_name=bingo_board["name"],
         rewards=rewards,
@@ -130,17 +128,19 @@ def view_profile():
     Displays the current user's restaurant profile page.
     """
     rest_info = current_user.get_profile()
-    if rest_info != {}: # Only get the rest info if available.
-        return render_template('restaurants/view_profile.j2',
-                               restaurant_name=rest_info["name"],
-                               address=rest_info["location"]["address"],
-                               city=rest_info["location"]["city"],
-                               province=rest_info["location"]["province"],
-                               postal_code=rest_info["location"]["postal_code"],
-                               phone_number=rest_info["phone_number"],
-                               category=rest_info["category"],
-                               rest_img=rest_info["image"],
-                               description=rest_info["description"])
+    if rest_info == {}:
+        flash("Please create a restaurant profile to continue.")
+        return redirect("/profile/edit")
+    return render_template('restaurants/view_profile.j2',
+                            restaurant_name=rest_info["name"],
+                            address=rest_info["location"]["address"],
+                            city=rest_info["location"]["city"],
+                            province=rest_info["location"]["province"],
+                            postal_code=rest_info["location"]["postal_code"],
+                            phone_number=rest_info["phone_number"],
+                            category=rest_info["category"],
+                            rest_img=rest_info["image"],
+                            description=rest_info["description"])
 
 @app.route('/profile/edit')
 @login_required
