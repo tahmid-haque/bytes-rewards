@@ -160,7 +160,7 @@ class RestaurantProfileManager(UserMixin):
         """
         Retrieves the username for flask-login.
         """
-        return self.username
+        return self.id
       
     def get_profile(self):
         """

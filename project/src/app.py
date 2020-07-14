@@ -168,32 +168,6 @@ def save_profile():
     current_user.update_profile(profile)
     return redirect("/")
 
-@app.route('/profile/edit')
-@login_required
-def edit_profile():
-    """
-    Display the edit restaurant profile page.
-    Prerequisite: User is logged in.
-    """
-    profile = current_user.get_profile()
-    return render_template('edit_profile.j2', profile=profile)
-
-
-@app.route('/profile/save', methods=['POST'])
-@login_required
-def save_profile():
-    """
-    Save a restaurant profile using the provided data.
-    Prerequisite: User is logged in.
-    """
-    profile = {key: val for key, val in request.form.items() if '[' not in key}
-    profile["location"] = {}
-    for key in request.form:  # Add location items to profile
-        if '[' in key:
-            profile["location"][key[9:-1]] = request.form[key]
-    current_user.update_profile(profile)
-    return redirect("/")
-
 
 if __name__ == "__main__":
     app.run(host="localhost", port=os.environ.get('PORT', 8000), debug=True)
