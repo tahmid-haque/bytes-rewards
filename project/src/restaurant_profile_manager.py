@@ -151,17 +151,11 @@ class RestaurantProfileManager(UserMixin):
 
     def get_rewards(self):
         """
-        Return a list of all goals that the current restaurant user can use
+        Return a list of all goals that the curren  t restaurant user can use
         within their profile.
         """
         return self.get_shared_rewards()
 
-    def get_id(self):
-        """
-        Retrieves the username for flask-login.
-        """
-        return self.id
-      
     def get_profile(self):
         """
         Return the restaurant user's profile.
@@ -187,4 +181,3 @@ class RestaurantProfileManager(UserMixin):
                            }})
         except UpdateFailureException:
             print("There was an issue updating a profile.")
-   

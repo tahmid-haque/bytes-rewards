@@ -34,11 +34,11 @@ def index():
     """
     Redirects user to customer login.
     """
-    return redirect("/customer_login")
+    return redirect("/login")
 
 
-@app.route('/customer_login', methods=['GET', 'POST'])
-def customer_login():
+@app.route('/login', methods=['GET', 'POST'])
+def login():
     """
     When posting to this page, verify the credentials provided. If valid,
     redirect to homepage. Otherwise prompt user and require them to try again.
@@ -58,22 +58,22 @@ def customer_login():
                 name = possible_user.fullname
                 return redirect(url_for('.view_profiles'))
         flash("Incorrect username or password. Please try again.")
-        return render_template('customer_login.j2')
-    return render_template('customer_login.j2')
+        return render_template('rewards/login.j2')
+    return render_template('rewards/login.j2')
 
 
-@app.route("/customer_logout")
+@app.route("/logout")
 @login_required
-def customer_logout():
+def logout():
     """
     Logs out current user.
     """
     logout_user()
-    return redirect('/customer_login')
+    return redirect('/login')
 
 
-@app.route('/customer_signup', methods=['GET', 'POST'])
-def customer_signup():
+@app.route('/signup', methods=['GET', 'POST'])
+def signup():
     """
     When posting to this page, verify if user already exists. If not, redirect
     to login.
@@ -87,11 +87,11 @@ def customer_signup():
                 username):  # A user already exists with this username.
             flash("This username is taken. Please choose a new one.")
             return render_template(
-                'customer_create_account.j2')  # Let user try again
+                'rewards/create_account.j2')  # Let user try again
         # If they're successful, insert into database
         possible_user.set_new_profile(fullname, password)
-        return redirect("/customer_login")
-    return render_template('customer_create_account.j2')
+        return redirect("/login")
+    return render_template('rewards/create_account.j2')
 
 
 @app.route('/view_profiles', methods=['GET', 'POST'])
@@ -102,7 +102,7 @@ def view_profiles():
     """
     user = CustomerProfileManager(app, current_user.username)
     restaurant_profiles = user.get_restaurant_profiles()
-    return render_template('view_profiles.j2', profiles=restaurant_profiles)
+    return render_template('rewards/view_profiles.j2', profiles=restaurant_profiles)
 
 
 @app.route('/view_board/<string:id>', methods=['GET', 'POST'])
@@ -129,7 +129,7 @@ def view_board(id):
                 for reward in user.get_rewards():
                     if reward["_id"] == id:
                         rewards.append(reward["reward"])
-    return render_template('view_game_board.j2', goals=goals, name=board_name, rewards=rewards)
+    return render_template('rewards/view_game_board.j2', goals=goals, name=board_name, rewards=rewards)
 
 
 if __name__ == "__main__":

@@ -2,13 +2,13 @@
 
 {% block head %}
     <title>Customer | View Profiles</title>
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='customer_css/view_profiles.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='rewards/css/view_profiles.css') }}" />
 {% endblock head %} 
 
 {% block body %} 
     <div class ="mainbox">
 		<div class="logout-button">
-			<a href="{{ url_for('customer_logout') }}">Logout</a>
+			<a href="{{ url_for('logout') }}">Logout</a>
         </div>
 		<h1>Welcome!</h1>
 		<h1>Choose a Game Board</h1>

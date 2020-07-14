@@ -2,12 +2,12 @@
 
 {% block head %}
     <title>Bytes | Create Account</title>
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='customer_css/customer_login.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='rewards/css/login.css') }}" />
 {% endblock head %} 
 
 {% block body %} 
     <div class="loginbox">
-        <img src="{{ url_for('static', filename='customer_resources/avatar.jpg') }}" class="avatar" alt="">
+        <img src="{{ url_for('static', filename='rewards/resources/avatar.jpg') }}" class="avatar" alt="">
         <h1>Customer Registration</h1>
         <p id="message" 
             {% with messages = get_flashed_messages() %}
@@ -18,7 +18,7 @@
                 {% endif %}
             {% endwith %}
         </p>
-        <form method="post" action="/customer_signup">
+        <form method="post" action="/signup">
             <p>Full Name</p>
             <input
                 type="text"

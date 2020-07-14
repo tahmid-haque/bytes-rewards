@@ -46,7 +46,7 @@ def index():
     bingo_board = current_user.get_bingo_board()
     rewards = current_user.get_rewards()
     return render_template(
-        'index.j2',
+        'restaurants/index.j2',
         goals=goals,
         board_name=bingo_board["name"],
         rewards=rewards,
@@ -89,7 +89,7 @@ def login():
                           )  # If username and password are correct, login
                 return redirect("/")
         flash("Incorrect username or password. Please try again.")
-    return render_template('login.j2')
+    return render_template('restaurants/login.j2')
 
 
 @app.route("/logout")
@@ -116,12 +116,12 @@ def signup():
         if possible_user.check_user_exists(
         ):  # A user already exists with this username.
             flash("This username is taken. Please choose a new one.")
-            return render_template('create_account.j2')  # Let user try again
+            return render_template('restaurants/create_account.j2')  # Let user try again
         # If they're successful, insert into database
         possible_user.set_new_profile(fullname, password)
         login_user(possible_user)
         return redirect("/profile/edit")
-    return render_template('create_account.j2')
+    return render_template('restaurants/create_account.j2')
 
 @app.route('/profile')
 @login_required
@@ -131,7 +131,7 @@ def view_profile():
     """
     rest_info = current_user.get_profile()
     if rest_info != {}: # Only get the rest info if available.
-        return render_template('view_profile.j2',
+        return render_template('restaurants/view_profile.j2',
                                restaurant_name=rest_info["name"],
                                address=rest_info["location"]["address"],
                                city=rest_info["location"]["city"],
@@ -150,7 +150,7 @@ def edit_profile():
     Prerequisite: User is logged in.
     """
     profile = current_user.get_profile()
-    return render_template('edit_profile.j2', profile=profile)
+    return render_template('restaurants/edit_profile.j2', profile=profile)
 
 
 @app.route('/profile/save', methods=['POST'])

@@ -2,7 +2,7 @@
 
 {% block head %}
     <title>View Your Board</title>
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='customer_css/board.css') }}">
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='rewards/css/board.css') }}">
 {% endblock head %} 
 
 {% block body %} 
@@ -17,30 +17,30 @@
 		        {% for i in range(5) %}
 				<td class="reward"></td>
 			{% endfor %}
-			<td title="{{rewards[0]}}" class="reward"> <img src="../static/customer_resources/gift.jpg"> </td>
+			<td title="{{rewards[0]}}" class="reward"> <img src="{{ url_for('static', filename='rewards/resources/gift.jpg') }}"> </td>
 		    </tr>
                     {% for i in range(25) %}
                         {% if i % 5 == 0 %}
                             <tr>
                         {% endif %}
 
-                        	<td title= "{{goals[i] }}" ><img src="../static/customer_resources/x.png"></td>
+                        	<td title= "{{goals[i] }}" ><img src="{{ url_for('static', filename='rewards/resources/x.png') }}"></td>
 
                         {% if i % 5 == 4 %}
 			  {% if i == 24 %}
-			    <td title="{{rewards[5]}}" class = "reward"><img src="../static/customer_resources/gift.jpg"></td>
+			    <td title="{{rewards[5]}}" class = "reward"><img src="{{ url_for('static', filename='rewards/resources/gift.jpg') }}"></td>
                             </tr>
 			  {% else %}
-			    <td title="{{rewards[(i%4)+1]}}" class = "reward"><img src="../static/customer_resources/gift.jpg"></td>
+			    <td title="{{rewards[(i%4)+1]}}" class = "reward"><img src="{{ url_for('static', filename='rewards/resources/gift.jpg') }}"></td>
                             </tr>
 			  {% endif %}
                         {% endif %}
                     {% endfor %}
 		    <tr class = "reward"> 
 			{% for i in range(5) %}
-				<td title="{{rewards[i+7]}}" class="reward"><img src="../static/customer_resources/gift.jpg"></td>
+				<td title="{{rewards[i+7]}}" class="reward"><img src="{{ url_for('static', filename='rewards/resources/gift.jpg') }}"></td>
 			{% endfor %}
-		        <td title="{{rewards[6]}}" class="reward"><img src="../static/customer_resources/gift.jpg"></td>
+		        <td title="{{rewards[6]}}" class="reward"><img src="{{ url_for('static', filename='rewards/resources/gift.jpg') }}"></td>
 		   </tr>
                 </table>
 
