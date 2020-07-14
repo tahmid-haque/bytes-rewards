@@ -31,7 +31,7 @@ def index():
     """
     Redirects user to customer login.
     """
-    return redirect("/login")
+    return redirect("/view_profiles")
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -84,9 +84,10 @@ def signup():
             flash("This username is taken. Please choose a new one.")
             return render_template(
                 'rewards/create_account.j2')  # Let user try again
-        # If they're successful, insert into database
+        # If they're successful, insert into database and login
         possible_user.set_new_profile(fullname, password)
-        return redirect("/login")
+        login_user(possible_user)
+        return redirect("/")
     return render_template('rewards/create_account.j2')
 
 
