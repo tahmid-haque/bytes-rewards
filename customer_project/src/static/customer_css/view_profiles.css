@@ -1,0 +1,161 @@
+body {
+    margin: 0;
+    padding: 0;
+    background-size: cover;
+    background-position: center;
+    font-family: sans-serif;
+    background-color: rgb(231, 231, 231);
+}
+
+.mainbox {
+    margin: 30px auto 30px auto;
+    width: 320px;
+    height: min-content;
+    background: #000080;
+    color: #fff;
+    color: #fff;
+    position: relative;
+    box-sizing: border-box;
+    padding: 30px 30px 30px 30px;
+	border-radius: 4px;
+}
+
+h1 {
+    margin: 0;
+    padding: 0 0 0;
+    text-align: center;
+    font-size: 22px;
+}
+
+h2 {
+    margin: 0;
+    padding: 0 0 0;
+    text-align: left;
+    font-size: 17px;
+	text-shadow: 2px 2px 2px #0000CD;
+}
+
+h3 {
+    margin: 0;
+    padding: 0 0 0;
+    text-align: left;
+    font-size: 12px;
+	color: dimgray;
+}
+
+.mainbox p {
+    margin: 0;
+    padding: 0;
+    font-weight: bold;
+}
+
+.mainbox input {
+    width: 100%;
+    margin-bottom: 20px;
+    box-sizing: border-box;
+}
+
+.mainbox a {
+    text-decoration: none;
+    font-size: 12px;
+    line-height: 20px;
+    color: dimgray;
+	font-weight: bold;
+}
+
+.mainbox a:hover {
+    color: #DDA0DD;
+}
+
+.profilecard {
+    margin: 30px auto 30px auto;
+    width: 250px;
+    height: min-content;
+    background: #B0C4DE;
+    color: #fff;
+    position: relative;
+    box-sizing: border-box;
+    padding: 10px 10px 10px 10px;
+	border-radius: 4px;
+}
+
+.profilecard-padding {
+	padding-top: 20px;
+}
+
+.item-padding {
+	padding-top: 5px;
+}
+
+.profilecard a {
+	margin: 0;
+    padding: 0 0 0;
+    text-align: left;
+    font-size: 12px;
+	color: dimgray;
+}
+
+.logout-button {
+    border: none;
+    outline: none;
+    height: min-content;
+	width: 60px;
+    background: #fff;
+	text-align: center;
+    font-size: 12px;
+    border-radius: 10px;
+	box-shadow: 1px 1px 1px #0000CD;
+}
+
+.learnmore {
+    border: none;
+    outline: none;
+    height: min-content;
+	width: 90px;
+    background: #fff;
+	text-align: center;
+    font-size: 12px;
+    border-radius: 10px;
+	box-shadow: 1px 1px 1px #0000CD;
+}
+
+.viewgame {
+    border: none;
+    outline: none;
+    height: min-content;
+	width: 130px;
+    background: #fff;
+	text-align: center;
+    font-size: 12px;
+    border-radius: 10px;
+	box-shadow: 1px 1px 1px #0000CD;
+}
+
+.button-container {
+	width: 240;
+	display: flex;
+	justify-content: space-between;
+}
+
+.image {
+    width: 220px;
+    height: 130px;
+	border: 1px solid #fff;
+	background: #fff;
+    border-radius: 4px;
+    padding: 5px;
+}
+
+.guideline {
+    margin-bottom: 5px !important;
+}
+
+.guideline,
+li {
+    font-weight: 400 !important;
+    font-size: 12px;
+}
+
+ul {
+    margin-top: 0;
+}
