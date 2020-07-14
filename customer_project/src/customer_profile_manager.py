@@ -72,6 +72,28 @@ class CustomerProfileManager(UserMixin):
         except QueryFailureException:
             return "There was an issue retrieving user credentials."
 
+    def get_goals(self):
+        """
+        Get all goals from database
+        """
+        try:
+            goals = self.db.query('goals')
+            return goals
+        except QueryFailureException:
+            print("Something's wrong with the query.")
+            return []
+
+    def get_rewards(self):
+        """
+        Get all rewards from database
+        """
+        try:
+            goals = self.db.query('rewards')
+            return goals
+        except QueryFailureException:
+            print("Something's wrong with the query.")
+            return []
+
     def get_restaurant_profiles(self):
         """
         Get all restaurant profiles that are ready to be viewed.
@@ -80,6 +102,18 @@ class CustomerProfileManager(UserMixin):
             restaurant_owners = self.db.query('restaurant_users',
                                               {'profile.is_public': True})
             return {owner["_id"]: owner["profile"] for owner in restaurant_owners}
+        except QueryFailureException:
+            print("Something's wrong with the query.")
+            return []
+
+    def get_restaurant_users(self):
+        """
+        Get all restaurant profiles that are ready to be viewed.
+        """
+        try:
+            restaurant_owners = self.db.query('restaurant_users',
+                                              {'profile.is_public': True})
+            return restaurant_owners
         except QueryFailureException:
             print("Something's wrong with the query.")
             return []
