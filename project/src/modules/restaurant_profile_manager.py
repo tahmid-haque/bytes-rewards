@@ -28,8 +28,9 @@ class RestaurantProfileManager(ProfileManager):
         Bytes team.
         """
         try:
-            shared_goal_ids = self.db.query('goals',
-                                            {"shared": True})[0]["goals"]
+            shared_goal_ids = self.db.query('goals', {
+                "shared": True
+            })[0]["goals"]
             return self.db.query('goals', {"_id": {"$in": shared_goal_ids}})
         except QueryFailureException:
             print("There was an issue retrieving goals.")
@@ -117,10 +118,11 @@ class RestaurantProfileManager(ProfileManager):
         """
         profile['is_public'] = 'is_public' in profile
         try:
-            self.db.update('restaurant_users', {"username": self.id},
-                           {'$set': {
-                               "profile": profile
-                           }})
+            self.db.update('restaurant_users', {"username": self.id}, {
+                '$set': {
+                    "profile": profile
+                }
+            })
         except UpdateFailureException:
             print("There was an issue updating a profile.")
 
@@ -129,8 +131,9 @@ class RestaurantProfileManager(ProfileManager):
         Get all restaurant users that have a public profile.
         """
         try:
-            restaurant_owners = self.db.query('restaurant_users',
-                                              {'profile.is_public': True})
+            restaurant_owners = self.db.query('restaurant_users', {
+                'profile.is_public': True
+            })
             return restaurant_owners
         except QueryFailureException:
             print("Something's wrong with the query.")
@@ -142,7 +145,7 @@ class RestaurantProfileManager(ProfileManager):
         """
         users = self.get_public_users()
         return {owner["_id"]: owner["profile"] for owner in users}
-		
+
     def get_custom_goals(self):
         """
         Gets custom goals added by the user.
@@ -154,13 +157,17 @@ class RestaurantProfileManager(ProfileManager):
             print("Something is wrong with the query")
             return []
 
-    def remove_custom_goal(self, goalId):
+    def remove_custom_goal(self, goal_id):
         """
         Remove a restaurant user's custom goal from their database.
         """
         try:
-            self.db.update('restaurant_users', {"username": self.id}, {"$pull": {"goals":
-                            {"id": goalId}}})
+            self.db.update('restaurant_users', {"username": self.id}, {
+                "$pull": {
+                    "goals": {
+                        "id": goal_id
+                    }
+                }
+            })
         except QueryFailureException:
             print("There was an issue deleting the goal.")
-		
