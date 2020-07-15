@@ -3,6 +3,7 @@ This file houses the restaurant profile management interface.
 It is used to interact with the restaurant profile database.
 """
 
+from bson.objectid import ObjectId
 from modules.profile_manager import ProfileManager
 from modules.database import Database, QueryFailureException, UpdateFailureException
 
@@ -142,3 +143,39 @@ class RestaurantProfileManager(ProfileManager):
         """
         users = self.get_public_users()
         return {owner["_id"]: owner["profile"] for owner in users}
+
+    def add_custom_goal(self, goal):
+        """
+        Add a custom goal to the restaurant profile. If successful, return True.
+        If goal already exists, return False.
+        """
+        try:
+            in_database = self.db.query('restaurant_users',
+                                        {'goals.goal': goal})
+            if in_database == []:
+                try:
+                    self.db.update(
+                        'restaurant_users', {"username": self.id},
+                        {"$push": {
+                            "goals": {
+                                "id": ObjectId(),
+                                "goal": goal
+                            }
+                        }})
+                    return "Goal added successfully"
+                except UpdateFailureException:
+                    print("Something went wrong with the update")
+        except QueryFailureException:
+            print("Something is wrong with the query")
+        return "Goal not added: duplicate goal"
+
+    def get_custom_goals(self):
+        """
+        Gets custom goals added by the user.
+        """
+        try:
+            user = self.db.query('restaurant_users', {"username": self.id})[0]
+            return user["goals"]
+        except QueryFailureException:
+            print("Something is wrong with the query")
+            return []
