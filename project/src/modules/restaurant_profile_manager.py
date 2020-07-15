@@ -142,3 +142,25 @@ class RestaurantProfileManager(ProfileManager):
         """
         users = self.get_public_users()
         return {owner["_id"]: owner["profile"] for owner in users}
+		
+    def get_custom_goals(self):
+        """
+        Gets custom goals added by the user.
+        """
+        try:
+            user = self.db.query('restaurant_users', {"username": self.id})[0]
+            return user["goals"]
+        except QueryFailureException:
+            print("Something is wrong with the query")
+            return []
+
+    def remove_custom_goal(self, goalId):
+        """
+        Remove a restaurant user's custom goal from their database.
+        """
+        try:
+            self.db.update('restaurant_users', {"username": self.id}, {"$pull": {"goals":
+                            {"id": goalId}}})
+        except QueryFailureException:
+            print("There was an issue deleting the goal.")
+		
