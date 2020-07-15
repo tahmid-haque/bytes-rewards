@@ -158,7 +158,7 @@ class RestaurantProfileManager(ProfileManager):
                         'restaurant_users', {"username": self.id},
                         {"$push": {
                             "goals": {
-                                "id": ObjectId(),
+                                "_id": ObjectId(),
                                 "goal": goal
                             }
                         }})
