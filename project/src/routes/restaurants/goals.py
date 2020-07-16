@@ -25,7 +25,7 @@ def add_goal():
     When posting to this route, add the goal given in form.
     Redirect to the goal customization page on completion.
     """
-    goal = request.form["goal"]
+    goal = request.form["goals"]
     current_user.add_custom_goal(goal)
     return redirect("/goals")
 

@@ -41,14 +41,15 @@ def test_add_goal_not_logged_in(client):
     """
     Test that a user cannot add a goal when they're not logged in.
     """
-    res = client.post("/goals/save", follow_redirects=True)
+    res = client.post("/goals/add", follow_redirects=True)
     assert b"Please log in to access this page" in res.data
 
 def test_delete_goal_not_logged_in(client):
     """
     Test that a user cannot delete a goal when they're not logged in.
     """
-    res = client.post("/goals/save", follow_redirects=True)
+    some_id = "5f0f4a09647ec38058dc4446" # Utilize an actual existing ID.
+    res = client.post("/goals/"+some_id+"/delete", follow_redirects=True)
     assert b"Please log in to access this page" in res.data
 
 def test_get_custom_goals():
