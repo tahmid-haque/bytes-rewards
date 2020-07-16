@@ -35,12 +35,25 @@ class RestaurantProfileManager(ProfileManager):
             print("There was an issue retrieving goals.")
             return []
 
+    def get_custom_goals(self):
+        """
+        Gets custom goals added by the user.
+        """
+        try:
+            user = self.db.query('restaurant_users', {"username": self.id})[0]
+            return user["goals"]
+        except QueryFailureException:
+            print("Something is wrong with the query")
+            return []
+
     def get_goals(self):
         """
         Return a list of all goals that the current restaurant user can use
         within their profile.
         """
-        return self.get_shared_goals()
+        custom=self.get_custom_goals()
+        shared=self.get_shared_goals()
+        return custom+shared
 
     def get_bingo_board(self):
         """
@@ -142,3 +155,4 @@ class RestaurantProfileManager(ProfileManager):
         """
         users = self.get_public_users()
         return {owner["_id"]: owner["profile"] for owner in users}
+
