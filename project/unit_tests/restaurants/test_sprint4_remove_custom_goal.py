@@ -28,7 +28,7 @@ def test_remove_custom_goal():
     """
     rpm = RestaurantProfileManager("vchang")
     old_goals = rpm.get_custom_goals()
-    rpm.remove_custom_goal(old_goals[0]['id'])
+    rpm.remove_custom_goal(old_goals[0]['_id'])
     new_goals = rpm.get_custom_goals()
     assert len(new_goals) < len(old_goals)
 

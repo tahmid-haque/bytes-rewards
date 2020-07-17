@@ -159,15 +159,18 @@ class RestaurantProfileManager(ProfileManager):
 
     def remove_custom_goal(self, goal_id):
         """
-        Remove a restaurant user's custom goal from their database.
+        Remove a restaurant user's custom goal from their database and returns
+        True upon success; throws exception and returns False otherwise.
         """
         try:
             self.db.update('restaurant_users', {"username": self.id}, {
                 "$pull": {
                     "goals": {
-                        "id": goal_id
+                        "_id": goal_id
                     }
                 }
             })
+            return True
         except QueryFailureException:
             print("There was an issue deleting the goal.")
+            return False
