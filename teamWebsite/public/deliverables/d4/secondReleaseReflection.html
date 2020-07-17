@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Bytes | Second Release Reflection</title>
+        <link rel="icon" href="/assets/common/logo.png" />
+
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css"
+        />
+        <link rel="stylesheet" href="/assets/common/css/teamStyle.css" />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;700&display=swap"
+            rel="stylesheet"
+        />
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/js/bootstrap.min.js"></script>
+    </head>
+
+    <body>
+        <span id="navbar-placeholder"></span>
+
+        <div class="container my-4">
+            <div class="jumbotron mb-4">
+                <h1 class="display-4">Second Release Reflection</h1>
+                <p class="lead">
+                    Here is our work for Deliverable 4.
+                    <span class="d-md-block">
+                        It contains changes to the product backlog, sprint backlogs, project velocity,
+						difficulties we encountered, use of contingency planning, progression from
+						D3 to D4, and client interactions.
+                    </span>
+                </p>
+            </div>
+
+            <div class="card border-dark h-100 mb-4">
+                <div class="card-header">Release Plan</div>
+                <div class="card-body">
+                    <div class="m-0 px-3 h-100">
+                        <div>
+                            <li>
+                            The length of our sprints continue to be one week long.
+							</li>
+							<li>
+                            We chose this length because we want to have a larger number of sprints
+							while still lining up with deadlines.
+							</li>
+							<li>
+							Our releases, including time taken for peer reviews, should fall 
+							exactly on each deliverable’s due date, including the final due date
+							of the project.
+							</li>
+                        </div>
+                    </div>
+                </div>
+            </div>
+			
+			<div class="card border-dark h-100 mb-4">
+                <div class="card-header">Difficulties We Encountered</div>
+                <div class="card-body">
+                    <div class="m-0 px-3 h-100">
+                        <div>
+							A difficulty that we encountered was figuring out a way to securely 
+							connect our Java Android application to our Mongo database. We 
+							conducted a lot of our own research, and reached out to our teaching 
+							assistant and our client for support. After following tutorials, we 
+							realized that many features that allowed Android applications to 
+							connect to Mongo databases were no longer supported. Following this, 
+							we tried to connect the application to the Mongo database using APIs; 
+							however, this feature was not easily supported on the Android emulator.
+							After a conversation with our client, we decided to make our project 
+							web-based so that we focus on the functionality.
+						</div>
+                    </div>
+                </div>
+            </div>
+			
+			<div class="card border-dark h-100 mb-4">
+                <div class="card-header">Client Interactions</div>
+                <div class="card-body">
+                    <div class="m-0 px-3 h-100">
+                        <div>
+                            <strong>Client Interactions and Questions Asked</strong>
+                            <p>
+							PickEasy had some inconsistencies with the timing of their Thursday 
+							meetings for a few weeks, so many of our interactions with our client 
+							occurred over email. The following states the date of the email/meeting
+							and the questions we asked.
+							</p>
+							<ul>
+								<strong>June 19, 2020</strong>
+								<li>
+								Do you want there to be a feature where customer users can see all
+								their past rewards? Or is this an inventive feature?
+								</li>
+								<li>
+								Should there be accounts for restaurant owners?
+								</li>
+								<strong>July 4, 2020</strong>
+								<li>
+								We are creating an Android app using Android Studio and trying to 
+								use an API to connect to MongoDB; we are having difficulties doing 
+								so and were wondering if you had any experience with this.
+								</li>
+								<li>
+								The app is very large in size due to all the dependencies, and we 
+								were wondering if you have any suggestions about deployment methods.
+								</li>
+								<li>
+								If we are unable to deploy an app because of the above limitations,
+								would a web-based loyalty program be an acceptable solution?
+								</li>
+								<strong>July 8, 2020</strong>
+								<li>
+								Should the bingo board be pre-filled with a randomized list of 
+								goals for a restaurant owner?
+								</li>
+								<li>
+								What is your opinion of the bingo editor interface in terms of design?
+								</li>
+								<li>
+								We were thinking about having the goal tracking system be similar 
+								to the coupon redemption system where a customer will present a QR
+								code and the restaurant owner can scan it to accept a goal, since 
+								we do not have experience with Shopify or Square. Would this be fine?
+								</li>
+								<strong>July 10, 2020</strong>
+								<li>
+								Should the customer and restaurant user interfaces be completely 
+								separate (with two individual domains) or should there be one main 
+								page that has two options for the two different types of users?
+								</li>
+							</ul>
+                        </div>
+                        <hr />
+						<strong>Demo of First Release: Meeting Minutes</strong>
+						<p>
+						On July 8, 2020 at 3:00 p.m., we demonstrated our first release to our 
+						client. The following states the demonstration agenda, questions asked, and
+						feedback from the client.
+						</p>
+						<ul>
+							<strong>Demonstration Agenda</strong>
+							<li>
+							Show login/create account pages
+							</li>
+							<li>
+							Show bingo editor
+								<ul>
+									<li>
+									Explain setup of bingo board; premade goals, goal boxes,
+									achievement paths, and rewards
+									</li>
+								</ul>
+							</li>
+							<li>
+							Show mockups for customer interface
+							</li>
+						</ul>
+						<ul>
+							<strong>Questions</strong>
+							<li>
+							What do you think of our bingo idea?
+								<ul>
+									<li>
+									Any suggestions?
+										<ul>
+											<li>
+											3x3, 4x4 etc.
+											</li>
+										</ul>
+									</li>
+									<li>
+									Should it be pre-filled with a randomized list of goals for a 
+									restaurant owner?
+									</li>
+									<li>
+									What’s your opinion of the bingo editor interface in terms of 
+									design?
+									</li>
+								</ul>
+							</li>
+							<li>
+							In terms of POS integration, we don’t have any experience with Shopify 
+							or Square, so our group will most likely not be using these to track goals.
+								<ul>
+									<li>
+									Instead, we were thinking about having the goal tracking system
+									be similar to the coupon redemption system where a customer 
+									will present a QR code and the restaurant owner can scan it 
+									to accept a goal. Would this be fine?
+									</li>
+								</ul>
+							</li>
+						</ul>
+						<ul>
+							<strong>Feedback from Client</strong>
+							<ul>
+								<li>
+								Wants customizable goals by the owner, not pre-populated
+								</li>
+								<li>
+								We can use Qr codes for our coupon system, but prefers if we could
+								integrate the project with Shopify
+								</li>
+								<li>
+								5x5 game board with the drop down menu is fine
+								</li>
+								<li>
+								Game board set up is not aesthetically pleasing
+								</li>
+								<li>
+								Wants us to focus more on the execution and customer side
+									<ul>
+										<li>
+										How the users would see and interact with the board
+										</li>
+									</ul>
+								</li>
+							</ul>
+						</ul>
+                    </div>
+                </div>
+            </div>
+			
+        </div>
+        <script src="/assets/common/js/main.js"></script>
+    </body>
+</html>
