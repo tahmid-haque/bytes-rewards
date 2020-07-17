@@ -162,12 +162,14 @@ class RestaurantProfileManager(ProfileManager):
                                 "goal": goal
                             }
                         }})
-                    return "Goal added successfully"
+                    return True
                 except UpdateFailureException:
-                    print("Something went wrong with the update")
+                    print("There was an issue updating the goals")
+                    return False
         except QueryFailureException:
             print("Something is wrong with the query")
-        return "Goal not added: duplicate goal"
+            return False
+        return False
 
     def get_custom_goals(self):
         """
