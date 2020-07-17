@@ -48,7 +48,7 @@ def test_delete_goal_not_logged_in(client):
     """
     Test that a user cannot delete a goal when they're not logged in.
     """
-    some_id = "5f0f4a09647ec38058dc4446" # Utilize an actual existing ID.
+    some_id = "5f11c9721a52881b3573c029" # Utilize an actual existing ID.
     res = client.post("/goals/"+some_id+"/delete", follow_redirects=True)
     assert b"Please log in to access this page" in res.data
 
@@ -60,10 +60,10 @@ def test_get_custom_goals():
     rpm = RestaurantProfileManager("janedoe")
     custom_goals = rpm.get_custom_goals()
     expected_custom_goals = [{
-        '_id': ObjectId("5f0f4a09647ec38058dc4446"),
-        'goal': "This is my custom goal."
+        'id': ObjectId("5f11c9721a52881b3573c029"),
+        'goal': "This is a custom goal."
     }, {
-        '_id': ObjectId("5f0f4a79647ec38058dc4447"),
+        'id': ObjectId("5f11c99a1a52881b3573c02a"),
         'goal': "This is another custom goal."
     }]
     assert custom_goals == expected_custom_goals

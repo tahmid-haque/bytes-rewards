@@ -6,7 +6,6 @@ It is used to interact with the restaurant profile database.
 from modules.profile_manager import ProfileManager
 from modules.database import Database, QueryFailureException, UpdateFailureException
 
-
 class RestaurantProfileManager(ProfileManager):
     """
     This class generates a restaurant profile manager, capable of managing

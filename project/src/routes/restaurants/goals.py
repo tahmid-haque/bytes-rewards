@@ -14,6 +14,7 @@ def view_custom_goals():
     """
     When retrieving this route, render a restaurant profile's list of
     customized goals.
+    Prerequisite: User is logged in.
     """
     goals = current_user.get_custom_goals()
     return render_template('customization.j2', goals=goals)
@@ -24,17 +25,19 @@ def add_goal():
     """
     When posting to this route, add the goal given in form.
     Redirect to the goal customization page on completion.
+    Prerequisite: User is logged in.
     """
-    goal = request.form["goals"]
+    goal = request.form["goal"]
     current_user.add_custom_goal(goal)
     return redirect("/goals")
 
-@bp.route('/<goal_id>/delete')
+@bp.route('/<goal_id>/delete', methods=['POST'])
 @login_required
 def delete_goal(goal_id):
     """
     When retrieving this route, delete the goal given by goal_id.
     Redirect to the goal customization page on completion.
+    Prerequisite: User is logged in.
     """
     current_user.remove_custom_goal(goal_id)
     return redirect("/goals")
