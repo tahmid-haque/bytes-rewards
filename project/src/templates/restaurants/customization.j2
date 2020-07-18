@@ -24,7 +24,7 @@
                 <i class="fas fa-plus"></i>
             </h1>
             <form action="/goals/add" method="POST">
-                <input type="text" name="goal" placeholder="Add New Goal">
+                <input type="text" name="goal" placeholder="Add New Goal" required>
             </form>
             <ul>
                 {% for item in goals %}
@@ -34,6 +34,11 @@
                         <span class="goal">{{item["goal"]}}</span>
                     </li>
                 {% endfor %}
+                {% if goals|length == 0 %}
+                    <li>
+                        <span id="empty">No custom goals found. Add one above!</span>
+                    </li>
+                {% endif %}
             </ul>
         </div>
         <p id="advisory">

@@ -133,3 +133,9 @@ li:nth-child(2n + 1) {
 .hidden {
     display: none;
 }
+
+#empty {
+    display: block;
+    padding-left: 20px;
+    color: #fb2525;
+}
