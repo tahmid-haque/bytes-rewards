@@ -1,187 +1,161 @@
 {% extends 'base.j2' %} 
 
 {% block head %}
-    <title>Bingo Editor (Web) </title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+    <title>Bytes | Bingo Editor</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/board_editor.css') }}">
 {% endblock head %} 
 
 {% block body %} 
-	<a href="/logout">Logout</a>
-    <div class="content">
-        <h1>Bingo Editor (Web) </h1>
-            <div class ="name-bingo-container">                
-				<form action="/board/save" method="POST">
-
-                <input 
-                    type="text" 
-                    name="board_name" 
-                    placeholder="Enter Name of your Bingo Board" 
-                    id="board-name" 
-                    {% if board_name|length > 0 %}
-                        value="{{board_name}}"
-                    {% endif %}
-                    required
-                >
-		
-                <table class="goal">
-					{% set count = 0 %}
-                    {% for i in range(25) %}
-                        {% if i % 5 == 0 %}
-                            </tr>
-                        {% endif %}
-
-                        <td> 
-						
-                            <div class="custom-select">
-								{% if i == 4 %}
-									<div class="first-reward-padding">
-										<div class="reward-select">
-											<select name="board_reward[]" required>
-												<option value="" hidden>Select reward:</option>
-												{% if rewards: %}
-												{% for a in rewards %}
-													<option value="{{ a['_id'] }}"
-														{% if i == 4 and board_reward[0] == a['_id'] %}
-															selected
-														{% endif %}
-													> 
-														{{ a["reward"] }}
-													</option>
-												{% endfor %}
-												{% endif %}
-											</select>
-										</div>
-									</div>
-								{% endif %}
-								{% if i % 5 == 4 %}
-									<div class="vertical-reward-padding">
-										<div class="reward-select">
-											<select name="board_reward[]" required>
-												<option value="" hidden>Select reward:</option>
-												{% if rewards: %}
-												{% for a in rewards %}
-													<option value="{{ a['_id'] }}"
-														{% if i == 4 and board_reward[1] == a['_id'] %}
-															selected
-														{% endif %}
-														{% if i == 9 and board_reward[2] == a['_id'] %}
-															selected
-														{% endif %}
-														{% if i == 14 and board_reward[3] == a['_id'] %}
-															selected
-														{% endif %}
-														{% if i == 19 and board_reward[4] == a['_id'] %}
-															selected
-														{% endif %}
-														{% if i == 24 and board_reward[5] == a['_id'] %}
-															selected
-														{% endif %}
-													> 
-														{{ a["reward"] }}
-													</option>
-												{% endfor %}
-												{% endif %}
-											</select>
-										</div>
-									</div>
-								{% endif %}
-																		
-								
-								{% if i == 24 %}
-									<div class="last-reward-padding">
-										<div class="reward-select">
-											<select name="board_reward[]" required>
-												<option value="" hidden>Select reward:</option>
-												{% if rewards: %}
-													{% for a in rewards %}
-														<option value="{{ a['_id'] }}"
-															{% if i == 24 and board_reward[6] == a['_id'] %}
-																selected
-															{% endif %}
-														> 
-															{{ a["reward"] }}
-														{% endfor %}
-													</option>
-													
-												{% endif %}
-											</select>
-										</div>
-									</div>
-									{% set count = count + 1 %}
-								{% endif %}
-							
-                                <select name="board[]" required>
-                                    <option value="" hidden>Select goal:</option>
-                                    {% if goals: %}
-                                    {% for a in goals %}
-                                        <option value="{{ a['_id'] }}"
-                                            {% if board|length > i and board[i] == a['_id'] %}
-                                                selected
-                                            {% endif %}
-                                        > 
-                                            {{ a["goal"] }}
-                                        </option>
-                                    {% endfor %}
-                                    {% endif %}
-                                </select>
-                            </div>
-							
-						
-                        </td>
-						
-                        {% if i % 5 == 4 %}
-                            </tr>
-                        {% endif %}  
-                    {% endfor %}
-                </table>
-				
-				
-            </div>
-
-			
-			<table class="reward">
-				{% for j in range(5) %}
-					{% if j % 5 == 0 %}
-						</tr>
-					{% endif %}
-					<td class="reward">
-						<div class="reward-select-table">
-							<select name="board_reward[]" required>
-								<option value="" hidden>Select reward:</option>
-									{% if rewards: %}
-										{% for a in rewards %}
-											<option value="{{ a['_id'] }}"
-												{% if board_reward|length > (7+(j%5)) and board_reward[(7+(j%5))] == a['_id'] %}
-													selected
-												{% endif %}
-											> 
-											{{ a["reward"] }}
-										{% endfor %}
-									{% endif %}
-								</option>
-							</select>
+	<div id="container">
+		<div id="build-area">
+			<div id="goals">
+				<div class="instruction">
+					Drag and drop goals onto the board:
+				</div>
+				<div class="list">
+					{% for i in range(goals|length) %}
+						<div class="item">
+							<div class="index">G{{i}}</div>
+							<div 
+								class="text draggable goal" 
+								title="{{goals[i]['goal']}}" 
+								key="{{goals[i]['_id']}}"
+								index="G{{i}}">
+							</div>
+						</div>
+					{% endfor %}
+				</div>
+			</div>
+			<div id="rewards">
+				<div class="instruction">
+					Drag and drop rewards onto the board:
+				</div>
+				<div class="list">
+					{% for j in range(rewards|length) %}
+						<div class="item">
+							<div class="index">R{{j}}</div>
+							<div 
+								class="text draggable reward" 
+								title="{{rewards[j]['reward']}}" 
+								key="{{rewards[j]['_id']}}"
+								index="R{{j}}">
+							</div>
+						</div>
+					{% endfor %}
+				</div>
+			</div>
+			<div class="buttons" id="back-customize-container">
+				<button id="back">Back</button>
+				<button id="customize">Customize</button>
+			</div>
+		</div>
+		<div id="board">
+			<table>
+				<tr>
+					<td colspan=5>
+						<div id="title">
+							<form action="/board/save" method="POST">
+								<input 
+									type="text" 
+									name="board_name" 
+									placeholder="Enter Name of your Bingo Board" 
+									id="board-name"
+									value="{{board_name}}"
+									required
+								>
+							</form>
 						</div>
 					</td>
-					{% if j % 5 == 4 %}
-						</tr>
-					{% endif %}
-				{% endfor %}
+					<td class="droppable reward" bingo="d2"></td>
+				</tr>
+				<tr>
+					<td class="droppable goal r1 c1 d1"></td>
+					<td class="droppable goal r1 c2"></td>
+					<td class="droppable goal r1 c3"></td>
+					<td class="droppable goal r1 c4"></td>
+					<td class="droppable goal r1 c5 d2"></td>
+					<td class="droppable reward" bingo="r1"></td>
+				</tr>
+				<tr>
+					<td class="droppable goal r2 c1"></td>
+					<td class="droppable goal r2 c2 d1"></td>
+					<td class="droppable goal r2 c3"></td>
+					<td class="droppable goal r2 c4 d2"></td>
+					<td class="droppable goal r2 c5"></td>
+					<td class="droppable reward" bingo="r2"></td>
+				</tr>
+				<tr>
+					<td class="droppable goal r3 c1"></td>
+					<td class="droppable goal r3 c2"></td>
+					<td class="droppable goal r3 c3 d1 d2"></td>
+					<td class="droppable goal r3 c4"></td>
+					<td class="droppable goal r3 c5"></td>
+					<td class="droppable reward" bingo="r3"></td>
+				</tr>
+				<tr>
+					<td class="droppable goal r4 c1"></td>
+					<td class="droppable goal r4 c2 d2"></td>
+					<td class="droppable goal r4 c3"></td>
+					<td class="droppable goal r4 c4 d1"></td>
+					<td class="droppable goal r4 c5"></td>
+					<td class="droppable reward" bingo="r4"></td>
+				</tr>
+				<tr>
+					<td class="droppable goal r5 c1 d2"></td>
+					<td class="droppable goal r5 c2"></td>
+					<td class="droppable goal r5 c3"></td>
+					<td class="droppable goal r5 c4"></td>
+					<td class="droppable goal r5 c5 d1"></td>
+					<td class="droppable reward" bingo="r5"></td>
+				</tr>
+				<tr>
+					<td class="droppable reward" bingo="c1"></td>
+					<td class="droppable reward" bingo="c2"></td>
+					<td class="droppable reward" bingo="c3"></td>
+					<td class="droppable reward" bingo="c4"></td>
+					<td class="droppable reward" bingo="c5"></td>
+					<td class="droppable reward" bingo="d1"></td>
+				</tr>
 			</table>
-		
+			<div class="buttons" id="clear-save-container">
+				<button id="clear">Clear</button>
+				<button id="save">Save</button>
+			</div>
+		</div>
+	</div>
+	<div id="buttons">
+			
+	</div>
 
-            <div class="clear-save-container">
-                <button type="button" value="Clear">Clear</button>
-                <button type="submit" value="Save">Save</button>
-            </div>
-    </div>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+	<script src="{{ url_for('static', filename='js/board_editor.js') }}"></script>
+	<script>
+		$(document).ready(function () {
+			setTimeout(function () {
+				let e, 
+					goalGrid = $("td.goal");
+					rewardGrid = $("td.reward");
 
-    <script>
-        document
-            .querySelector(".clear-save-container [type='button']")
-            .addEventListener("click", () => {
-                document.querySelector("#board-name").value = "";
-                document.querySelectorAll("select").forEach(e => e.value = "");
-            });
-    </script>
+				{% for k in range(board|length) %}
+					e = $(".list [key='{{board[k]}}']").clone().draggable(dragOptions);
+					setSize(e, cellWidth, cellHeight)
+						.css({ top: 0, left: 0 })
+						.prependTo(goalGrid.eq({{k}}));
+				{% endfor %}
 
+				{% for l in range(board_reward|length) %}
+					e = $(".list [key='{{board_reward[l]}}']").clone().draggable(dragOptions);
+					setSize(e, cellWidth, cellHeight)
+						.css({ top: 0, left: 0 })
+						.prependTo(rewardGrid.eq({{l}}));
+				{% endfor %}
+				cellWidth = $('#board').innerWidth() / 6;
+         		cellHeight = $('#board').innerHeight() / 7;
+				fixDroppables();
+				alignButtons();
+			}, 100);
+			
+		});
+	</script>
 {% endblock body %}
