@@ -53,3 +53,15 @@ input[type='button'] {
     font-family: 'poppins', sans-serif;
     font-weight: 600;
 }
+
+.logout-button {
+    border: none;
+    outline: none;
+    height: min-content;
+	width: 60px;
+    background: #fff;
+	text-align: center;
+    font-size: 12px;
+    border-radius: 10px;
+	box-shadow: 1px 1px 1px #DC143C;
+}
