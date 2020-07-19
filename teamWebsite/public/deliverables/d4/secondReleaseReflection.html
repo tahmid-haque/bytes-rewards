@@ -291,6 +291,73 @@
             </div>
 			
 			<div class="card border-dark h-100 mb-4">
+                <div class="card-header">Changes to System Components</div>
+                <div class="card-body">
+                    <div class="m-0 px-3 h-100">
+                        <div>
+							<figure>
+								<img
+								src="/assets/d3/img/BoxAndLine.png"
+								class="sprint-plan-img mb2"
+								title="Figure 1: Deliverable 3 Box and Line Diagram"
+								/>
+								<figcaption> Figure 1: Deliverable 3 Box and Line Diagram (for comparison) </figcaption>
+							</figure>
+							
+							<figure>
+								<img
+								src="/assets/d4/img/d4_box_diagram.png"
+								class="sprint-plan-img mb2"
+								title="Figure 2: Deliverable 4 Box and Line Diagram"
+								/>
+								<figcaption> Figure 2: Deliverable 4 Box and Line Diagram </figcaption>
+							</figure>
+							<p>
+								We added changes to system components according to the feedback 
+								we received from our TA after the last deliverable. As seen in Figure 1, the
+								frontend components all shared the same backend communication, both on the A) Website Interface 
+								and the B) Application Interface. In this deliverable (Figure 2), we decoupled these features 
+								by creating more specific backend communication components. That is, each feature has its own backend communication.
+								Notice also in Figure 2 that some interfaces have been grouped together in subcomponents as they share many similarities.
+								For example, in Figure 2 A) we have a subcomponent entitled Restaurant Profile Interfaces and inside we have Create Account 
+								Page, Login Interface, Restaurant Profile Editor and Restaurant Owner Summary. Each of these components all relate to the
+								Restaurant Profile, hence why they can be grouped together. However, the Goal and Reward Customization Page and the Bingo
+								Board Editor components are not considered as a Restaurant Profile Interface, yet they are still important features of the
+								Website Interface. Furthermore, we cleaned up the C) Backend. In Figure 2, we introduced changed the Database Management
+								Systems subcomponent into the Profile Management subcomponent and placed User Authentication under this subcomponent.
+								All the individual backend components now connect to the Profile Management subcomponent. We also created a more general
+								component called the User Management component, which Restaurant Management and Customer Management components inherit from.
+								The Friend Reward Comparison, Goal Completion Modifier, Reward Completion Modifier components no longer relate directly to
+								the Database Communication but rather indirectly through other components as seen in Figure 2. 
+							</p>
+						</div>
+                    </div>
+                </div>
+            </div>
+			
+			<div class="card border-dark h-100 mb-4">
+                <div class="card-header">Estimated and Actual Project Velocities</div>
+                <div class="card-body">
+                    <div class="m-0 px-3 h-100">
+                        <div>
+							<strong>Estimated Project Velocities</strong>
+								<ul>
+									<li> Sprint 2: 46 story points
+									<li> Sprint 3: 35 story points
+									<li> Sprint 4: 22 story points
+								</ul>
+							<strong>Actual Project Velocities</strong>
+								<ul>
+									<li> Sprint 2: 46 story points
+									<li> Sprint 3: 35 story points
+									<li> Sprint 4: 22 story points
+								</ul>
+						</div>
+                    </div>
+                </div>
+            </div>
+			
+			<div class="card border-dark h-100 mb-4">
                 <div class="card-header">Difficulties We Encountered</div>
                 <div class="card-body">
                     <div class="m-0 px-3 h-100">
@@ -310,6 +377,48 @@
                 </div>
             </div>
 			
+			<div class="card border-dark h-100 mb-4">
+                <div class="card-header">How Our Contingency Plan Was Useful/ How It Varied</div>
+                <div class="card-body">
+                    <div class="m-0 px-3 h-100">
+                        <div>
+							<p>
+								Thankfully, there was no need to utilize our contingency plan for this deliverable.
+								From the last deliverable, we were able to complete three sprints. 
+								The first sprint we split according to web and application interfaces; however, due to setbacks,
+								our application became entirely web based. Thankfully, the conversion of application to web was
+								not difficult and did not set back the overall project. Overall, everyone was able to get their
+								work done on time. The second sprint we split according to feature, where we would implement both
+								the frontend, backend and testing. In this sprint, everyone was able to finish their work on time.
+								In the third sprint there was only one front end and the rest of us implemented the backend features.
+								In this sprint, our estimated project velocity was low. More so, we were all able to finish the frontend
+								and backend implementation early in the sprint. Thus, we decided to clean up the appearance of our bingo board,
+								since in our meeting with the client, that was one of the major things they wanted us to fix. Because of this,
+								we allotted a new task for creating a mockup of the new interface and the implementation of it.
+							</p>
+						</div>
+                    </div>
+                </div>
+            </div>
+
+			<div class="card border-dark h-100 mb-4">
+                <div class="card-header">How to Improve the Next Sprint Based on Experience With This Deliverable</div>
+                <div class="card-body">
+                    <div class="m-0 px-3 h-100">
+                        <div>
+							<p>
+								In this deliverable we learned how to properly peer review, so now we can provide better feedback
+								to our teammates on their code moving forward. We also gained feedback on our user stories, 
+								so in the future, we can write better user stories. In addition, we have a clearer grasp of how 
+								long it may take us to implement features individually, so calculating these may be easier in the future, 
+								and if time permits, we can increase our project velocity for the upcoming sprints. Since we have taken 
+								time to learn the tools needed, we can also work more quickly on these features.
+							</p>
+						</div>
+                    </div>
+                </div>
+            </div>
+
 			<div class="card border-dark h-100 mb-4">
                 <div class="card-header">Project Progression from Deliverable 3 to 4</div>
                 <div class="card-body">
