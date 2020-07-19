@@ -1,0 +1,135 @@
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: rgb(231, 231, 231);
+}
+
+h1 {
+    background-color: #a50000;
+    color: white;
+    margin: 0;
+    padding: 10px 20px;
+    font-size: 24px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.fa-plus:hover {
+    cursor: pointer;
+}
+
+input {
+    font-size: 18px;
+    background-color: #444;
+    width: 100%;
+    padding: 13px 13px 13px 20px;
+    box-sizing: border-box;
+    color: #fff;
+    border: 3px solid rgba(0, 0, 0, 0);
+    transition: all, linear, 0.4s;
+}
+
+input::placeholder {
+    color: #bbb;
+}
+
+input:focus {
+    background-color: #888;
+    border: 3px solid #fff;
+    outline: none;
+}
+
+input:focus::placeholder {
+    color: #ddd;
+}
+
+.hidden-input {
+    height: 0;
+    padding: 0;
+    border: none;
+}
+
+ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    overflow: auto;
+}
+
+li {
+    line-height: 40px;
+    color: #fff;
+    display: flex;
+}
+
+li .goal {
+    line-height: 40px;
+    height: min-content;
+}
+
+li .delete {
+    background-color: #d81600;
+    display: block;
+    margin-right: 20px;
+    text-align: center;
+    color: white;
+    width: 0px;
+    transition: all, linear, 400ms;
+    opacity: 0;
+}
+
+li:hover .delete {
+    opacity: 1;
+    width: max-content;
+    padding: 0px 15px;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+li:nth-child(2n + 1) {
+    background-color: black;
+    color: white;
+}
+
+#container {
+    margin: 100px auto;
+    width: 90%;
+    min-width: 320px;
+    max-width: 1000px;
+}
+
+#dark-container {
+    background-color: #444;
+    box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);
+}
+
+#message {
+    color: #fb2525;
+    margin-bottom: 20px;
+    text-align: center;
+    background-color: yellow;
+    font-weight: bold;
+    padding: 10px;
+    border: 2px solid gray;
+}
+
+#advisory {
+    margin-top: 20px;
+    text-align: center;
+    background-color: white;
+    font-weight: bold;
+    padding: 10px;
+    border: 2px solid gray;
+}
+
+#advisory span {
+    color: #fb2525;
+    font-weight: 600;
+    font-size: 18px;
+    display: block;
+}
+
+.hidden {
+    display: none;
+}
