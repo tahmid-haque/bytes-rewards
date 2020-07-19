@@ -291,51 +291,6 @@
             </div>
 			
 			<div class="card border-dark h-100 mb-4">
-                <div class="card-header">Changes to System Components</div>
-                <div class="card-body">
-                    <div class="m-0 px-3 h-100">
-                        <div>
-							<figure>
-								<img
-								src="/assets/d3/img/BoxAndLine.png"
-								class="sprint-plan-img mb2"
-								title="Figure 1: Deliverable 3 Box and Line Diagram"
-								/>
-								<figcaption> Figure 1: Deliverable 3 Box and Line Diagram (for comparison) </figcaption>
-							</figure>
-							
-							<figure>
-								<img
-								src="/assets/d4/img/d4_box_diagram.png"
-								class="sprint-plan-img mb2"
-								title="Figure 2: Deliverable 4 Box and Line Diagram"
-								/>
-								<figcaption> Figure 2: Deliverable 4 Box and Line Diagram </figcaption>
-							</figure>
-							<p>
-								We added changes to system components according to the feedback 
-								we received from our TA after the last deliverable. As seen in Figure 1, the
-								frontend components all shared the same backend communication, both on the A) Website Interface 
-								and the B) Application Interface. In this deliverable (Figure 2), we decoupled these features 
-								by creating more specific backend communication components. That is, each feature has its own backend communication.
-								Notice also in Figure 2 that some interfaces have been grouped together in subcomponents as they share many similarities.
-								For example, in Figure 2 A) we have a subcomponent entitled Restaurant Profile Interfaces and inside we have Create Account 
-								Page, Login Interface, Restaurant Profile Editor and Restaurant Owner Summary. Each of these components all relate to the
-								Restaurant Profile, hence why they can be grouped together. However, the Goal and Reward Customization Page and the Bingo
-								Board Editor components are not considered as a Restaurant Profile Interface, yet they are still important features of the
-								Website Interface. Furthermore, we cleaned up the C) Backend. In Figure 2, we introduced changed the Database Management
-								Systems subcomponent into the Profile Management subcomponent and placed User Authentication under this subcomponent.
-								All the individual backend components now connect to the Profile Management subcomponent. We also created a more general
-								component called the User Management component, which Restaurant Management and Customer Management components inherit from.
-								The Friend Reward Comparison, Goal Completion Modifier, Reward Completion Modifier components no longer relate directly to
-								the Database Communication but rather indirectly through other components as seen in Figure 2. 
-							</p>
-						</div>
-                    </div>
-                </div>
-            </div>
-			
-			<div class="card border-dark h-100 mb-4">
                 <div class="card-header">Estimated and Actual Project Velocities</div>
                 <div class="card-body">
                     <div class="m-0 px-3 h-100">
