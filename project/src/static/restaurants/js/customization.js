@@ -27,7 +27,7 @@ document.querySelector('h1 i').onclick = () => {
 // Submit the delete form
 document.querySelectorAll('.delete').forEach((e) => {
     e.onclick = () => {
-        form = document.querySelector(`form[action='/goals/${e.id}/delete']`);
+        form = e.parentElement.children[0];
         if (confirm('Are you sure you want to delete this goal?'))
             form.submit();
     };

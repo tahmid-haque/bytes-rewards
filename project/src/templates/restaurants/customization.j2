@@ -29,8 +29,10 @@
             <ul>
                 {% for item in goals %}
                     <li>
-                        <form action="/goals/{{item['_id']}}/delete"></form>
-                        <span class="delete" id="{{item['_id']}}"><i class="far fa-trash-alt"></i></span>
+                        <form action="/goals/delete" method="POST">
+                            <input type="hidden" name="deleted-goal" value="{{item['_id']}}">
+                        </form>
+                        <span class="delete"><i class="far fa-trash-alt"></i></span>
                         <span class="goal">{{item["goal"]}}</span>
                     </li>
                 {% endfor %}

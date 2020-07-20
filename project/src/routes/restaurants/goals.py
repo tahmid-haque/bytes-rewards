@@ -31,13 +31,14 @@ def add_goal():
     current_user.add_custom_goal(goal)
     return redirect("/goals")
 
-@bp.route('/<goal_id>/delete', methods=['POST'])
+@bp.route('/delete', methods=['POST'])
 @login_required
-def delete_goal(goal_id):
+def delete_goal():
     """
     When retrieving this route, delete the goal given by goal_id.
     Redirect to the goal customization page on completion.
     Prerequisite: User is logged in.
     """
+    goal_id = request.form["deleted-goal"]
     current_user.remove_custom_goal(goal_id)
     return redirect("/goals")

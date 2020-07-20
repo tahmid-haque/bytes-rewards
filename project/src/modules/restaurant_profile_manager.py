@@ -206,7 +206,7 @@ class RestaurantProfileManager(ProfileManager):
             self.db.update('restaurant_users', {"username": self.id}, {
                 "$pull": {
                     "goals": {
-                        "_id": goal_id
+                        "_id": ObjectId(goal_id)
                     }
                 }
             })
