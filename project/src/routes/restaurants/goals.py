@@ -2,7 +2,7 @@
 This file contains routes related to cusomizing restaurant user's goals.
 """
 
-from flask import Blueprint, render_template, request, redirect
+from flask import Blueprint, render_template, request, redirect, flash
 from flask_login import current_user, login_required
 
 bp = Blueprint("goals", __name__)
@@ -28,7 +28,9 @@ def add_goal():
     Prerequisite: User is logged in.
     """
     goal = request.form["goal"]
-    current_user.add_custom_goal(goal)
+    added = current_user.add_custom_goal(goal)
+    if not added:
+        flash("This is a duplicate goal. Goal not added.")
     return redirect("/goals")
 
 @bp.route('/delete', methods=['POST'])
