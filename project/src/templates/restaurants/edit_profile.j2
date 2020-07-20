@@ -88,15 +88,17 @@
                 placeholder='ON'
                 required
                 readonly
-            />           
-            <p id="checkbox-container">
+            />
+            {% if allow_public %}
+                <p id="checkbox-container">
                 <span id="checkbox-label">Set Public:</span>
                 <input
                     type="checkbox"
                     name="is_public"
                     id="checkbox"
                 />   
-            </p>       
+            </p>      
+            {% endif %}            
             <input type="submit" value="Submit">
         </form>
             {% if profile %}

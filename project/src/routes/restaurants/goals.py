@@ -2,7 +2,7 @@
 This file contains routes related to cusomizing restaurant user's goals.
 """
 
-from flask import Blueprint, render_template, request, redirect
+from flask import Blueprint, render_template, request, redirect, flash
 from flask_login import current_user, login_required
 
 bp = Blueprint("goals", __name__)
@@ -28,16 +28,21 @@ def add_goal():
     Prerequisite: User is logged in.
     """
     goal = request.form["goal"]
-    current_user.add_custom_goal(goal)
+    added = current_user.add_custom_goal(goal)
+    if not added:
+        flash("This is a duplicate goal. Goal not added.")
     return redirect("/goals")
 
-@bp.route('/<goal_id>/delete', methods=['POST'])
+@bp.route('/delete', methods=['POST'])
 @login_required
-def delete_goal(goal_id):
+def delete_goal():
     """
     When retrieving this route, delete the goal given by goal_id.
     Redirect to the goal customization page on completion.
     Prerequisite: User is logged in.
     """
-    current_user.remove_custom_goal(goal_id)
+    goal_id = request.form["deleted-goal"]
+    removed = current_user.remove_custom_goal(goal_id)
+    if not removed:
+        flash("This goal in on your current game board; replace and try again")
     return redirect("/goals")

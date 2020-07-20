@@ -28,23 +28,9 @@ class RestaurantProfileManager(ProfileManager):
         Bytes team.
         """
         try:
-            shared_goal_ids = self.db.query('goals', {
-                "shared": True
-            })[0]["goals"]
-            return self.db.query('goals', {"_id": {"$in": shared_goal_ids}})
+            return self.db.query('goals')
         except QueryFailureException:
             print("There was an issue retrieving goals.")
-            return []
-
-    def get_custom_goals(self):
-        """
-        Gets custom goals added by the user.
-        """
-        try:
-            user = self.db.query('restaurant_users', {"username": self.id})[0]
-            return user["goals"]
-        except QueryFailureException:
-            print("Something is wrong with the query")
             return []
 
     def get_goals(self):
@@ -52,8 +38,8 @@ class RestaurantProfileManager(ProfileManager):
         Return a list of all goals that the current restaurant user can use
         within their profile.
         """
-        custom=self.get_custom_goals()
-        shared=self.get_shared_goals()
+        custom = self.get_custom_goals()
+        shared = self.get_shared_goals()
         return custom+shared
 
     def get_bingo_board(self):
@@ -96,11 +82,7 @@ class RestaurantProfileManager(ProfileManager):
         Bytes team.
         """
         try:
-            shared_rewards = self.db.query('rewards')
-            shared_reward_ids = []
-            for i in shared_rewards:
-                shared_reward_ids.append(i['_id'])
-            return self.db.query('rewards', {"_id": {"$in": shared_reward_ids}})
+            return self.db.query('rewards')
         except QueryFailureException:
             print("There was an issue retrieving rewards.")
             return []
@@ -166,6 +148,8 @@ class RestaurantProfileManager(ProfileManager):
         try:
             user = self.db.query('restaurant_users', {"username": self.id})[0]
             return user["goals"]
+        except KeyError:  # New User, no goals found
+            return []
         except QueryFailureException:
             print("Something is wrong with the query")
             return []
@@ -176,8 +160,8 @@ class RestaurantProfileManager(ProfileManager):
         If goal already exists, return False.
         """
         try:
-            in_database = self.db.query('restaurant_users',
-                                        {'goals.goal': goal})
+            goals = self.get_goals()
+            in_database = [x['goal'] for x in goals if x['goal'] == goal]
             if in_database == []:
                 try:
                     self.db.update(
@@ -203,10 +187,13 @@ class RestaurantProfileManager(ProfileManager):
         True upon success; throws exception and returns False otherwise.
         """
         try:
+            goals = self.get_bingo_board()["board"]
+            if ObjectId(goal_id) in goals:
+                return False
             self.db.update('restaurant_users', {"username": self.id}, {
                 "$pull": {
                     "goals": {
-                        "_id": goal_id
+                        "_id": ObjectId(goal_id)
                     }
                 }
             })
