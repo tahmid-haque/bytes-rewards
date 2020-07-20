@@ -155,6 +155,8 @@ class RestaurantProfileManager(ProfileManager):
         try:
             user = self.db.query('restaurant_users', {"username": self.id})[0]
             return user["goals"]
+        except KeyError:  # New User, no goals found
+            return []
         except QueryFailureException:
             print("Something is wrong with the query")
             return []
