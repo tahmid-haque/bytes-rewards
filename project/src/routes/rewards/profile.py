@@ -33,9 +33,13 @@ def view_board(obj_id):
         if str(restaurant_user["_id"]
               ) == obj_id and restaurant_user["profile"]["is_public"] is True:
             board_name = restaurant_user["bingo_board"]["name"]
-            goal_ids = restaurant_user["bingo_board"]["board"]
+            goal_ids = restaurant_user["bingo_board"]["board"] 
+            custom_goals_dict = restaurant_user["goals"]
             for goal_id in goal_ids:
                 for goal in current_user.get_goals():
+                    if goal["_id"] == goal_id:
+                        goals.append(goal["goal"])
+                for goal in custom_goals_dict:
                     if goal["_id"] == goal_id:
                         goals.append(goal["goal"])
             reward_ids = restaurant_user["bingo_board"]["board_reward"]
