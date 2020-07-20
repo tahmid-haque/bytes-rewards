@@ -3,7 +3,6 @@ body {
     padding: 0;
     background-size: cover;
     background-position: center;
-    font-family: sans-serif;
     background-color: rgb(231, 231, 231);
 }
 
@@ -58,6 +57,7 @@ input[type='tel'] {
     height: 40px;
     color: #fff;
     font-size: 16px;
+    font-family: 'poppins', sans-serif;
 }
 
 .loginbox input[type='button'] {
@@ -92,6 +92,7 @@ input[type='tel'] {
     background-color: yellow;
     padding: 10px;
     border: 2px solid gray;
+    font-weight: bold;
 }
 
 #password {
@@ -113,7 +114,7 @@ ul {
 }
 
 input[type='submit'] {
-    font-size: 18px;
+    font-size: 16px;
     padding: 8px 0;
     margin-bottom: 0px;
     background-color: white;
@@ -121,6 +122,8 @@ input[type='submit'] {
     transition: 0.3s;
     border: none;
     border-radius: 2%;
+    font-weight: 600;
+    font-family: 'poppins', sans-serif;
 }
 
 input[type='submit']:hover {
@@ -141,7 +144,7 @@ textarea {
     color: #fff;
     font-size: 16px;
     resize: vertical;
-    font-family: sans-serif;
+    font-family: 'poppins', sans-serif;
     font-size: 16px;
     overflow: hidden;
     min-height: 40px;
@@ -171,7 +174,7 @@ input:read-only {
 
 #back {
     width: 100%;
-    font-size: 18px;
+    font-size: 16px;
     padding: 8px 0;
     margin: 15px 0 0 0;
     background-color: red;
@@ -179,6 +182,8 @@ input:read-only {
     color: white;
     transition: 0.3s;
     border-radius: 2%;
+    font-family: 'poppins', sans-serif;
+    font-weight: 600;
 }
 
 #back:hover {
