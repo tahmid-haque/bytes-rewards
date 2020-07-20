@@ -38,13 +38,16 @@ def test_remove_custom_goal():
     with app.app_context():
         rpm = RestaurantProfileManager("vchang")
         old_goals = rpm.get_custom_goals()
-        board_goals = rpm.get_bingo_board()
-        rand_int = random.randint(0, len(old_goals)-1)
-        while old_goals[rand_int]['_id'] in board_goals:
-            rand_int = random.randint(0, len(old_goals)-1)
-        rpm.remove_custom_goal(old_goals[rand_int]['_id'])
+        board_goals = rpm.get_bingo_board()["board"]
+        found = False
+        for i in range (0, len(old_goals)):
+            if ObjectId(old_goals[i]['_id']) not in board_goals:
+                found = True
+                rpm.remove_custom_goal(old_goals[i]['_id'])
+                break
         new_goals = rpm.get_custom_goals()
-        assert len(new_goals) == (len(old_goals) - 1)
+        assert (len(new_goals) == len(old_goals) and found == False) or \
+               (len(new_goals) == (len(old_goals) - 1) and found == True)
 
 def test_remove_custom_goal_on_board():
     """
@@ -55,10 +58,10 @@ def test_remove_custom_goal_on_board():
     with app.app_context():
         rpm = RestaurantProfileManager("vchang")
         old_goals = rpm.get_custom_goals()
-        board_goals = rpm.get_bingo_board()
-        for i in range (0, (len(old_goals)-1)):
+        board_goals = rpm.get_bingo_board()["board"]
+        for i in range (0, len(old_goals)):
             if ObjectId(old_goals[i]['_id']) in board_goals:
-                rpm.remove_custom_goal(old_goals[index]['_id'])
+                rpm.remove_custom_goal(old_goals[i]['_id'])
                 break
         new_goals = rpm.get_custom_goals()
         assert len(new_goals) == len(old_goals)
