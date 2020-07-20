@@ -42,5 +42,7 @@ def delete_goal():
     Prerequisite: User is logged in.
     """
     goal_id = request.form["deleted-goal"]
-    current_user.remove_custom_goal(goal_id)
+    removed = current_user.remove_custom_goal(goal_id)
+    if not removed:
+        flash("This goal in on your current game board; replace and try again")
     return redirect("/goals")

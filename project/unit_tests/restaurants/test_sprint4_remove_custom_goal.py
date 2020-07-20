@@ -37,8 +37,28 @@ def test_remove_custom_goal():
     with app.app_context():
         rpm = RestaurantProfileManager("vchang")
         old_goals = rpm.get_custom_goals()
+        board_goals = rpm.get_bingo_board()
         rand_int = random.randint(0, len(old_goals)-1)
+        while old_goals[rand_int]['_id'] in board_goals:
+            rand_int = random.randint(0, len(old_goals)-1)
         rpm.remove_custom_goal(old_goals[rand_int]['_id'])
         new_goals = rpm.get_custom_goals()
         assert len(new_goals) == (len(old_goals) - 1)
+
+def test_remove_custom_goal_on_board():
+    """
+    Test that the remove_custom_goal() function in 
+    restaurant_profile_manager.py will not remove a goal
+    that is on the board.
+    """
+    with app.app_context():
+        rpm = RestaurantProfileManager("vchang")
+        old_goals = rpm.get_custom_goals()
+        board_goals = rpm.get_bingo_board()
+        for i in range (0, (len(old_goals)-1)):
+            if ObjectId(old_goals[i]['_id']) in board_goals:
+                rpm.remove_custom_goal(old_goals[index]['_id'])
+                break
+        new_goals = rpm.get_custom_goals()
+        assert len(new_goals) == len(old_goals)
 

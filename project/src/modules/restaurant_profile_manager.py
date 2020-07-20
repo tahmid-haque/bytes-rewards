@@ -41,8 +41,8 @@ class RestaurantProfileManager(ProfileManager):
         Return a list of all goals that the current restaurant user can use
         within their profile.
         """
-        custom=self.get_custom_goals()
-        shared=self.get_shared_goals()
+        custom = self.get_custom_goals()
+        shared = self.get_shared_goals()
         return custom+shared
 
     def get_bingo_board(self):
@@ -194,6 +194,9 @@ class RestaurantProfileManager(ProfileManager):
         True upon success; throws exception and returns False otherwise.
         """
         try:
+            goals = self.get_bingo_board()["board"]
+            if ObjectId(goal_id) in goals:
+                return False
             self.db.update('restaurant_users', {"username": self.id}, {
                 "$pull": {
                     "goals": {
