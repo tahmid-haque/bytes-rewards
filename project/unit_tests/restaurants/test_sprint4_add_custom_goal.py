@@ -37,7 +37,7 @@ def test_add_custom_goal():
     """
     with app.app_context():
         rpm = RestaurantProfileManager("vchang")
-        existing_goal_dict = rpm.get_custom_goals()
+        existing_goal_dict = rpm.get_goals()
         existing_goal_list = [x['goal'] for x in existing_goal_dict]
         count = 2
         inList = True
@@ -47,7 +47,7 @@ def test_add_custom_goal():
             if expected_goal not in existing_goal_list:
                 inList = False
         rpm.add_custom_goal(expected_goal)
-        goal_list = rpm.get_custom_goals()
+        goal_list = rpm.get_goals()
         
         goal = [x for x in goal_list if x['goal'] == expected_goal]
         
@@ -62,11 +62,11 @@ def test_add__duplicate_custom_goal():
     """
     with app.app_context():
         rpm = RestaurantProfileManager("vchang")
-        existing_goal_dict = rpm.get_custom_goals()
+        existing_goal_dict = rpm.get_goals()
         existing_goal_list = [x['goal'] for x in existing_goal_dict]
         dupe_goal = existing_goal_list[0]
         rpm.add_custom_goal(dupe_goal)
-        goal_list = rpm.get_custom_goals()
+        goal_list = rpm.get_goals()
         
         goal = [x for x in goal_list if x['goal'] == dupe_goal]
         
