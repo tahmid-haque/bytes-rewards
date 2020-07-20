@@ -28,10 +28,7 @@ class RestaurantProfileManager(ProfileManager):
         Bytes team.
         """
         try:
-            shared_goal_ids = self.db.query('goals', {
-                "shared": True
-            })[0]["goals"]
-            return self.db.query('goals', {"_id": {"$in": shared_goal_ids}})
+            return self.db.query('goals')
         except QueryFailureException:
             print("There was an issue retrieving goals.")
             return []
@@ -85,11 +82,7 @@ class RestaurantProfileManager(ProfileManager):
         Bytes team.
         """
         try:
-            shared_rewards = self.db.query('rewards')
-            shared_reward_ids = []
-            for i in shared_rewards:
-                shared_reward_ids.append(i['_id'])
-            return self.db.query('rewards', {"_id": {"$in": shared_reward_ids}})
+            return self.db.query('rewards')
         except QueryFailureException:
             print("There was an issue retrieving rewards.")
             return []
