@@ -8,6 +8,9 @@
 {% endblock head %} 
 
 {% block body %} 
+	<div class="back-button">
+		<a href="/board">Back</a>
+    </div>
     <div id="container">
         <p id="message" 
             {% with messages = get_flashed_messages() %}
