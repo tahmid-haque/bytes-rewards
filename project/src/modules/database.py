@@ -3,6 +3,7 @@ This file houses all databases-related components. It includes support for all
 CRUD operations and provided custom error handling.
 """
 
+import os
 from flask_pymongo import PyMongo, ObjectId  # Import Flask-PyMongo utilities
 from flask import current_app
 
@@ -35,7 +36,7 @@ class Database:
 
     # Indicates mongo server location and corresponding database, "bytes"
     mongoURI = "mongodb+srv://admin:alwW8GtvfSoyHF4e@cluster0-wjxhu." +\
-               "azure.mongodb.net/bytes?retryWrites=true&w=majority"
+               "azure.mongodb.net/<DATABASE_NAME>?retryWrites=true&w=majority"
 
     @staticmethod
     def get_instance():
@@ -75,7 +76,10 @@ class Database:
                 getInstance.")
 
         # Integrate Mongo w/ Flask and save database to object
-        current_app.config["MONGO_URI"] = Database.mongoURI
+        db_name = os.environ.get("BYTES_DATABASE", "bytes-dev")
+        if current_app.testing:
+            db_name = "bytes-testing"
+        current_app.config["MONGO_URI"] = Database.mongoURI.replace("<DATABASE_NAME>", db_name)
         self.db = PyMongo(current_app).db
         Database.instance = self
 

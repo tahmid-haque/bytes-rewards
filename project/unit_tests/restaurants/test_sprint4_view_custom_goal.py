@@ -60,10 +60,10 @@ def test_get_custom_goals():
     rpm = RestaurantProfileManager("janedoe")
     custom_goals = rpm.get_custom_goals()
     expected_custom_goals = [{
-        'id': ObjectId("5f11c9721a52881b3573c029"),
+        '_id': ObjectId("5f11c9721a52881b3573c029"),
         'goal': "This is a custom goal."
     }, {
-        'id': ObjectId("5f11c99a1a52881b3573c02a"),
+        '_id': ObjectId("5f11c99a1a52881b3573c02a"),
         'goal': "This is another custom goal."
     }]
     assert custom_goals == expected_custom_goals
