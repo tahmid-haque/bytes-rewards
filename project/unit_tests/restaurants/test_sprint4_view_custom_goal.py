@@ -48,8 +48,8 @@ def test_delete_goal_not_logged_in(client):
     """
     Test that a user cannot delete a goal when they're not logged in.
     """
-    some_id = "5f11c9721a52881b3573c029" # Utilize an actual existing ID.
-    res = client.post("/goals/"+some_id+"/delete", follow_redirects=True)
+    some_id = {"deleted-goal": "5f11c9721a52881b3573c029"} # Utilize an actual existing ID.
+    res = client.post("/goals/delete", data=some_id, follow_redirects=True)
     assert b"Please log in to access this page" in res.data
 
 def test_get_custom_goals():
