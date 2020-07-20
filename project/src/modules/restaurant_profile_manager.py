@@ -7,7 +7,6 @@ from bson.objectid import ObjectId
 from modules.profile_manager import ProfileManager
 from modules.database import Database, QueryFailureException, UpdateFailureException
 
-
 class RestaurantProfileManager(ProfileManager):
     """
     This class generates a restaurant profile manager, capable of managing
@@ -160,6 +159,17 @@ class RestaurantProfileManager(ProfileManager):
         users = self.get_public_users()
         return {owner["_id"]: owner["profile"] for owner in users}
 
+    def get_custom_goals(self):
+        """
+        Gets custom goals added by the user.
+        """
+        try:
+            user = self.db.query('restaurant_users', {"username": self.id})[0]
+            return user["goals"]
+        except QueryFailureException:
+            print("Something is wrong with the query")
+            return []
+
     def add_custom_goal(self, goal):
         """
         Add a custom goal to the restaurant profile. If successful, return True.
@@ -204,4 +214,3 @@ class RestaurantProfileManager(ProfileManager):
         except QueryFailureException:
             print("There was an issue deleting the goal.")
             return False
-
