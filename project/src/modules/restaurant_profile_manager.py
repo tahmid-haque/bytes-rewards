@@ -167,8 +167,7 @@ class RestaurantProfileManager(ProfileManager):
         If goal already exists, return False.
         """
         try:
-            in_database = self.db.query('restaurant_users',
-                                        {'goals.goal': goal})
+            in_database = self.get_shared_goals()
             if in_database == []:
                 try:
                     self.db.update(
