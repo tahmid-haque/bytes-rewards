@@ -222,7 +222,7 @@ $('#customize').click(function () {
             'Are you sure you want to leave this page? All unsaved changes will be lost.'
         )
     ) {
-        window.location.href = '/goals';
+        window.location.href = '/customize';
     }
 });
 

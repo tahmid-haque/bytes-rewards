@@ -9,7 +9,7 @@ from modules.restaurant_profile_manager import RestaurantProfileManager
 from routes.authentication import get_auth_routes, add_auth
 from routes.restaurants.profile import bp as profile_routes
 from routes.restaurants.board import bp as board_routes
-from routes.restaurants.goals import bp as goal_routes
+from routes.restaurants.customize import bp as customize_routes
 
 # Initialize a flask app using current file
 app = Flask(__name__,
@@ -19,7 +19,7 @@ add_auth(app, RestaurantProfileManager)
 app.register_blueprint(get_auth_routes(RestaurantProfileManager))
 app.register_blueprint(profile_routes, url_prefix="/profile")
 app.register_blueprint(board_routes, url_prefix="/board")
-app.register_blueprint(goal_routes, url_prefix="/goals")
+app.register_blueprint(customize_routes, url_prefix="/customize")
 
 
 @app.route('/')
