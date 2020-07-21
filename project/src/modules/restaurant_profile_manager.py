@@ -7,6 +7,7 @@ from bson.objectid import ObjectId
 from modules.profile_manager import ProfileManager
 from modules.database import Database, QueryFailureException, UpdateFailureException
 
+
 class RestaurantProfileManager(ProfileManager):
     """
     This class generates a restaurant profile manager, capable of managing
@@ -40,7 +41,7 @@ class RestaurantProfileManager(ProfileManager):
         """
         custom = self.get_custom_goals()
         shared = self.get_shared_goals()
-        return custom+shared
+        return custom + shared
 
     def get_bingo_board(self):
         """
@@ -89,10 +90,12 @@ class RestaurantProfileManager(ProfileManager):
 
     def get_rewards(self):
         """
-        Return a list of all goals that the curren  t restaurant user can use
+        Return a list of all rewards that the current restaurant user can use
         within their profile.
         """
-        return self.get_shared_rewards()
+        custom = self.get_custom_rewards()
+        shared = self.get_shared_rewards()
+        return custom + shared
 
     def get_profile(self):
         """
@@ -113,11 +116,10 @@ class RestaurantProfileManager(ProfileManager):
         """
         profile['is_public'] = 'is_public' in profile
         try:
-            self.db.update('restaurant_users', {"username": self.id}, {
-                '$set': {
-                    "profile": profile
-                }
-            })
+            self.db.update('restaurant_users', {"username": self.id},
+                           {'$set': {
+                               "profile": profile
+                           }})
         except UpdateFailureException:
             print("There was an issue updating a profile.")
 
@@ -126,9 +128,8 @@ class RestaurantProfileManager(ProfileManager):
         Get all restaurant users that have a public profile.
         """
         try:
-            restaurant_owners = self.db.query('restaurant_users', {
-                'profile.is_public': True
-            })
+            restaurant_owners = self.db.query('restaurant_users',
+                                              {'profile.is_public': True})
             return restaurant_owners
         except QueryFailureException:
             print("Something's wrong with the query.")
@@ -190,14 +191,55 @@ class RestaurantProfileManager(ProfileManager):
             goals = self.get_bingo_board()["board"]
             if ObjectId(goal_id) in goals:
                 return False
-            self.db.update('restaurant_users', {"username": self.id}, {
-                "$pull": {
-                    "goals": {
-                        "_id": ObjectId(goal_id)
-                    }
-                }
-            })
+            self.db.update('restaurant_users', {"username": self.id},
+                           {"$pull": {
+                               "goals": {
+                                   "_id": ObjectId(goal_id)
+                               }
+                           }})
             return True
         except QueryFailureException:
             print("There was an issue deleting the goal.")
             return False
+
+    def add_custom_reward(self, reward):
+        """
+        Add a custom reward to the restaurant profile. If successful, return True.
+        If reward already exists, return False.
+        """
+        try:
+            rewards = self.get_rewards()
+            in_database = [
+                x['reward'] for x in rewards if x['reward'] == reward
+            ]
+            if in_database == []:
+                try:
+                    self.db.update('restaurant_users', {"username": self.id}, {
+                        "$push": {
+                            "rewards": {
+                                "_id": ObjectId(),
+                                "reward": reward
+                            }
+                        }
+                    })
+                    return True
+                except UpdateFailureException:
+                    print("There was an issue updating the rewards")
+                    return False
+        except QueryFailureException:
+            print("Something is wrong with the query")
+            return False
+        return False
+
+    def get_custom_rewards(self):
+        """
+        Gets custom rewards added by the user.
+        """
+        try:
+            user = self.db.query('restaurant_users', {"username": self.id})[0]
+            return user["rewards"]
+        except KeyError:  # New User, no rewards found
+            return []
+        except QueryFailureException:
+            print("Something is wrong with the query")
+            return []
