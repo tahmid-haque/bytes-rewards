@@ -243,3 +243,25 @@ class RestaurantProfileManager(ProfileManager):
         except QueryFailureException:
             print("Something is wrong with the query")
             return []
+
+    def remove_custom_reward(self, reward_id):
+        """
+        Remove a restaurant user's custom reward that is not on their game board
+        from their database and returns
+        True upon success; throws exception and returns False otherwise.
+        """
+        try:
+            rewards = self.get_bingo_board()["board_reward"]
+            if ObjectId(reward_id) in rewards:
+                return False
+            self.db.update('restaurant_users', {"username": self.id}, {
+                "$pull": {
+                    "rewards": {
+                        "_id": ObjectId(reward_id)
+                    }
+                }
+            })
+            return True
+        except QueryFailureException:
+            print("There was an issue deleting the reward.")
+            return False
