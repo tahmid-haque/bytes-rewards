@@ -19,6 +19,7 @@ def view_custom_goals():
     goals = current_user.get_custom_goals()
     return render_template('customization.j2', goals=goals)
 
+
 @bp.route('/add', methods=['POST'])
 @login_required
 def add_goal():
@@ -32,6 +33,7 @@ def add_goal():
     if not added:
         flash("This is a duplicate goal. Goal not added.")
     return redirect("/goals")
+
 
 @bp.route('/delete', methods=['POST'])
 @login_required

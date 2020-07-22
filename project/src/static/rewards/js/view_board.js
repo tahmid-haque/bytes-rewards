@@ -1,3 +1,8 @@
+/**
+ * Show the card associated by the given goal position.
+ *
+ * @param {number} i The goal position
+ */
 function show(i) {
     $('.card')
         .eq(i)
@@ -18,8 +23,11 @@ function show(i) {
         });
 }
 
-let animationLock = false;
+let animationLock = false; // Ensure synchronous card-swaps
 
+/**
+ * Add event listeners to each goal box so that their card shows and the previous card is hidden.
+ */
 for (let i = 0; i < $('.card').length; i++) {
     $('#board td')
         .eq(i)
