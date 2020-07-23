@@ -22,17 +22,17 @@
             {% endwith %}
         </p>
         <div id="dark-container">
-            <h1>
+            <h1 name="goal">
                 <span>Customize Goals</span>
                 <i class="fas fa-plus"></i>
             </h1>
-            <form action="/goals/add" method="POST">
+            <form id="goal" action="/customize/add-goal" method="POST">
                 <input type="text" name="goal" placeholder="Add New Goal" required>
             </form>
             <ul>
                 {% for item in goals %}
                     <li>
-                        <form action="/goals/delete" method="POST">
+                        <form action="/customize/delete-goal" method="POST">
                             <input type="hidden" name="deleted-goal" value="{{item['_id']}}">
                         </form>
                         <span class="delete"><i class="far fa-trash-alt"></i></span>
@@ -46,9 +46,39 @@
                 {% endif %}
             </ul>
         </div>
+		<div class="space">
+		
+		</div>
+		<div id="dark-container">
+            <h1 name="reward">
+                <span>Customize Rewards</span>
+                <i class="fas fa-plus"></i>
+            </h1>
+            <form id="reward" action="/customize/add-reward" method="POST">
+                <input type="text" name="reward" placeholder="Add New Reward" required>
+            </form>
+            <ul>
+                {% for item in rewards %}
+                    <li>
+                        <form action="/customize/delete-reward" method="POST">
+                            <input type="hidden" name="deleted-reward" value="{{item['_id']}}">
+                        </form>
+                        <span class="delete"><i class="far fa-trash-alt"></i></span>
+                        <span class="reward">{{item["reward"]}}</span>
+                    </li>
+                {% endfor %}
+                {% if rewards|length == 0 %}
+                    <li>
+                        <span id="empty">No custom rewards found. Add one above!</span>
+                    </li>
+                {% endif %}
+            </ul>
+        </div>
         <p id="advisory">
             <span>IMPORTANT!</span>
             Please only add goals that may be completed in a single visit to your restaurant.
+			<br>
+			Please only add rewards that may be redeemed in a single visit to your restaurant.
         </p>
     </div>
     
