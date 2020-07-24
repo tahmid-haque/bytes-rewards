@@ -1,50 +1,144 @@
 {% extends 'base.j2' %} 
 
 {% block head %}
-    <title>View Your Board</title>
+    <title>Bytes | {{name}}</title>
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/board.css') }}">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" />
 {% endblock head %} 
 
 {% block body %} 
-    <div class="content">
-
-        <h1>{{ name }} </h1>
-    	<a href="/"> <input class="back" type="button"  value="Back"> </a>
-            <div class ="name-bingo-container">                
-
-                <table align="center">
-		    <tr>
-		        {% for i in range(5) %}
-				<td class="reward"></td>
+	<div id="container">
+		<button id="back" onclick="window.location.href='/profiles'"><i class="fas fa-long-arrow-alt-left"></i></button>
+		<h1>{{name}}</h1>
+		<table id="board">
+		    {% for i in range(25) %}
+				{% if i % 5 == 0 %}
+					<tr>
+				{% endif %}
+				<td 
+					class="goal r{{i // 5}} c{{i % 5}}
+					{% if i % 5 == i // 5 %}
+						d0
+					{% endif %}
+					{% if i // 5 == 4 - (i % 5) %}
+						d1
+					{% endif %}
+					{% if goals[i]['is_complete'] %}
+						complete
+					{% else %}
+						incomplete
+					{% endif %}" 
+					title="{{goals[i]['goal']}}">
+					<i class="fas 
+						{% if goals[i]['is_complete'] %}
+							fa-check
+						{% else %}
+							fa-times
+						{% endif %}"></i>
+				</td>
+				{% if i % 5 == 4 %}
+					</tr>
+				{% endif %}
 			{% endfor %}
-			<td title="{{rewards[0]}}" class="reward"> <img src="{{ url_for('static', filename='resources/gift.jpg') }}"> </td>
-		    </tr>
-                    {% for i in range(25) %}
-                        {% if i % 5 == 0 %}
-                            <tr>
-                        {% endif %}
+		</table>
 
-                        	<td title= "{{goals[i] }}" ><img src="{{ url_for('static', filename='resources/x.png') }}"></td>
+		<span class="cards">
+			{% for i in range(25) %}
+				<div class="hidden card">
+					<div class="goal-info">
+						<h2>{{goals[i]['goal']}}</h2>
+					</div>
+					<hr>
+					<div class="reward-info">
+						<table class="reward-table">
+							<tr>
+								<td colspan=2>Rewards</td>
+							</tr>
+							<tr>
+								<td colspan=2 id="reward-instruction">
+									Complete all goals highlighted by the same colour to earn the rewards below!
+								</td>
+							</tr>
+							<tr>
+								<td height="50" style="background-color: orange">Horizontal</td>
+								<td>{{rewards[(i // 5 + 1)]["reward"]}}</td>
+							</tr>
+							<tr>
+								<td height="50" style="background-color: cyan">Vertical</td>
+								<td>{{rewards[(i % 5 + 6)]["reward"]}}</td>
+							</tr>
+							{% if i % 5 == i // 5 %}
+								<tr>
+									<td height="50" style="background-color: yellow">Descending Diagonal</td>
+									<td>{{rewards[10]["reward"]}}</td>
+								</tr>
+							{% endif %}
+							{% if i // 5 == 4 - (i % 5) %}
+								<tr>
+									<td height="50" style="background-color: pink">Ascending Diagonal</td>
+									<td>{{rewards[0]["reward"]}}</td>
+								</tr>
+							{% endif %}
+						</table>
+					</div>
+					<hr>
+					<div class="goal-status">
+						<table>
+							<tr>
+								<td>Goal Status</td>
+								{% if goals[i]['is_complete'] %}
+									<td class="complete-status">Complete</td>
+								{% else %}
+									<td class="incomplete-status">Incomplete</td>
+								{% endif %}
+							</tr>
+						</table>
+					</div>
+					<hr>
+					{% if goals[i]['is_complete'] %}
+						<div class="completed-info">
+							<h2>Next Steps</h2>
+							<ol>
+								<li>
+									Continue completing goals until a Bingo! is achieved. (Complete all goals in a row/column/diagonal)
+								</li>
+								<li>
+									Check back here to obtain rewards!
+								</li>
+							</ol>
+						</div>
+					{% else %}
+						<div class="instructions">
+							<img src="{{qrcode(cust_id + '+' + goals[i]['_id']|string + '+' + i|string, box_size=24)}}">
+							<div class="code-header">Code</div>
+							<strong class="code">
+								{{cust_id + '+' + goals[i]['_id']|string + '+' + i|string}}
+							</strong>
+							<h2>Steps</h2>
+							<ol>
+								<li>
+									When completing this goal, present the above QR code to your server for verification.
+								</li>
+								<li>
+									Alternatively, provide the above redemption code if requested by your server. 
+								</li>
+								<li>
+									Check this page later to see the goal's confirmation.
+								</li>
+								<li>
+									Continue achieving goals until you achieve a Bingo! to obtain rewards.
+								</li>
+							</ol>
+						</div>
+					{% endif %}
+				</div>
+			{% endfor %}		
+		</span>
+		<div id="hint">Click on goals (boxes) to find out more!</div>
+	</div>
 
-                        {% if i % 5 == 4 %}
-			  {% if i == 24 %}
-			    <td title="{{rewards[5]}}" class = "reward"><img src="{{ url_for('static', filename='resources/gift.jpg') }}"></td>
-                            </tr>
-			  {% else %}
-			    <td title="{{rewards[(i%4)+1]}}" class = "reward"><img src="{{ url_for('static', filename='resources/gift.jpg') }}"></td>
-                            </tr>
-			  {% endif %}
-                        {% endif %}
-                    {% endfor %}
-		    <tr class = "reward"> 
-			{% for i in range(5) %}
-				<td title="{{rewards[i+7]}}" class="reward"><img src="{{ url_for('static', filename='resources/gift.jpg') }}"></td>
-			{% endfor %}
-		        <td title="{{rewards[6]}}" class="reward"><img src="{{ url_for('static', filename='resources/gift.jpg') }}"></td>
-		   </tr>
-                </table>
-
-            </div>
-
-    </div>
+	
+    <script src="{{ url_for('static', filename='js/view_board.js') }}"></script>
+		
 {% endblock body %}
