@@ -44,8 +44,12 @@ def view_board(obj_id):
                     if goal["_id"] == goal_id:
                         goals.append(goal["goal"])
             reward_ids = restaurant_user["bingo_board"]["board_reward"]
+            custom_rewards_dict = user_rpm.get_custom_rewards()
             for reward_id in reward_ids:
                 for reward in current_user.get_rewards():
+                    if reward["_id"] == reward_id:
+                        rewards.append(reward["reward"])
+                for reward in custom_rewards_dict:
                     if reward["_id"] == reward_id:
                         rewards.append(reward["reward"])
     return render_template('view_game_board.j2',
