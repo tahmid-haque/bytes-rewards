@@ -34,7 +34,7 @@ def view_board(obj_id):
               ) == obj_id and restaurant_user["profile"]["is_public"] is True:
             board_name = restaurant_user["bingo_board"]["name"]
             goal_ids = restaurant_user["bingo_board"]["board"]
-            user_rpm = RestaurantProfileManager(restaurant_user["username"]) 
+            user_rpm = RestaurantProfileManager(restaurant_user["username"])
             custom_goals_dict = user_rpm.get_custom_goals()
             for goal_id in goal_ids:
                 for goal in current_user.get_goals():
