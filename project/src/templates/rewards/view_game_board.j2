@@ -37,10 +37,10 @@
                         {% endif %}
                     {% endfor %}
 		    <tr class = "reward"> 
-			{% for i in range(5) %}
-				<td title="{{rewards[i+7]}}" class="reward"><img src="{{ url_for('static', filename='resources/gift.jpg') }}"></td>
+			{% for i in range(6) %}
+				<td title="{{rewards[i+6]}}" class="reward"><img src="{{ url_for('static', filename='resources/gift.jpg') }}"></td>
 			{% endfor %}
-		        <td title="{{rewards[6]}}" class="reward"><img src="{{ url_for('static', filename='resources/gift.jpg') }}"></td>
+		       
 		   </tr>
                 </table>
 
