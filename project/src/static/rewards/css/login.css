@@ -3,7 +3,6 @@ body {
     padding: 0;
     background-size: cover;
     background-position: center;
-    font-family: sans-serif;
     background-color: rgb(231, 231, 231);
 }
 
@@ -76,11 +75,11 @@ input[type='password'] {
     text-decoration: none;
     font-size: 12px;
     line-height: 20px;
-    color: #DCDCDC	
+    color: #dcdcdc;
 }
 
 .loginbox a:hover {
-    color: #DDA0DD;
+    color: #dda0dd;
 }
 
 #message {

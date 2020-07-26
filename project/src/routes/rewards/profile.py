@@ -25,30 +25,13 @@ def view_board(obj_id):
     """
     Allows users to view the chosen restaurant's game board.
     """
-    goals = []
-    board_name = "Board is unavailable"
-    rewards = []
-    restaurant_users = RestaurantProfileManager("").get_public_users()
-    for restaurant_user in restaurant_users:
-        if str(restaurant_user["_id"]
-              ) == obj_id and restaurant_user["profile"]["is_public"] is True:
-            board_name = restaurant_user["bingo_board"]["name"]
-            goal_ids = restaurant_user["bingo_board"]["board"]
-            user_rpm = RestaurantProfileManager(restaurant_user["username"]) 
-            custom_goals_dict = user_rpm.get_custom_goals()
-            for goal_id in goal_ids:
-                for goal in current_user.get_goals():
-                    if goal["_id"] == goal_id:
-                        goals.append(goal["goal"])
-                for goal in custom_goals_dict:
-                    if goal["_id"] == goal_id:
-                        goals.append(goal["goal"])
-            reward_ids = restaurant_user["bingo_board"]["board_reward"]
-            for reward_id in reward_ids:
-                for reward in current_user.get_rewards():
-                    if reward["_id"] == reward_id:
-                        rewards.append(reward["reward"])
+    username = current_user.get_id()
+    rpm = RestaurantProfileManager("")
+    board = rpm.get_restaurant_board_by_id(obj_id)
+    current_user.set_board_progress(board, obj_id)
+
     return render_template('view_game_board.j2',
-                           goals=goals,
-                           name=board_name,
-                           rewards=rewards)
+                           goals=board["board"],
+                           name=board["name"],
+                           rewards=board["board_reward"],
+                           cust_id=username)
