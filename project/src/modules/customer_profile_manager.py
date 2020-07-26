@@ -2,6 +2,7 @@
 This file houses the customer profile management interface.
 It is used to interact with the customer profile database.
 """
+from bson.objectid import ObjectId
 from modules.profile_manager import ProfileManager
 from modules.database import QueryFailureException
 
@@ -20,24 +21,28 @@ class CustomerProfileManager(ProfileManager):
         """
         ProfileManager.__init__(self, username, 'customers')
 
-    def get_goals(self):
+    def set_board_progress(self, board, rest_id):
         """
-        Get all goals from database
+        Given a board and restaurant id, update a board with the customer's progress.
         """
         try:
-            goals = self.db.query('goals')
-            return goals
-        except QueryFailureException:
-            print("Something's wrong with the query.")
-            return []
+            rest_id = ObjectId(rest_id)
 
-    def get_rewards(self):
-        """
-        Get all rewards from database
-        """
-        try:
-            goals = self.db.query('rewards')
-            return goals
+            # assign incomplete for all goals initially
+            for i in range(len(board["board"])):
+                board["board"][i]["is_complete"] = False
+
+            # assign complete for all goals the customer completed
+            customer = self.db.query("customers", {"username": self.id})[0]
+            if "progress" in customer:
+                for restaurant in customer["progress"]:
+                    if restaurant["restaurant_id"] == rest_id:
+                        for goal in restaurant["completed_goals"]:
+                            index = int(goal["position"])
+                            if board["board"][index]["_id"] == goal["_id"]:
+                                board["board"][index]["is_complete"] = True
+
         except QueryFailureException:
             print("Something's wrong with the query.")
-            return []
+        except IndexError:
+            print("Could not find the customer")

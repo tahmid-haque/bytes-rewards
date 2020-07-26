@@ -3,44 +3,41 @@ body {
     padding: 0;
     background-size: cover;
     background-position: center;
-    font-family: sans-serif;
     background-color: rgb(231, 231, 231);
 }
 
 .mainbox {
-    margin: 30px auto 30px auto;
-    width: 320px;
+    margin: 0 auto;
+    max-width: 600px;
     height: min-content;
-    background: #000080;
-    color: #fff;
     color: #fff;
     position: relative;
     box-sizing: border-box;
-    padding: 30px 30px 30px 30px;
-	border-radius: 4px;
+    padding: 20px min(40px, 5%) 1px min(40px, 5%);
+    background-color: #000080;
 }
 
 h1 {
     margin: 0;
     padding: 0 0 0;
     text-align: center;
-    font-size: 22px;
+    font-size: 24px;
 }
 
 h2 {
     margin: 0;
     padding: 0 0 0;
     text-align: left;
-    font-size: 17px;
-	text-shadow: 2px 2px 2px #0000CD;
+    font-size: 20px;
+    text-shadow: 2px 2px 2px #0000cd;
 }
 
 h3 {
     margin: 0;
     padding: 0 0 0;
     text-align: left;
-    font-size: 12px;
-	color: dimgray;
+    font-size: 16px;
+    color: dimgray;
 }
 
 .mainbox p {
@@ -49,101 +46,94 @@ h3 {
     font-weight: bold;
 }
 
-.mainbox input {
-    width: 100%;
-    margin-bottom: 20px;
-    box-sizing: border-box;
-}
-
 .mainbox a {
     text-decoration: none;
-    font-size: 12px;
+    font-size: 18px;
     line-height: 20px;
     color: dimgray;
-	font-weight: bold;
+    font-weight: bold;
 }
 
 .mainbox a:hover {
-    color: #DDA0DD;
+    color: #dda0dd;
 }
 
 .profilecard {
-    margin: 30px auto 30px auto;
-    width: 250px;
-    height: min-content;
-    background: #B0C4DE;
+    margin: 30px auto;
+    width: 100%;
+    background: #b0c4de;
     color: #fff;
     position: relative;
     box-sizing: border-box;
     padding: 10px 10px 10px 10px;
-	border-radius: 4px;
-}
-
-.profilecard-padding {
-	padding-top: 20px;
-}
-
-.item-padding {
-	padding-top: 5px;
+    border-radius: 4px;
 }
 
 .profilecard a {
-	margin: 0;
+    margin: 0;
     padding: 0 0 0;
-    text-align: left;
-    font-size: 12px;
-	color: dimgray;
+    text-align: center;
+    font-size: 18px;
+    color: dimgray;
 }
 
 .logout-button {
     border: none;
     outline: none;
     height: min-content;
-	width: 60px;
+    padding: 5px 10px;
+    width: min-content;
     background: #fff;
-	text-align: center;
-    font-size: 12px;
+    text-align: center;
     border-radius: 10px;
-	box-shadow: 1px 1px 1px #0000CD;
+    box-shadow: 1px 1px 1px #0000cd;
 }
 
 .learnmore {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     border: none;
     outline: none;
-    height: min-content;
-	width: 90px;
+    height: 30px;
+    width: 60px;
+    padding: 10px;
     background: #fff;
-	text-align: center;
-    font-size: 12px;
+    text-align: center;
     border-radius: 10px;
-	box-shadow: 1px 1px 1px #0000CD;
+    box-shadow: 1px 1px 1px #0000cd;
 }
 
 .viewgame {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     border: none;
     outline: none;
-    height: min-content;
-	width: 130px;
+    height: 30px;
+    width: 130px;
+    padding: 10px;
     background: #fff;
-	text-align: center;
-    font-size: 12px;
+    text-align: center;
     border-radius: 10px;
-	box-shadow: 1px 1px 1px #0000CD;
+    box-shadow: 1px 1px 1px #0000cd;
 }
 
 .button-container {
-	width: 240;
-	display: flex;
-	justify-content: space-between;
+    margin-top: 5px;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
 }
 
 .image {
-    width: 220px;
-    height: 130px;
-	border: 1px solid #fff;
-	background: #fff;
+    margin-top: 5px;
+    width: 100%;
+    background: #fff;
     border-radius: 4px;
     padding: 5px;
+    box-sizing: border-box;
+    object-fit: cover;
 }
 
 .guideline {
