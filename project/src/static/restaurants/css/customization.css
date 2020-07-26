@@ -79,7 +79,31 @@ li .delete {
     opacity: 0;
 }
 
+li .reward {
+    line-height: 40px;
+    height: min-content;
+}
+
+li .delete-reward {
+    background-color: #d81600;
+    display: block;
+    margin-right: 20px;
+    text-align: center;
+    color: white;
+    width: 0px;
+    transition: all, linear, 400ms;
+    opacity: 0;
+}
+
 li:hover .delete {
+    opacity: 1;
+    width: max-content;
+    padding: 0px 15px;
+    font-size: 18px;
+    cursor: pointer;
+}
+
+li:hover .delete-reward {
     opacity: 1;
     width: max-content;
     padding: 0px 15px;

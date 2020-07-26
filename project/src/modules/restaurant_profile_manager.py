@@ -90,10 +90,12 @@ class RestaurantProfileManager(ProfileManager):
 
     def get_rewards(self):
         """
-        Return a list of all goals that the curren  t restaurant user can use
+        Return a list of all rewards that the current restaurant user can use
         within their profile.
         """
-        return self.get_shared_rewards()
+        custom = self.get_custom_rewards()
+        shared = self.get_shared_rewards()
+        return custom + shared
 
     def get_profile(self):
         """
@@ -192,8 +194,72 @@ class RestaurantProfileManager(ProfileManager):
                                }
                            }})
             return True
-        except UpdateFailureException:
+        except QueryFailureException:
             print("There was an issue deleting the goal.")
+            return False
+
+    def add_custom_reward(self, reward):
+        """
+        Add a custom reward to the restaurant profile. If successful, return True.
+        If reward already exists, return False.
+        """
+        try:
+            rewards = self.get_rewards()
+            in_database = [
+                x['reward'] for x in rewards if x['reward'] == reward
+            ]
+            if in_database == []:
+                try:
+                    self.db.update('restaurant_users', {"username": self.id}, {
+                        "$push": {
+                            "rewards": {
+                                "_id": ObjectId(),
+                                "reward": reward
+                            }
+                        }
+                    })
+                    return True
+                except UpdateFailureException:
+                    print("There was an issue updating the rewards")
+                    return False
+        except QueryFailureException:
+            print("Something is wrong with the query")
+            return False
+        return False
+
+    def get_custom_rewards(self):
+        """
+        Gets custom rewards added by the user.
+        """
+        try:
+            user = self.db.query('restaurant_users', {"username": self.id})[0]
+            return user["rewards"]
+        except KeyError:  # New User, no rewards found
+            return []
+        except QueryFailureException:
+            print("Something is wrong with the query")
+            return []
+
+    def remove_custom_reward(self, reward_id):
+        """
+        Remove a restaurant user's custom reward that is not on their game board
+        from their database and returns
+        True upon success; throws exception and returns False otherwise.
+        """
+        try:
+            rewards = self.get_bingo_board()["board_reward"]
+            if ObjectId(reward_id) in rewards:
+                return False
+            self.db.update('restaurant_users', {"username": self.id}, {
+                "$pull": {
+                    "rewards": {
+                        "_id": ObjectId(reward_id)
+                    }
+                }
+            })
+            return True
+        except QueryFailureException:
+            print("There was an issue deleting the reward.")
             return False
 
     def get_restaurant_board_by_id(self, rest_id):
