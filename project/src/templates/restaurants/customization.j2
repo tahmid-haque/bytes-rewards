@@ -22,11 +22,11 @@
             {% endwith %}
         </p>
         <div id="dark-container">
-            <h1>
+            <h1 name="goal">
                 <span>Customize Goals</span>
                 <i class="fas fa-plus"></i>
             </h1>
-            <form action="/customize/add-goal" method="POST">
+            <form id="goal" action="/customize/add-goal" method="POST">
                 <input type="text" name="goal" placeholder="Add New Goal" required>
             </form>
             <ul>
@@ -46,12 +46,15 @@
                 {% endif %}
             </ul>
         </div>
+		<div class="space">
+		
+		</div>
 		<div id="dark-container">
-            <h1>
+            <h1 name="reward">
                 <span>Customize Rewards</span>
                 <i class="fas fa-plus"></i>
             </h1>
-            <form action="/customize/add-reward" method="POST">
+            <form id="reward" action="/customize/add-reward" method="POST">
                 <input type="text" name="reward" placeholder="Add New Reward" required>
             </form>
             <ul>
