@@ -25,17 +25,21 @@
 					{% if i // 5 == 4 - (i % 5) %}
 						d1
 					{% endif %}
-					{% if goals[i]['is_complete'] %}
+					{% if goals[i]['is_complete'] and goals[i]['is_bingo'] %}
+						bingo
+					{% elif goals[i]['is_complete'] %}
 						complete
 					{% else %}
 						incomplete
 					{% endif %}" 
 					title="{{goals[i]['goal']}}">
 					<i class="fas 
-						{% if goals[i]['is_complete'] %}
+						{% if goals[i]['is_complete'] and goals[i]['is_bingo'] %}
+							fa-star
+						{% elif goals[i]['is_complete'] %}
 							fa-check
 						{% else %}
-							fa-times
+							fa-hamburger
 						{% endif %}"></i>
 				</td>
 				{% if i % 5 == 4 %}
@@ -61,27 +65,55 @@
 									Complete all goals highlighted by the same colour to earn the rewards below!
 								</td>
 							</tr>
+							{% set earned = {'is_earned': False} %}
 							<tr>
-								<td height="50" style="background-color: orange">Horizontal</td>
+								{% if rewards[(i // 5 + 1)]["is_earned"] %}
+									<td height="50" class="bingo-reward"><h2>Horizontal</h2></td>
+									{% if earned.update({'is_earned':True}) %} {% endif %}
+								{% else %}
+									<td height="50" style="background-color: orange">Horizontal</td>
+								{% endif %}
 								<td>{{rewards[(i // 5 + 1)]["reward"]}}</td>
 							</tr>
 							<tr>
-								<td height="50" style="background-color: cyan">Vertical</td>
+								{% if rewards[(i % 5 + 6)]["is_earned"] %}
+									<td height="50" class="bingo-reward"><h2>Vertical</h2></td>
+									{% if earned.update({'is_earned':True}) %} {% endif %}
+								{% else %}
+									<td height="50" style="background-color: cyan">Vertical</td>
+								{% endif %}
 								<td>{{rewards[(i % 5 + 6)]["reward"]}}</td>
 							</tr>
 							{% if i % 5 == i // 5 %}
 								<tr>
-									<td height="50" style="background-color: yellow">Descending Diagonal</td>
+									{% if rewards[11]["is_earned"] %}
+										<td height="50" class="bingo-reward"><h2>Descending Diagonal</h2></td>
+										{% if earned.update({'is_earned':True}) %} {% endif %}
+									{% else %}
+										<td height="50" style="background-color: yellow">Descending Diagonal</td>
+									{% endif %}
 									<td>{{rewards[11]["reward"]}}</td>
 								</tr>
 							{% endif %}
 							{% if i // 5 == 4 - (i % 5) %}
 								<tr>
-									<td height="50" style="background-color: pink">Ascending Diagonal</td>
+									{% if rewards[0]["is_earned"] %}
+										<td height="50" class="bingo-reward"><h2>Ascending Diagonal</h2></td>
+										{% if earned.update({'is_earned':True}) %} {% endif %}
+									{% else %}
+										<td height="50" style="background-color: pink">Ascending Diagonal</td>
+									{% endif %}
 									<td>{{rewards[0]["reward"]}}</td>
 								</tr>
 							{% endif %}
 						</table>
+						{% if earned.is_earned %}
+							<div class="rewards-button-padding">
+								<div class="rewards-button">
+									<a href="/profiles">Redeem Rewards</a>
+								</div>
+							</div>
+						{% endif %}
 					</div>
 					<hr>
 					<div class="goal-status">
