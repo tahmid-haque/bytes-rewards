@@ -79,7 +79,8 @@ class Database:
         db_name = os.environ.get("BYTES_DATABASE", "bytes-dev")
         if current_app.testing:
             db_name = "bytes-testing"
-        current_app.config["MONGO_URI"] = Database.mongoURI.replace("<DATABASE_NAME>", db_name)
+        current_app.config["MONGO_URI"] = Database.mongoURI.replace(
+            "<DATABASE_NAME>", db_name)
         self.db = PyMongo(current_app).db
         Database.instance = self
 

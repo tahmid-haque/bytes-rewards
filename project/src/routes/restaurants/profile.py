@@ -39,7 +39,9 @@ def edit_profile():
     """
     profile = current_user.get_profile()
     ready_for_publish = current_user.get_bingo_board()["board"] != []
-    return render_template('edit_profile.j2', profile=profile, allow_public=ready_for_publish)
+    return render_template('edit_profile.j2',
+                           profile=profile,
+                           allow_public=ready_for_publish)
 
 
 @bp.route('/save', methods=['POST'])

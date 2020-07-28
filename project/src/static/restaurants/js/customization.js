@@ -12,6 +12,16 @@ function fixGoalHeights() {
     });
 }
 
+function fixRewardHeights() {
+    document.querySelectorAll('li').forEach((li) => {
+        deleteIcon = li.getElementsByClassName('delete-reward')[0];
+        reward = li.getElementsByClassName('reward')[0];
+        height = `${reward.getBoundingClientRect().height}px`;
+        deleteIcon.style.height = height;
+        deleteIcon.style.lineHeight = height;
+    });
+}
+
 // Fix delete button height on hover
 document.querySelectorAll('.goal').forEach((goal) => {
     goal.addEventListener('mouseenter', () => setTimeout(fixGoalHeights, 450));
@@ -38,5 +48,21 @@ document.querySelectorAll('.delete').forEach((e) => {
     };
 });
 
+// Fix delete button height on hover
+document.querySelectorAll('.reward').forEach((reward) => {
+    reward.addEventListener('mouseenter', () => setTimeout(fixRewardHeights, 450));
+    reward.addEventListener('mouseout', () => setTimeout(fixRewardHeights, 450));
+});
+
+document.querySelectorAll('.delete-reward').forEach((i) => {
+    i.onclick = () => {
+        form = i.parentElement.children[0];
+        if (confirm('Are you sure you want to delete this reward?'))
+            form.submit();
+    };
+});
+
 window.onload = fixGoalHeights;
 window.onresize = fixGoalHeights;
+window.onload = fixRewardHeights;
+window.onresize = fixRewardHeights;

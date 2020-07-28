@@ -20,24 +20,18 @@
 							<h2>{{ value }}</h2>
 						{% endif %}
 						{% if key == "category" %}
-							<div class="item-padding">
-								<h3>{{ value }}</h3>
-							</div>
+							<h3>{{ value }}</h3>
 						{% endif %}
 						{% if key == "image" %}
-							<div class="item-padding">
-								<img src="{{ value }}" class="image"/>
-							</div>
+							<img src="{{ value }}" class="image"/>
 						{% endif %}
 					{% endfor %}
-					<div class="item-padding">
-						<div class="button-container">
-							<div class="learnmore">
-								<a href="/profiles">Learn More</a>
-							</div>
-							<div class="viewgame">
-								<a href="/profiles/{{id}}/board">View Game Board</a>
-							</div>
+					<div class="button-container">
+						<div class="learnmore">
+							<a href="/profiles">Learn More</a>
+						</div>
+						<div class="viewgame">
+							<a href="/profiles/{{id}}/board">View Game Board</a>
 						</div>
 					</div>
 				</div>
