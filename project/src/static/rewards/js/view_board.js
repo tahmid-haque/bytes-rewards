@@ -19,7 +19,7 @@ function show(i) {
                 $(`.d1`).addClass('a-diagonal');
             $('#board td').eq(i).addClass('selected');
             animationLock = false;
-            $('#hint').hide();
+            $('#hint').slideUp(500);
         });
 }
 

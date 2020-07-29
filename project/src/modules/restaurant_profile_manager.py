@@ -3,6 +3,7 @@ This file houses the restaurant profile management interface.
 It is used to interact with the restaurant profile database.
 """
 
+import copy
 from bson.objectid import ObjectId
 from modules.profile_manager import ProfileManager
 from modules.database import Database, QueryFailureException, UpdateFailureException
@@ -277,12 +278,12 @@ class RestaurantProfileManager(ProfileManager):
             board = restaurant["bingo_board"]
 
             board["board"] = [
-                goal for index in board["board"] for goal in goals
+                copy.deepcopy(goal) for index in board["board"] for goal in goals
                 if index == goal["_id"]
             ]
 
             board["board_reward"] = [
-                reward for index in board["board_reward"] for reward in rewards
+                copy.deepcopy(reward) for index in board["board_reward"] for reward in rewards
                 if index == reward["_id"]
             ]
             self.id = temp_id
