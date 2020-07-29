@@ -6,6 +6,7 @@ It is used to interact with the restaurant profile database.
 from bson.objectid import ObjectId
 from modules.profile_manager import ProfileManager
 from modules.database import Database, QueryFailureException, UpdateFailureException
+from datetime import datetime
 
 class RestaurantProfileManager(ProfileManager):
     """
@@ -201,3 +202,53 @@ class RestaurantProfileManager(ProfileManager):
         except QueryFailureException:
             print("There was an issue deleting the goal.")
             return False
+
+
+    def complete_goal(self, user, goal_id, position):
+        """
+        Adds a goal to the database that has been completed by the customer and returns
+        True upon success; throws exception and returns False otherwise.
+        """
+        try:
+            owner_id = self.db.query('restaurant_users', {"username": self.id})[0]["_id"]
+            user_profile = self.db.query('customers', {"username": user})[0]
+            if "progress" in user_profile:
+                for restaurant in user_profile["progress"]:
+                    if restaurant["restaurant_id"] == owner_id:
+                        goals = restaurant["completed_goals"]
+                        for goal in goals:
+                            if str(goal["_id"]) == goal_id and position == goal["position"]:
+                                return "This goal has already been completed!"
+                        id_exists = True
+            if not isinstance(position, int) or not (1 <= len(position) <= 2) or not (0 <= int(position) <= 24) \
+                    or not str(self.get_bingo_board()["board"][position]) == goal_id:
+                return "Invalid QR code!"
+            try:
+                if "progress" in user_profile and id_exists:
+                    self.db.update('customers', {"username": user, "progress.restaurant_id": ObjectId(owner_id)},
+                                   {"$push": {
+                                       "progress.$.completed_goals": {
+                                           "_id": ObjectId(goal_id),
+                                           "position": position,
+                                           "date_completed": datetime.now()}}})
+                else:
+                    self.db.update(
+                        'customers', {"username": self.id},
+                        {"$push": {
+                            "progress": {
+                                "restaurant_id": ObjectId(owner_id),
+                                "completed_goals": [{
+                                    "_id": ObjectId(goal_id),
+                                    "position": position,
+                                    "date": datetime.now()
+                                }]
+                            }
+                        }})
+                return "Successfully marked as completed!"
+            except UpdateFailureException:
+                print("There was an issue updating")
+                return "Error"
+        except QueryFailureException:
+            print("Something is wrong with the query")
+            return "Error"
+        return "Error"

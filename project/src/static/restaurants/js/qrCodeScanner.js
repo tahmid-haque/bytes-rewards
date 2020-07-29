@@ -6,13 +6,23 @@ const canvas = canvasElement.getContext("2d");
 
 const qrResult = document.getElementById("qr-result");
 const outputData = document.getElementById("outputData");
+const inputBox = document.getElementById("code");
 const btnScanQR = document.getElementById("btn-scan-qr");
 
 let scanning = false;
 
 qr.callback = res => {
   if (res) {
-    outputData.innerText = res;
+
+    $.ajax({
+        url: '/goals/verify-goal/' + res,        
+        type: 'POST',
+    })
+    .done(function(data){
+      $('#outputData').text(data.goal)
+
+    });
+    inputBox.value = res;
     scanning = false;
 
     video.srcObject.getTracks().forEach(track => {
