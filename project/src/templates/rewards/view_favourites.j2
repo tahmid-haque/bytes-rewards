@@ -1,0 +1,56 @@
+{% extends 'base.j2' %} 
+
+{% block head %}
+    <title>Customer | View Profiles</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/view_profiles.css') }}" />
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" />
+{% endblock head %} 
+
+{% block body %} 
+    <div class ="mainbox">
+		<button id="back" onclick=history.back()><i class="fas fa-long-arrow-alt-left"></i></button>
+		<h1>Favourite Restaurants</h1>
+		{% if profiles: %}
+			{% for id, profile in profiles.items() %}
+				<div class ="profilecard">
+					{% for key, value in profile.items() %}
+						<div class="button-container">
+							{% if key == "name" %}
+								<h2>{{ value }}</h2>
+								{% set vars = {'fav': False} %}
+									{% if favourite: %}
+									{% for restaurant in favourite %}
+										{% if id == restaurant %}
+											{% if vars.update({'fav': True}) %} {% endif %}
+										{% endif %}
+									{% endfor %}
+									
+									{% endif %}
+									<button id="button-favourite" onclick="window.location.href='/profiles/view-favourites/{{id}}/favourite'"><i class=" 
+										{% if vars.fav %}
+											fas fa-heart">
+										{% else %}
+											far fa-heart">
+										{% endif %}</i></button>
+							{% endif %}
+						</div>
+						{% if key == "category" %}
+							<h3>{{ value }}</h3>
+						{% endif %}
+						{% if key == "image" %}
+							<img src="{{ value }}" class="image"/>
+						{% endif %}
+					{% endfor %}
+					<div class="button-container">
+						<div class="learnmore">
+							<a href="/profiles">Learn More</a>
+						</div>
+						<div class="viewgame">
+							<a href="/profiles/{{id}}/board">View Game Board</a>
+						</div>
+					</div>
+				</div>
+			{% endfor %}
+		{% endif %}
+    </div>
+{% endblock body %}

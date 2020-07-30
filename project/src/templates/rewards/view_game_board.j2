@@ -10,7 +10,7 @@
 {% block body %} 
 
 	<div id="container">
-		<button id="back" onclick="window.location.href='/profiles'"><i class="fas fa-long-arrow-alt-left"></i></button>
+		<button id="back" onclick=history.back()><i class="fas fa-long-arrow-alt-left"></i></button>
 		<h1>{{name}}</h1>
 		<table id="board">
 		    {% for i in range(25) %}
