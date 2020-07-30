@@ -17,9 +17,10 @@ def view_profiles():
     Allows users to view restaurant profiles that are set to public.
     """
     restaurant_profiles = RestaurantProfileManager("").get_public_profiles()
-    username = current_user.get_id()
-    favourite = current_user.get_favourite(username)
-    return render_template('view_profiles.j2', profiles=restaurant_profiles, favourite=favourite)
+    favourite = current_user.get_favourite()
+    return render_template('view_profiles.j2',
+                           profiles=restaurant_profiles,
+                           favourite=favourite)
 
 
 @bp.route('/<string:obj_id>/board', methods=['GET', 'POST'])
@@ -38,15 +39,16 @@ def view_board(obj_id):
                            rewards=board["board_reward"],
                            cust_id=username)
 
+
 @bp.route('/<string:obj_id>/favourite', methods=['GET', 'POST'])
 @login_required
 def favourite_restaurant(obj_id):
     """
     Allows users to add and remove restaurants from "favourite"
     """
-    username = current_user.get_id()
-    favourite = current_user.update_favourite(username, obj_id)
+    current_user.update_favourite(obj_id)
     return redirect("/")
+
 
 @bp.route('/view-favourites', methods=['GET', 'POST'])
 @login_required
@@ -54,13 +56,14 @@ def view_favourites():
     """
     Allows users to view restaurants from "favourite"
     """
-    username = current_user.get_id()
-    favourite = current_user.get_favourite(username)
+    favourite = current_user.get_favourite()
     rpm = RestaurantProfileManager("")
     profiles = rpm.get_public_profiles()
     list_fav = current_user.get_favourite_doc(profiles, favourite)
-    print(list_fav)
-    return render_template('view_favourites.j2', profiles=list_fav, favourite=favourite)
+    return render_template('view_favourites.j2',
+                           profiles=list_fav,
+                           favourite=favourite)
+
 
 @bp.route('/view-favourites/<string:obj_id>/favourite', methods=['GET', 'POST'])
 @login_required
@@ -68,6 +71,5 @@ def view_favourite_restaurant(obj_id):
     """
     Allows users to remove restaurants from "favourite" while on "favourites" page
     """
-    username = current_user.get_id()
-    favourite = current_user.update_favourite(username, obj_id)
+    current_user.update_favourite(obj_id)
     return redirect('/profiles/view-favourites')

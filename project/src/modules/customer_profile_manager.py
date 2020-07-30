@@ -47,11 +47,11 @@ class CustomerProfileManager(ProfileManager):
         except IndexError:
             print("Could not find the customer")
 
-    def get_favourite(self, username):
+    def get_favourite(self):
         """
         Gets the list of user's favourite restaurant Ids
         """
-        try: 
+        try:
             customer = self.db.query("customers", {"username": self.id})[0]
             if "favourite" in customer:
                 return customer["favourite"]
@@ -62,35 +62,29 @@ class CustomerProfileManager(ProfileManager):
         except IndexError:
             print("Could not find the customer")
 
-    def update_favourite(self, username, obj_id):
+    def update_favourite(self, obj_id):
         """
         Updates the list of user's favourite restaurant Ids
         """
-        try: 
+        try:
             customer = self.db.query("customers", {"username": self.id})[0]
             if "favourite" not in customer:
-                self.db.update("customers", {"username": self.id}, 
-                    {"$push": 
-                        {"favourite": 
-                            ObjectId(obj_id)
-                        }})
+                self.db.update("customers", {"username": self.id},
+                               {"$push": {
+                                   "favourite": ObjectId(obj_id)
+                               }})
             else:
                 if ObjectId(obj_id) in customer["favourite"]:
-                    print("here")
                     self.db.update('customers', {"username": self.id},
-                        {"$pull": {
-                            "favourite": 
-                                ObjectId(obj_id)
-                        
-                        }})
+                                   {"$pull": {
+                                       "favourite": ObjectId(obj_id)
+                                   }})
                 else:
                     self.db.update('customers', {"username": self.id},
-                        {"$push": {
-                        "favourite": 
-                            ObjectId(obj_id)
-                   
-                        }})
-            return self.get_favourite(username)
+                                   {"$push": {
+                                       "favourite": ObjectId(obj_id)
+                                   }})
+            return self.get_favourite()
         except QueryFailureException:
             print("Something's wrong with the query.")
         except IndexError:
@@ -101,8 +95,7 @@ class CustomerProfileManager(ProfileManager):
         Gets a dictionary of the user's favourite restaurant profiles
         """
         list_fav = {}
-        for f in favourite:
-            if f in profiles:
-                list_fav[ObjectId(f)] = profiles[ObjectId(f)]
+        for fav in favourite:
+            if fav in profiles:
+                list_fav[ObjectId(fav)] = profiles[ObjectId(fav)]
         return list_fav
-			
