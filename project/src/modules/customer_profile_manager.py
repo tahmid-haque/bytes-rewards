@@ -21,21 +21,25 @@ class CustomerProfileManager(ProfileManager):
         """
         ProfileManager.__init__(self, username, 'customers')
 
-    def check_bingo(self, board, completed_indices): 
-        ranges = [[4, 8, 12, 16, 20], [x for x in range(0,5)], [x for x in range(5,10)],
-        [x for x in range(10,14)], [x for x in range(15,19)], [x for x in range(19,25)],
-        [x for x in range(25) if x%5 == 0],[x for x in range(25) if x%5 == 1],
-        [x for x in range(25) if x%5 == 2], [x for x in range(25) if x%5 == 3],
-        [x for x in range(25) if x%5 == 4], [0, 6, 12, 18, 24]]
-        
+    def check_bingo(self, board, completed_indices):
+        """
+        Helper function to update a board with the customer's bingos.
+        """
+        ranges = [[4, 8, 12, 16, 20]]
+        for i in range(0, 25, 5):
+            ranges.append([x for x in range(i, i + 5)])
+        for i in range(5):
+            ranges.append([x for x in range(25) if x % 5 == i])
+        ranges.append([0, 6, 12, 18, 24])
+
         count = 0
-        for r in ranges:
+        for rang in ranges:
             is_bingo = True
-            for i in r:
+            for i in rang:
                 if i not in completed_indices:
                     is_bingo = False
             if is_bingo:
-                for i in r:
+                for i in rang:
                     board["board"][i]["is_bingo"] = True
                     board["board_reward"][count]["is_earned"] = True
             count += 1
@@ -50,25 +54,31 @@ class CustomerProfileManager(ProfileManager):
             # assign incomplete for all goals initially
             for i in range(len(board["board"])):
                 board["board"][i]["is_complete"] = False
-                
+
+            # assign "not bingo" for all goals initially
             for i in range(len(board["board"])):
                 board["board"][i]["is_bingo"] = False
-                
+
+            # assign "not earned" for all rewards initially
             for i in range(len(board["board_reward"])):
                 board["board_reward"][i]["is_earned"] = False
 
             # assign complete for all goals the customer completed
+            # assign bingo for all goals that make up a bingo that the customer completed
+            # assign earned for all rewards that are earned
             customer = self.db.query("customers", {"username": self.id})[0]
             if "progress" in customer:
                 for restaurant in customer["progress"]:
                     if restaurant["restaurant_id"] == rest_id:
                         for goal in restaurant["completed_goals"]:
-                            completed_indices = [x["position"] for x in restaurant["completed_goals"]]
+                            completed_index = [
+                                x["position"]
+                                for x in restaurant["completed_goals"]
+                            ]
                             index = int(goal["position"])
                             if board["board"][index]["_id"] == goal["_id"]:
                                 board["board"][index]["is_complete"] = True
-                                self.check_bingo(board, completed_indices)
-            print(board["board_reward"])
+                                self.check_bingo(board, completed_index)
 
         except QueryFailureException:
             print("Something's wrong with the query.")
