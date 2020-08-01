@@ -1,17 +1,17 @@
-<!DOCTYPE html>
-<html>
-  <head>
-    <title>QR Code Scanner</title>
+{% extends 'base.j2' %} 
+
+{% block head %}
+    <title>QR Code Goal Verification</title>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;" />
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/qr-verification.css') }}" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://rawgit.com/sitepoint-editors/jsqrcode/master/src/qr_packed.js"></script>
-  </head>
+{% endblock head %}
 
-  <body>
+{% block body %}
     <div id="container">
-      <h1>QR Code Scanner</h1>
+      <h1>QR Code Goal Verification</h1>
     <div id="instructions">
         <p id="message" 
             {% with messages = get_flashed_messages() %}
@@ -24,6 +24,7 @@
         </p>
     <p class="instructions">Click the Qr code below to activate camera and start scanning!</p>
     <p class="instructions">Once a code is scanned, you can scan again or verify for completion.</p>
+    <p class="instructions">You may even manually enter a code if you wish in the input box below.</p>
     </div>
       <a id="btn-scan-qr">
         <img src="https://dab1nmslvvntp.cloudfront.net/wp-content/uploads/2017/07/1499401426qr_icon.svg">
@@ -38,11 +39,10 @@
         <form class="verify" method="post" action="/goals/finish-goal">
           <label>QR Code:</label>
           <input type="text" id="code" name="code"><br><br>
-          <input type="submit" value="Mark for completion">
+          <input id="mark" type="submit" value="Mark for completion">
         </form> 
       </div>
     </div>
 
     <script src="{{ url_for('static', filename='js/qrCodeScanner.js') }}" ></script>
-  </body>
-</html>
+{% endblock body %}

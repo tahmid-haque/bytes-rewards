@@ -207,7 +207,7 @@ class RestaurantProfileManager(ProfileManager):
     def complete_goal(self, user, goal_id, position):
         """
         Adds a goal to the database that has been completed by the customer and returns
-        True upon success; throws exception and returns False otherwise.
+        a message depending on if it is successful or not.
         """
         try:
             owner_id = self.db.query('restaurant_users', {"username": self.id})[0]["_id"]
@@ -220,8 +220,8 @@ class RestaurantProfileManager(ProfileManager):
                             if str(goal["_id"]) == goal_id and position == goal["position"]:
                                 return "This goal has already been completed!"
                         id_exists = True
-            if not isinstance(position, int) or not (1 <= len(position) <= 2) or not (0 <= int(position) <= 24) \
-                    or not str(self.get_bingo_board()["board"][position]) == goal_id:
+            if not isinstance(int(position), int) or not (1 <= len(position) <= 2) or not (0 <= int(position) <= 24) \
+                    or not str(self.get_bingo_board()["board"][int(position)]) == goal_id:
                 return "Invalid QR code!"
             try:
                 if "progress" in user_profile and id_exists:

@@ -64,4 +64,4 @@ def view_qr_verification():
     Display the qr verification page.
     Prerequisite: User is logged in.
     """
-    return render_template('qr-verification.html')
+    return render_template('qr-verification.j2')
