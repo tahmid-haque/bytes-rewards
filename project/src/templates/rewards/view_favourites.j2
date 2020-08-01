@@ -8,7 +8,7 @@
 
 {% block body %} 
     <div class ="mainbox">
-		<button id="back" onclick=history.back()><i class="fas fa-long-arrow-alt-left"></i></button>
+		<button id="back" onclick="window.location.href='/profiles'"><i class="fas fa-long-arrow-alt-left"></i></button>
 		<h1>Favourite Restaurants</h1>
 		{% if profiles: %}
 			{% for id, profile in profiles.items() %}
