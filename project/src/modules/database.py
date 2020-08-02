@@ -108,6 +108,7 @@ class Database:
         res = self.db[collection].update_one(query, document)
         if not res.acknowledged:
             raise UpdateFailureException("Failed to update!")
+        return res
 
     def insert(self, collection, document):
         """
@@ -117,3 +118,4 @@ class Database:
         res = self.db[collection].insert_one(document)  # Insert using Mongo
         if not res.acknowledged:  # Ensure successful insert
             raise InsertFailureException("Failed to insert!")
+        return res

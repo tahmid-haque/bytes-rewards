@@ -76,17 +76,42 @@ def test_add__duplicate_custom_reward():
         assert len(reward) == 1
 
 
+def test_custom_route_no_login(client):
+    """
+    Test that customization page does not load unless user is logged in.
+    """
+    res = client.get("/customize", follow_redirects=True)
+    assert b"Please log in to access this page" in res.data
+
+
+def test_custom_route_logged_in(client):
+    """
+    Test that customization page loads when the user is logged in.
+    """
+    client.post("/login", data={"username": "vchang", "password": "Password!"})
+    res = client.get("/customize", follow_redirects=True)
+    assert b"Customization" in res.data
+
+
+def test_add_reward_not_logged_in(client):
+    """
+    Test that a user cannot add a custom reward when they are not logged in.
+    """
+    res = client.post("/customize/add-reward", follow_redirects=True)
+    assert b"Please log in to access this page" in res.data
+
+
 def test_get_custom_rewards():
     """
-    Test that get_custom_rewards function in restaurant_profile_manager.py
-    returns the user's list of custom rewards.
+    Test that get_custom_goals function in restaurant_profile_manager.py
+    returns the user's list of custom goals.
     """
     with app.app_context():
         rpm = RestaurantProfileManager("vchang")
         rewards = rpm.get_custom_rewards()
         has_fields = True
         for reward in rewards:
-            if reward['_id'] is None and reward['reward'] is None:
+            if reward['_id'] is None and reward['goal'] is None:
                 has_fields = False
 
         assert len(rewards) >= 0 and has_fields

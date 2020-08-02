@@ -41,43 +41,43 @@ def test_get_shared_rewards():
     rpm = RestaurantProfileManager("vchang")
     shared = rpm.get_shared_rewards()
     expected_shared = [{
-        '_id': ObjectId("5f03a9967aae4a086d8100fd"),
-        'reward': "10% off a purchase"
+        '_id': ObjectId('5f03a9df7aae4a086d810100'),
+        'reward': '$5 off a purchase of $30+'
     }, {
-        '_id': ObjectId("5f03a9b57aae4a086d8100fe"),
-        'reward': "15% off a purchase"
-    }, {
-        '_id': ObjectId("5f03a9c87aae4a086d8100ff"),
-        'reward': "$10 off a purchase of $50+"
-    }, {
-        '_id': ObjectId("5f03a9df7aae4a086d810100"),
-        'reward': "$5 off a purchase of $30+"
-    }, {
-        '_id': ObjectId("5f03a9ec7aae4a086d810101"),
-        'reward': "$5 gift voucher"
-    }, {
-        '_id': ObjectId("5f03a9fd7aae4a086d810102"),
-        'reward': "Free drink"
-    }, {
-        '_id': ObjectId("5f03aa0b7aae4a086d810103"),
-        'reward': "Free appetizer"
-    }, {
-        '_id': ObjectId("5f03aa1a7aae4a086d810104"),
-        'reward': "Free dessert"
+        '_id': ObjectId('5f03a9fd7aae4a086d810102'),
+        'reward': 'Free drink'
     }, {
         '_id':
-            ObjectId("5f03aa287aae4a086d810105"),
+            ObjectId('5f03aa287aae4a086d810105'),
         'reward':
-            "Buy one entree, get another 50% off (of lesser or equal value)"
+            'Buy one entree, get another 50% off (of lesser or equal value)'
     }, {
-        '_id': ObjectId("5f03aa377aae4a086d810106"),
-        'reward': "$3 off any entree"
+        '_id': ObjectId('5f03aa1a7aae4a086d810104'),
+        'reward': 'Free dessert'
     }, {
-        '_id': ObjectId("5f03aa437aae4a086d810107"),
-        'reward': "One free drink refill"
+        '_id': ObjectId('5f03a9c87aae4a086d8100ff'),
+        'reward': '$10 off a purchase of $50+'
     }, {
-        '_id': ObjectId("5f03aa507aae4a086d810108"),
-        'reward': "All desserts $6 each"
+        '_id': ObjectId('5f03aa0b7aae4a086d810103'),
+        'reward': 'Free appetizer'
+    }, {
+        '_id': ObjectId('5f03a9967aae4a086d8100fd'),
+        'reward': '10% off a purchase'
+    }, {
+        '_id': ObjectId('5f03aa377aae4a086d810106'),
+        'reward': '$3 off any entree'
+    }, {
+        '_id': ObjectId('5f03aa437aae4a086d810107'),
+        'reward': 'One free drink refill'
+    }, {
+        '_id': ObjectId('5f03aa507aae4a086d810108'),
+        'reward': 'All desserts $6 each'
+    }, {
+        '_id': ObjectId('5f03a9b57aae4a086d8100fe'),
+        'reward': '15% off a purchase'
+    }, {
+        '_id': ObjectId('5f03a9ec7aae4a086d810101'),
+        'reward': '$5 gift voucher'
     }]
     assert shared == expected_shared
 
@@ -90,43 +90,43 @@ def test_get_rewards_old_user():
     rpm = RestaurantProfileManager("vchang")
     rewards = rpm.get_rewards()
     expected_rewards = [{
-        '_id': ObjectId("5f03a9967aae4a086d8100fd"),
-        'reward': "10% off a purchase"
+        '_id': ObjectId('5f03a9df7aae4a086d810100'),
+        'reward': '$5 off a purchase of $30+'
     }, {
-        '_id': ObjectId("5f03a9b57aae4a086d8100fe"),
-        'reward': "15% off a purchase"
-    }, {
-        '_id': ObjectId("5f03a9c87aae4a086d8100ff"),
-        'reward': "$10 off a purchase of $50+"
-    }, {
-        '_id': ObjectId("5f03a9df7aae4a086d810100"),
-        'reward': "$5 off a purchase of $30+"
-    }, {
-        '_id': ObjectId("5f03a9ec7aae4a086d810101"),
-        'reward': "$5 gift voucher"
-    }, {
-        '_id': ObjectId("5f03a9fd7aae4a086d810102"),
-        'reward': "Free drink"
-    }, {
-        '_id': ObjectId("5f03aa0b7aae4a086d810103"),
-        'reward': "Free appetizer"
-    }, {
-        '_id': ObjectId("5f03aa1a7aae4a086d810104"),
-        'reward': "Free dessert"
+        '_id': ObjectId('5f03a9fd7aae4a086d810102'),
+        'reward': 'Free drink'
     }, {
         '_id':
-            ObjectId("5f03aa287aae4a086d810105"),
+            ObjectId('5f03aa287aae4a086d810105'),
         'reward':
-            "Buy one entree, get another 50% off (of lesser or equal value)"
+            'Buy one entree, get another 50% off (of lesser or equal value)'
     }, {
-        '_id': ObjectId("5f03aa377aae4a086d810106"),
-        'reward': "$3 off any entree"
+        '_id': ObjectId('5f03aa1a7aae4a086d810104'),
+        'reward': 'Free dessert'
     }, {
-        '_id': ObjectId("5f03aa437aae4a086d810107"),
-        'reward': "One free drink refill"
+        '_id': ObjectId('5f03a9c87aae4a086d8100ff'),
+        'reward': '$10 off a purchase of $50+'
     }, {
-        '_id': ObjectId("5f03aa507aae4a086d810108"),
-        'reward': "All desserts $6 each"
+        '_id': ObjectId('5f03aa0b7aae4a086d810103'),
+        'reward': 'Free appetizer'
+    }, {
+        '_id': ObjectId('5f03a9967aae4a086d8100fd'),
+        'reward': '10% off a purchase'
+    }, {
+        '_id': ObjectId('5f03aa377aae4a086d810106'),
+        'reward': '$3 off any entree'
+    }, {
+        '_id': ObjectId('5f03aa437aae4a086d810107'),
+        'reward': 'One free drink refill'
+    }, {
+        '_id': ObjectId('5f03aa507aae4a086d810108'),
+        'reward': 'All desserts $6 each'
+    }, {
+        '_id': ObjectId('5f03a9b57aae4a086d8100fe'),
+        'reward': '15% off a purchase'
+    }, {
+        '_id': ObjectId('5f03a9ec7aae4a086d810101'),
+        'reward': '$5 gift voucher'
     }]
     assert rewards == expected_rewards
 
