@@ -5,6 +5,7 @@ It is used to interact with the customer profile database.
 from bson.objectid import ObjectId
 from modules.profile_manager import ProfileManager
 from modules.database import QueryFailureException
+from modules.restaurant_profile_manager import RestaurantProfileManager
 
 
 class CustomerProfileManager(ProfileManager):
@@ -99,3 +100,54 @@ class CustomerProfileManager(ProfileManager):
             if fav in profiles:
                 list_fav[ObjectId(fav)] = profiles[ObjectId(fav)]
         return list_fav
+ 
+    def get_reward_progress(self):
+        """
+        Return the current user's reward history as a tuple of two lists:
+        ([active rewards], [redeemed rewards]).
+        Returns ([], []) on failure.
+        """
+        try:
+            customer = self.db.query("customers", {"username": self.id})[0]
+
+            # no game progress
+            if "progress" not in customer:
+                return ([], [])
+
+            active_rewards = []
+            redeemed_rewards = []
+            for resaurant in customer["progress"]:
+
+                # no rewards completed at this restaurant
+                if "completed_rewards" not in resaurant:
+                    continue
+
+                restaurant_name = RestaurantProfileManager(
+                    "").get_restaurant_name_by_id(resaurant["restaurant_id"])
+
+                # add rewards to appropriate collection
+                for reward in resaurant["completed_rewards"]:
+                    reward["restaurant_name"] = restaurant_name
+                    if reward["is_redeemed"]:
+                        redeemed_rewards.append(reward)
+                    else:
+                        active_rewards.append(reward)
+
+            # sort redeemed rewards by date
+            redeemed_rewards = sorted(redeemed_rewards,
+                                      key=lambda x: x["redemption_date"],
+                                      reverse=True)
+
+            # format all dates
+            for index, reward in enumerate(redeemed_rewards):
+                redeemed_rewards[index]["redemption_date"] = reward[
+                    "redemption_date"].strftime("%B %d, %Y")
+
+            return (active_rewards, redeemed_rewards)
+
+        except QueryFailureException:
+            print("Something's wrong with the query.")
+            return ([], [])
+        except IndexError:
+            print("Could not find the customer")
+            return ([], [])

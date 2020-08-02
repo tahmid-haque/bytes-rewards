@@ -26,7 +26,7 @@ def test_custom_goals_route_no_login(client):
     """
     Test that goal customization page does not load unless user is logged in.
     """
-    res = client.get("/customizes", follow_redirects=True)
+    res = client.get("/customize", follow_redirects=True)
     assert b"Please log in to access this page" in res.data
 
 def test_custom_goals_route_logged_in(client):
@@ -34,14 +34,14 @@ def test_custom_goals_route_logged_in(client):
     Test that goal customization page loads when the user is logged in.
     """
     client.post("/login", data={"username": "janedoe", "password": "Aa123456"})
-    res = client.get("/customizes", follow_redirects=True)
+    res = client.get("/customize", follow_redirects=True)
     assert b"Customization" in res.data
 
 def test_add_goal_not_logged_in(client):
     """
     Test that a user cannot add a goal when they're not logged in.
     """
-    res = client.post("/customizes/add", follow_redirects=True)
+    res = client.post("/customize/add-goal", follow_redirects=True)
     assert b"Please log in to access this page" in res.data
 
 def test_delete_goal_not_logged_in(client):
@@ -49,7 +49,7 @@ def test_delete_goal_not_logged_in(client):
     Test that a user cannot delete a goal when they're not logged in.
     """
     some_id = {"deleted-goal": "5f11c9721a52881b3573c029"} # Utilize an actual existing ID.
-    res = client.post("/customizes/delete", data=some_id, follow_redirects=True)
+    res = client.post("/customize/delete-goal", data=some_id, follow_redirects=True)
     assert b"Please log in to access this page" in res.data
 
 def test_get_custom_goals():

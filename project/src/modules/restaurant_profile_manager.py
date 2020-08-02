@@ -5,6 +5,7 @@ It is used to interact with the restaurant profile database.
 
 import copy
 from bson.objectid import ObjectId
+from bson.errors import InvalidId
 from modules.profile_manager import ProfileManager
 from modules.database import Database, QueryFailureException, UpdateFailureException
 
@@ -251,13 +252,12 @@ class RestaurantProfileManager(ProfileManager):
             rewards = self.get_bingo_board()["board_reward"]
             if ObjectId(reward_id) in rewards:
                 return False
-            self.db.update('restaurant_users', {"username": self.id}, {
-                "$pull": {
-                    "rewards": {
-                        "_id": ObjectId(reward_id)
-                    }
-                }
-            })
+            self.db.update('restaurant_users', {"username": self.id},
+                           {"$pull": {
+                               "rewards": {
+                                   "_id": ObjectId(reward_id)
+                               }
+                           }})
             return True
         except QueryFailureException:
             print("There was an issue deleting the reward.")
@@ -278,12 +278,16 @@ class RestaurantProfileManager(ProfileManager):
             board = restaurant["bingo_board"]
 
             board["board"] = [
-                copy.deepcopy(goal) for index in board["board"] for goal in goals
+                copy.deepcopy(goal)
+                for index in board["board"]
+                for goal in goals
                 if index == goal["_id"]
             ]
 
             board["board_reward"] = [
-                copy.deepcopy(reward) for index in board["board_reward"] for reward in rewards
+                copy.deepcopy(reward)
+                for index in board["board_reward"]
+                for reward in rewards
                 if index == reward["_id"]
             ]
             self.id = temp_id
@@ -291,3 +295,16 @@ class RestaurantProfileManager(ProfileManager):
         except (QueryFailureException, IndexError):
             print("Something's wrong with the query.")
             return {}
+
+    def get_restaurant_name_by_id(self, object_id):
+        """
+        Given a restaurant user's database id, return the restaurant's name.
+        Returns "" on failure.
+        """
+        try:
+            user = self.db.query("restaurant_users",
+                                 {"_id": ObjectId(object_id)})[0]
+            return user["profile"]["name"]
+        except (QueryFailureException, IndexError, KeyError, InvalidId):
+            print("Something's wrong with the query.")
+            return ""

@@ -29,9 +29,14 @@ document.querySelectorAll('.goal').forEach((goal) => {
 });
 
 // Toggle the visibility of the add goal input box
-document.querySelector('h1 i').onclick = () => {
-    document.querySelector('input').classList.toggle('hidden-input');
-    document.querySelector('form').classList.toggle('hidden-input');
+document.querySelector('h1[name="goal"] i').onclick = () => {
+    document.querySelector('input[name="goal"]').classList.toggle('hidden-input');
+    document.querySelector('form[id="goal"]').classList.toggle('hidden-input');
+};
+
+document.querySelector('h1[name="reward"] i').onclick = () => {
+    document.querySelector('input[name="reward"]').classList.toggle('hidden-input');
+    document.querySelector('form[id="reward"]').classList.toggle('hidden-input');
 };
 
 // Submit the delete form

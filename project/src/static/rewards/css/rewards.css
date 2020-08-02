@@ -1,0 +1,229 @@
+body,
+html {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    background-color: rgb(231, 231, 231);
+    font-family: 'Poppins', sans-serif;
+}
+
+#container {
+    margin: 0 auto;
+    max-width: 600px;
+    min-height: 100vh;
+    color: #ffffff;
+    box-sizing: border-box;
+    padding: 20px min(40px, 5%);
+    background-color: rgb(176, 196, 222);
+}
+
+#back {
+    font-size: 35px;
+    color: rgb(212, 0, 0);
+    background-color: white;
+    border-radius: 10px;
+    text-align: center;
+    width: 70px;
+    height: 35px;
+    border: none;
+    line-height: 35px;
+    padding: 0;
+    transition: all linear 300ms;
+    outline: none;
+    border: 1px solid black;
+    -webkit-text-stroke: 1px black;
+}
+
+#back:hover {
+    color: #ff0000;
+    cursor: pointer;
+}
+
+h1 {
+    text-align: center;
+    font-weight: bold;
+    font-size: 50px;
+    line-height: 50px;
+    margin: 20px 0;
+    -webkit-text-stroke: 2px black;
+}
+
+#active-tab.active {
+    border-right: 2px solid black;
+}
+
+#redeemed-tab.active {
+    border-left: 2px solid black;
+}
+
+#redeemed-tab {
+    border-left: 1px solid black;
+}
+
+#active-tab {
+    border-right: 1px solid black;
+}
+
+a.nav-item.nav-link {
+    background-color: #cacaca;
+    box-sizing: border-box;
+    border: 2px solid black;
+    border-bottom: 3px solid black;
+    color: black;
+    font-weight: bold;
+    font-size: 23px;
+}
+
+a.nav-item.nav-link.active {
+    border: 3px solid black;
+    border-bottom: none;
+    background-color: #f7f7f7;
+    color: black;
+}
+
+#navigation {
+    border-bottom: 3px solid black;
+    box-sizing: content-box;
+    height: 52px;
+}
+
+.accordion,
+#redeemed-container {
+    background-color: white;
+    color: black;
+    border: 3px solid black;
+    border-top: none;
+    border-bottom-left-radius: 0.25rem;
+    border-bottom-right-radius: 0.25rem;
+}
+
+.card:first-of-type {
+    border-top: none;
+}
+
+.card:last-of-type,
+.card:last-of-type .card-header.collapsed {
+    border-bottom: none;
+}
+
+.card {
+    border: none;
+}
+
+.card-header.collapsed {
+    border-bottom: 3px solid black;
+}
+
+#active-rewards .card-header {
+    cursor: pointer;
+}
+
+.card-header {
+    border-bottom: 2px solid black;
+    padding: 10px 15px;
+}
+
+.card:not(:last-child) .card-body {
+    border-bottom: 2px solid black;
+}
+
+.rest-name,
+.reward-text {
+    padding: 0;
+    font-size: 30px;
+    line-height: 40px;
+}
+
+.rest-name {
+    font-weight: bold;
+}
+
+.card .fas {
+    font-size: 60px;
+    line-height: 80px;
+}
+
+.fa-gift {
+    color: red;
+}
+
+.fa-check {
+    color: green;
+}
+
+.reward {
+    margin-right: 10px;
+}
+
+.code-header {
+    font-weight: bold;
+    font-size: 20px;
+    background-color: black;
+    color: white;
+    text-align: center;
+}
+
+.code {
+    display: block;
+    word-wrap: break-word;
+    text-align: center;
+    background-color: #dfdfdf;
+    border: 2px solid black;
+    padding: 5px;
+    margin-bottom: 5px;
+}
+
+.instructions ol {
+    padding-left: 20px;
+    margin: 0;
+}
+
+.instructions h2 {
+    margin: 0 0 5px 0;
+}
+
+.instructions img {
+    width: 100%;
+    margin-bottom: 7px;
+}
+
+.instructions li:nth-child(n + 2) {
+    margin-top: 10px;
+}
+
+.steps {
+    font-weight: bold;
+    font-size: 24px;
+}
+
+.card-body {
+    padding: 10px;
+}
+
+#hint {
+    width: calc(100% - 4px);
+    text-align: center;
+    background-color: white;
+    color: black;
+    border: 3px solid black;
+    font-size: 20px;
+    padding: 5px;
+    box-sizing: border-box;
+    margin: 10px auto;
+}
+
+.empty {
+    color: #ff0000;
+    font-size: 20px;
+    padding: 5px 10px;
+    background-color: #f7f7f7;
+    text-align: center;
+    font-weight: bold;
+}
+
+#active-container .empty {
+    border: 3px solid black;
+    border-top: none;
+    border-bottom-left-radius: 0.25rem;
+    border-bottom-right-radius: 0.25rem;
+}
