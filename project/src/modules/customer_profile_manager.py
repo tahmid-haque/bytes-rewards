@@ -48,6 +48,59 @@ class CustomerProfileManager(ProfileManager):
         except IndexError:
             print("Could not find the customer")
 
+    def get_favourite(self):
+        """
+        Gets the list of user's favourite restaurant Ids
+        """
+        try:
+            customer = self.db.query("customers", {"username": self.id})[0]
+            if "favourite" in customer:
+                return customer["favourite"]
+            else:
+                return []
+        except QueryFailureException:
+            print("Something's wrong with the query.")
+        except IndexError:
+            print("Could not find the customer")
+
+    def update_favourite(self, obj_id):
+        """
+        Updates the list of user's favourite restaurant Ids
+        """
+        try:
+            customer = self.db.query("customers", {"username": self.id})[0]
+            if "favourite" not in customer:
+                self.db.update("customers", {"username": self.id},
+                               {"$push": {
+                                   "favourite": ObjectId(obj_id)
+                               }})
+            else:
+                if ObjectId(obj_id) in customer["favourite"]:
+                    self.db.update('customers', {"username": self.id},
+                                   {"$pull": {
+                                       "favourite": ObjectId(obj_id)
+                                   }})
+                else:
+                    self.db.update('customers', {"username": self.id},
+                                   {"$push": {
+                                       "favourite": ObjectId(obj_id)
+                                   }})
+            return self.get_favourite()
+        except QueryFailureException:
+            print("Something's wrong with the query.")
+        except IndexError:
+            print("Could not find the customer")
+
+    def get_favourite_doc(self, profiles, favourite):
+        """
+        Gets a dictionary of the user's favourite restaurant profiles
+        """
+        list_fav = {}
+        for fav in favourite:
+            if fav in profiles:
+                list_fav[ObjectId(fav)] = profiles[ObjectId(fav)]
+        return list_fav
+ 
     def get_reward_progress(self):
         """
         Return the current user's reward history as a tuple of two lists:
