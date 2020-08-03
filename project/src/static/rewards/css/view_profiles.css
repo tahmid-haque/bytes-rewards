@@ -40,6 +40,15 @@ h3 {
     color: dimgray;
 }
 
+h4 {
+    margin: 0;
+    padding-top: 15px;
+	padding-bottom: 50px;
+    text-align: center;
+    font-size: 18px;
+    color: gray;
+}
+
 .mainbox p {
     margin: 0;
     padding: 0;
@@ -148,4 +157,63 @@ li {
 
 ul {
     margin-top: 0;
+}
+
+.title-container {
+	width: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+#button-favourite {
+    font-size: 25px;
+    color: rgb(212, 0, 0);
+    background-color: white;
+    border-radius: 10px;
+    text-align: center;
+    width: 35px;
+    height: 35px;
+    border: none;
+    line-height: 5px;
+    padding: 0;
+    transition: all linear 300ms;
+    outline: none;
+    box-shadow: 1px 1px 1px #0000cd;
+}
+
+.viewfav {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: none;
+    outline: none;
+    height: 30px;
+    width: 130px;
+    padding: 10px;
+    background: #fff;
+    text-align: center;
+    border-radius: 10px;
+    box-shadow: 1px 1px 1px #0000cd;
+}
+
+#back {
+    font-size: 35px;
+    color: rgb(212, 0, 0);
+    background-color: white;
+    border-radius: 10px;
+    text-align: center;
+    width: 70px;
+    height: 35px;
+    border: none;
+    line-height: 35px;
+    padding: 0;
+    transition: all linear 300ms;
+    outline: none;
+    border: 1px solid black;
+    -webkit-text-stroke: 1px black;
+}
+
+#back:hover {
+    color: #ff0000;
+    cursor: pointer;
 }

@@ -1,0 +1,128 @@
+{% extends 'base.j2' %} 
+
+{% block head %}
+	<title>Bytes | Rewards</title>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css" />
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" />
+	<link rel="stylesheet" href="{{ url_for('static', filename='css/rewards.css') }}">
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/js/bootstrap.min.js"></script>
+{% endblock head %} 
+
+{% block body %} 
+  	<div id="container">
+		<button 
+			id="back" 
+			onclick=history.back()
+			<i class="fas fa-long-arrow-alt-left"></i>
+		</button>
+		<h1>Rewards</h1>
+
+		<nav>
+			<div class="nav nav-tabs" id="navigation">
+				<a 
+					class="nav-item nav-link active" 
+					id="active-tab"
+					data-toggle="tab" 
+					href="#active-container">Active</a>
+				<a 
+					class="nav-item nav-link" 
+					id="redeemed-tab"
+					data-toggle="tab" 
+					href="#redeemed-container">Redeemed</a>
+			</div>
+		</nav>
+		<div class="tab-content">
+			<div class="tab-pane fade show active" id="active-container">
+				{% if active_rewards|length > 0 %}
+					<div class="accordion" id="active-rewards">
+						{% for i in range(active_rewards|length) %}
+							<div class="card">
+								<div 
+									class="card-header collapsed d-flex align-items-center justify-content-between"
+									data-toggle="collapse" 
+									data-target="#reward-{{i}}">
+									<div class="reward">
+										<div class="rest-name">
+											{{active_rewards[i]['restaurant_name']}}
+										</div>
+										<div class="reward-text">
+											{{active_rewards[i]['text']}}
+										</div>
+									</div>
+									<i class="fas fa-gift"></i>
+								</div>
+
+								<div id="reward-{{i}}" class="collapse" data-parent="#active-rewards">
+									<div class="card-body instructions">
+										<img src="{{qrcode(active_rewards[i]['redemption_code'], box_size=24)}}">
+										<div class="code-header">Code</div>
+										<strong class="code">
+											{{active_rewards[i]['redemption_code']}}
+										</strong>
+										<h2 class="steps">Steps</h2>
+										<ol>
+											<li>
+												On your next visit to <em>{{active_rewards[i]['restaurant_name']}}</em>, present the above QR code to
+												redeem your <strong>{{active_rewards[i]['text']}}</strong> reward.
+											</li>
+											<li>
+												Alternatively, provide the above redemption code if requested by your server. 
+											</li>
+										</ol>
+									</div>
+								</div>
+							</div>
+						{% endfor %}
+					</div>
+					<div id="hint">Click on rewards to find out more!</div>
+				{% else %}
+					<div class="empty">
+						No active rewards found.
+						<br>
+						Complete goals for restaurants to earn rewards!
+						<br>
+					</div>
+				{% endif %}
+			</div>
+			<div class="tab-pane fade" id="redeemed-container">
+				{% if redeemed_rewards|length > 0 %}
+					<div id="redeemed-rewards">
+						{% for j in range(redeemed_rewards|length) %}
+							<div class="card">
+								<div 
+									class="card-header collapsed">
+									<div class="reward d-flex align-items-center justify-content-between">
+										<div>
+											<div class="rest-name">
+												{{redeemed_rewards[j]['restaurant_name']}}
+											</div>
+											<div class="reward-text">
+												{{redeemed_rewards[j]['text']}}
+											</div>
+										</div>
+										<i class="fas fa-check"></i>
+									</div>
+									<div class="date text-right">
+										Redeemed on {{redeemed_rewards[j]['redemption_date']}}
+									</div>
+								</div>
+							</div>
+						{% endfor %}
+					</div>
+				{% else %}
+					<div class="empty">
+						No redeemed rewards found.
+						<br>
+						Redeemed rewards will appear here.
+					</div>
+				{% endif %}
+			</div>
+		</div>
+	</div>
+
+	<script>
+		$("#active-rewards .card").click(() => $("#hint").slideUp(500))
+	</script>
+		
+{% endblock body %}
