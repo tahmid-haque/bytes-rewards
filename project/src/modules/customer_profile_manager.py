@@ -189,3 +189,6 @@ class CustomerProfileManager(ProfileManager):
         except IndexError:
             print("Could not find the customer")
             return ([], [])
+    
+    def update_board(self):
+        RestaurantProfileManager("").update_board()

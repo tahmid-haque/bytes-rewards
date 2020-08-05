@@ -9,6 +9,7 @@ from bson.errors import InvalidId
 from modules.profile_manager import ProfileManager
 from modules.database import Database, QueryFailureException, UpdateFailureException
 from datetime import datetime
+from dateutil.relativedelta import relativedelta
 
 
 class RestaurantProfileManager(ProfileManager):
@@ -303,14 +304,16 @@ class RestaurantProfileManager(ProfileManager):
         a message depending on if it is successful or not.
         """
         try:
-            owner_id = self.db.query('restaurant_users', {"username": self.id})[0]["_id"]
+            owner_id = self.db.query('restaurant_users',
+                                     {"username": self.id})[0]["_id"]
             user_profile = self.db.query('customers', {"username": user})[0]
             if "progress" in user_profile:
                 for restaurant in user_profile["progress"]:
                     if restaurant["restaurant_id"] == owner_id:
                         goals = restaurant["completed_goals"]
                         for goal in goals:
-                            if str(goal["_id"]) == goal_id and position == goal["position"]:
+                            if str(goal["_id"]
+                                  ) == goal_id and position == goal["position"]:
                                 return "This goal has already been completed!"
                         id_exists = True
             if not isinstance(int(position), int) or not (1 <= len(position) <= 2) or not (0 <= int(position) <= 24) \
@@ -318,25 +321,33 @@ class RestaurantProfileManager(ProfileManager):
                 return "Invalid QR code!"
             try:
                 if "progress" in user_profile and id_exists:
-                    self.db.update('customers', {"username": user, "progress.restaurant_id": ObjectId(owner_id)},
-                                   {"$push": {
-                                       "progress.$.completed_goals": {
-                                           "_id": ObjectId(goal_id),
-                                           "position": position,
-                                           "date_completed": datetime.now()}}})
-                else:
                     self.db.update(
-                        'customers', {"username": self.id},
-                        {"$push": {
+                        'customers', {
+                            "username": user,
+                            "progress.restaurant_id": ObjectId(owner_id)
+                        }, {
+                            "$push": {
+                                "progress.$.completed_goals": {
+                                    "_id": ObjectId(goal_id),
+                                    "position": position,
+                                    "date_completed": datetime.now()
+                                }
+                            }
+                        })
+                else:
+                    self.db.update('customers', {"username": self.id}, {
+                        "$push": {
                             "progress": {
-                                "restaurant_id": ObjectId(owner_id),
+                                "restaurant_id":
+                                    ObjectId(owner_id),
                                 "completed_goals": [{
                                     "_id": ObjectId(goal_id),
                                     "position": position,
                                     "date": datetime.now()
                                 }]
                             }
-                        }})
+                        }
+                    })
                 return "Successfully marked as completed!"
             except UpdateFailureException:
                 print("There was an issue updating")
@@ -358,3 +369,63 @@ class RestaurantProfileManager(ProfileManager):
         except (QueryFailureException, IndexError, KeyError, InvalidId):
             print("Something's wrong with the query.")
             return ""
+
+    def update_board(self):
+        try: 
+            public = self.get_public_users()
+            reset = 90
+            for user in public:
+                if 'expiry_date' in user['bingo_board']:
+                    if datetime.now() > user['bingo_board']['expiry_date']:
+                        if 'future_board' in user:
+                            self.db.update(
+                                'restaurant_users', {'username': user['username']},
+                                {'$set': {
+                                    'bingo_board': user['future_board']
+                                }})
+                            future_exp_date = user['future_board'][
+                                'expiry_date'] + relativedelta(days=+reset)
+                            self.db.update(
+                                'restaurant_users', {'username': user['username']},
+                                {
+                                    '$set': {
+                                        'future_board': {
+                                            'name':
+                                                user['future_board']['name'],
+                                            'size':
+                                                user['future_board']['size'],
+                                            'board':
+                                                user['future_board']['board'],
+                                            'board_reward':
+                                                user['future_board']
+                                                ['board_reward'],
+                                            'expiry_date':
+                                                future_exp_date
+                                        }
+                                    }
+                                })
+                        else:
+                            exp_date = user['bingo_board'][
+                                'expiry_date'] + relativedelta(days=+reset)
+                            self.db.update(
+                                'restaurant_users', {'username': user['username']},
+                                {
+                                    '$set': {
+                                        'bingo_board': {
+                                            'name':
+                                                user['bingo_board']['name'],
+                                            'size':
+                                                user['bingo_board']['size'],
+                                            'board':
+                                                user['bingo_board']['board'],
+                                            'board_reward':
+                                                user['bingo_board']['board_reward'],
+                                            'expiry_date':
+                                                exp_date
+                                        }
+                                    }
+                                })
+                        return True
+            return False
+        except UpdateFailureException:
+            print("There was an issue updating")
