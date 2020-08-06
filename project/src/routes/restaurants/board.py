@@ -4,8 +4,8 @@ This file contains routes related to a restaurant user's game board.
 
 from flask import Blueprint, render_template, request, redirect
 from flask_login import current_user, login_required
-from datetime import datetime
 bp = Blueprint("board", __name__)
+
 
 @bp.route('/')
 @login_required

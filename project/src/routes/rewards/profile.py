@@ -5,7 +5,6 @@ This file contains routes related to restaurant profiles.
 from flask import Blueprint, render_template, redirect
 from flask_login import current_user, login_required
 from modules.restaurant_profile_manager import RestaurantProfileManager
-from modules.customer_profile_manager import CustomerProfileManager
 
 bp = Blueprint("profile", __name__)
 

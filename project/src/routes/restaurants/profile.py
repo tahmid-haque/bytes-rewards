@@ -59,6 +59,7 @@ def save_profile():
     current_user.update_profile(profile)
     return redirect("/")
 
+
 @bp.route('/qr-verification')
 @login_required
 def view_qr_verification():
