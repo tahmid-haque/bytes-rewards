@@ -4,6 +4,7 @@ body {
     background-size: cover;
     background-position: center;
     background-color: rgb(231, 231, 231);
+    font-family: 'Poppins', sans-serif;
 }
 
 .mainbox {
@@ -14,7 +15,8 @@ body {
     position: relative;
     box-sizing: border-box;
     padding: 20px min(40px, 5%) 1px min(40px, 5%);
-    background-color: #000080;
+    background-color: white;
+    box-shadow: 0px 0px 12px 0px rgba(0, 0, 0, 0.75);
 }
 
 h1 {
@@ -22,6 +24,8 @@ h1 {
     padding: 0 0 0;
     text-align: center;
     font-size: 24px;
+    color: navy;
+    text-shadow: 0px 1px 3px rgba(0, 0, 0, 0.6);
 }
 
 h2 {
@@ -43,7 +47,7 @@ h3 {
 h4 {
     margin: 0;
     padding-top: 15px;
-	padding-bottom: 50px;
+    padding-bottom: 50px;
     text-align: center;
     font-size: 18px;
     color: gray;
@@ -76,6 +80,7 @@ h4 {
     box-sizing: border-box;
     padding: 10px 10px 10px 10px;
     border-radius: 4px;
+    box-shadow: 0px 0px 12px 0px rgba(0, 0, 0, 0.75);
 }
 
 .profilecard a {
@@ -110,7 +115,6 @@ h4 {
     background: #fff;
     text-align: center;
     border-radius: 10px;
-    box-shadow: 1px 1px 1px #0000cd;
 }
 
 .viewgame {
@@ -125,7 +129,11 @@ h4 {
     background: #fff;
     text-align: center;
     border-radius: 10px;
-    box-shadow: 1px 1px 1px #0000cd;
+}
+
+.learnmore,
+.viewgame {
+    box-shadow: 0px 0px 3px 0px rgba(0, 0, 0, 0.75);
 }
 
 .button-container {
@@ -160,7 +168,7 @@ ul {
 }
 
 .title-container {
-	width: 100%;
+    width: 100%;
     display: flex;
     justify-content: space-between;
 }
@@ -178,7 +186,7 @@ ul {
     padding: 0;
     transition: all linear 300ms;
     outline: none;
-    box-shadow: 1px 1px 1px #0000cd;
+    box-shadow: 0px 0px 3px 0px rgba(0, 0, 0, 0.75);
 }
 
 .viewfav {
@@ -216,4 +224,105 @@ ul {
 #back:hover {
     color: #ff0000;
     cursor: pointer;
+}
+
+/* Override Bootstrap Styles */
+
+h1,
+h2,
+h3 {
+    font-weight: bold;
+    line-height: normal;
+}
+
+*,
+::after,
+::before {
+    box-sizing: unset;
+}
+
+/* Navbar Styling */
+
+.light-nav-item {
+    transition: 0.3s;
+    background-color: #f8f8f8 !important;
+    color: black !important;
+}
+
+.light-nav-item:hover {
+    background-color: rgb(54, 99, 141) !important;
+    color: #f8f8f8 !important;
+}
+
+.dark-nav-item {
+    transition: 0.3s;
+    background-color: rgb(54, 99, 141) !important;
+    color: white !important;
+}
+
+.dark-nav-item:hover {
+    background-color: white !important;
+    color: black !important;
+}
+
+.display-4 {
+    font-size: 3.2rem;
+}
+
+.alt-color {
+    background-color: rgb(54, 99, 141) !important;
+    color: white !important;
+    opacity: 85%;
+}
+
+.alt-color:hover {
+    opacity: 100%;
+}
+
+#navbar {
+    -webkit-box-shadow: 0px 2px 5px 0px rgba(133, 133, 133, 1);
+    -moz-box-shadow: 0px 2px 5px 0px rgba(133, 133, 133, 1);
+    box-shadow: 0px 1px 3px 0px rgba(133, 133, 133, 1);
+    transition: 0.3s;
+    background-color: #f8f8f8;
+    line-height: 2.2rem;
+}
+
+.container {
+    max-width: 600px;
+}
+
+.navbar-toggler,
+.navbar-toggler:focus {
+    outline: none;
+    border: none;
+}
+
+.alt-color .navbar-toggler-icon {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='30' height='30' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 1%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e") !important;
+}
+
+.navbar-toggler-icon {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' width='30' height='30' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%280, 0, 0, 0.8%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e") !important;
+}
+
+#navbar i {
+    display: none;
+}
+
+#sign-out-icon {
+    padding-top: 3px !important;
+}
+
+@media only screen and (max-width: 768px) {
+    #navbar i {
+        padding: 0 0.75rem;
+        display: block;
+        float: right;
+        font-size: 30px;
+    }
+}
+
+.nav-item {
+    font-size: 20px;
 }

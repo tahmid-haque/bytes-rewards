@@ -2,20 +2,60 @@
 
 {% block head %}
     <title>Customer | View Profiles</title>
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/view_profiles.css') }}" />
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" />
+	<link 
+		rel="stylesheet" 
+		href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.min.css" 
+		integrity="sha512-MoRNloxbStBcD8z3M/2BmnT+rg4IsMxPkXaGh2zD6LGNNFE80W3onsAhRcMAMrSoyWL9xD7Ert0men7vR8LUZg==" 
+		crossorigin="anonymous" />
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/view_profiles.css') }}" />
 {% endblock head %} 
 
 {% block body %} 
-    <div class ="mainbox">
-		<div class="button-container">
-			<div class="logout-button">
-				<a href="/logout">Logout</a>
-			</div>
-			<div class="viewfav">
-				<a href="/profiles/view-favourites">View Favourites</a>
+	<nav
+		id="navbar"
+		class="navbar navbar-expand-md navbar-light p-0 sticky-top"
+	>
+		<div class="container">
+			<a class="navbar-brand p-0 m-0" href="/"
+				><img src="{{ url_for('static', filename='resources/logo.png') }}" height="50rem"
+			/></a>
+			<button
+				class="navbar-toggler"
+				type="button"
+				data-toggle="collapse"
+				data-target="#navbarSupportedContent"
+			>
+				<span class="navbar-toggler-icon"></span>
+			</button>
+
+			<div class="collapse navbar-collapse" id="navbarSupportedContent">
+				<ul class="navbar-nav mr-auto">
+					<a
+						class="nav-item nav-link light-nav-item pl-2"
+						href="/profiles/view-favourites"
+						><i class="fas fa-gift"></i><strong>Favourites</strong>
+					</a>
+					<a
+						class="nav-item nav-link light-nav-item pl-2"
+						href="/personal/rewards"
+						><i class="fas fa-star"></i><strong>Rewards</strong>
+					</a>
+				</ul>
+				<ul class="navbar-nav">
+					<a
+						class="nav-item nav-link light-nav-item pl-2"
+						href="/logout"
+						id="logout"
+						><i class="fas fa-sign-out-alt" id="sign-out-icon"></i><strong>Logout</strong>
+					</a>
+				</ul>
 			</div>
 		</div>
+	</nav>
+    <div class ="mainbox">
 		<h1>Welcome!</h1>
 		<h1>Choose a Game Board</h1>
 		{% if profiles: %}
@@ -61,4 +101,34 @@
 			{% endfor %}
 		{% endif %}
     </div>
+	
+	<script>
+		const navHeight = $('#navbar').height();
+
+		$(document).scroll(function () {
+			$('.list-group-item').removeClass('active');
+			if ($(this).scrollTop() > navHeight) {
+				$('.light-nav-item')
+					.removeClass('light-nav-item')
+					.addClass('dark-nav-item');
+				$('#navbar').addClass('alt-color');
+				$('#navbar img').attr("src", 
+					"{{ url_for('static', filename='resources/light_logo.png') }}")
+			} else {
+				$('.dark-nav-item')
+					.removeClass('dark-nav-item')
+					.addClass('light-nav-item');
+				$('#navbar').removeClass('alt-color');
+				$('#navbar img').attr("src", 
+					"{{ url_for('static', filename='resources/logo.png') }}")
+			}
+		});
+
+		function toggleFavourite() {
+			$(this).toggleClass("far")
+			$(this).toggleClass("fas")
+		}
+
+		$(".profilecard .fas, .profilecard .far").hover(toggleFavourite, toggleFavourite)
+	</script>
 {% endblock body %}
