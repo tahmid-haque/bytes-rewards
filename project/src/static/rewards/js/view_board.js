@@ -1,3 +1,7 @@
+{
+	var size = $('#board_size').data("size");
+}
+
 /**
  * Show the card associated by the given goal position.
  *
@@ -12,10 +16,10 @@ function show(i) {
             $('.vertical').removeClass('vertical');
             $('.d-diagonal').removeClass('d-diagonal');
             $('.a-diagonal').removeClass('a-diagonal');
-            $(`.r${parseInt(i / 5)}`).addClass('horizontal');
-            $(`.c${i % 5}`).addClass('vertical');
-            if (i % 5 === parseInt(i / 5)) $(`.d0`).addClass('d-diagonal');
-            if (parseInt(i / 5) === 4 - (i % 5))
+            $(`.r${parseInt(i / size)}`).addClass('horizontal');
+            $(`.c${i % size}`).addClass('vertical');
+            if (i % size === parseInt(i / size)) $(`.d0`).addClass('d-diagonal');
+            if (parseInt(i / size) === (size-1) - (i % size))
                 $(`.d1`).addClass('a-diagonal');
             $('#board td').eq(i).addClass('selected');
             animationLock = false;

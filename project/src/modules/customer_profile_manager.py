@@ -22,16 +22,22 @@ class CustomerProfileManager(ProfileManager):
         """
         ProfileManager.__init__(self, username, 'customers')
 
-    def check_bingo(self, board, completed_indices):
+    def check_bingo(self, board, completed_indices, size):
         """
         Helper function to update a board with the customer's bingos.
         """
-        ranges = [[4, 8, 12, 16, 20]]
-        for i in range(0, 25, 5):
-            ranges.append([x for x in range(i, i + 5)])
-        for i in range(5):
-            ranges.append([x for x in range(25) if x % 5 == i])
-        ranges.append([0, 6, 12, 18, 24])
+        a_diag = size - 1
+        d_diag = size + 1
+        ranges = [[]]
+        for i in range(1, size + 1):
+            ranges[0].append(a_diag * i)
+        for i in range(0, size * size, size):
+            ranges.append([x for x in range(i, i + size)])
+        for i in range(size):
+            ranges.append([x for x in range(size * size) if x % size == i])
+        ranges.append([])
+        for i in range(0, size):
+            ranges[-1].append(d_diag * i)
 
         count = 0
         for rang in ranges:
@@ -79,7 +85,8 @@ class CustomerProfileManager(ProfileManager):
                             index = int(goal["position"])
                             if board["board"][index]["_id"] == goal["_id"]:
                                 board["board"][index]["is_complete"] = True
-                                self.check_bingo(board, completed_index)
+                                self.check_bingo(board, completed_index,
+                                                 board["size"])
 
         except QueryFailureException:
             print("Something's wrong with the query.")
@@ -138,7 +145,7 @@ class CustomerProfileManager(ProfileManager):
             if fav in profiles:
                 list_fav[ObjectId(fav)] = profiles[ObjectId(fav)]
         return list_fav
- 
+
     def get_reward_progress(self):
         """
         Return the current user's reward history as a tuple of two lists:
