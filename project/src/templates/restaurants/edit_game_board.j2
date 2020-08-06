@@ -1,0 +1,157 @@
+{% extends 'base.j2' %} 
+
+{% block head %}
+    <title>Bytes | Bingo Editor</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/board_editor.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css" />
+{% endblock head %} 
+
+{% block body %} 
+	<div id="container">
+		<div id="build-area">
+            <div id="options-container">
+                <form action="/board/save" method="POST">
+                    <div id="size-date-container">
+                        <div id="size-label-container">
+                            <label>Board Size:</label>
+                            <div id="size-container">
+                                <div size=3>3x3</div>
+                                <div size=4>4x4</div>
+                                <div size=5>5x5</div>
+                            </div>
+                        </div>
+                        <div id="date-label-container">
+                            <label>Expiration (11:59 PM UTC):</label>
+                            <input 
+                                type="text" 
+                                name="expiry_date" 
+                                placeholder="Select Date"
+                                readonly                             
+                                required >
+                        </div>
+                    </div>
+                    <div id="title">
+                        <label>Board Title</label>
+                        <input 
+                            type="text" 
+                            name="board_name" 
+                            placeholder="Enter Name of your Bingo Board" 
+                            id="board-name"
+                            value="{{board_name}}"
+                            required>
+                    </div>
+                </form>
+            </div>
+			<div id="goals">
+				<div class="instruction">
+					Drag and drop goals onto the board:
+				</div>
+				<div class="list">
+					{% for i in range(goals|length) %}
+						<div class="item">
+							<div class="index">G{{i}}</div>
+							<div 
+								class="text draggable goal" 
+								title="{{goals[i]['goal']}}" 
+								key="{{goals[i]['_id']}}"
+								index="G{{i}}">
+							</div>
+						</div>
+					{% endfor %}
+				</div>
+			</div>
+			<div id="rewards">
+				<div class="instruction">
+					Drag and drop rewards onto the board:
+				</div>
+				<div class="list">
+					{% for j in range(rewards|length) %}
+						<div class="item">
+							<div class="index">R{{j}}</div>
+							<div 
+								class="text draggable reward" 
+								title="{{rewards[j]['reward']}}" 
+								key="{{rewards[j]['_id']}}"
+								index="R{{j}}">
+							</div>
+						</div>
+					{% endfor %}
+				</div>
+			</div>
+			<div class="buttons" id="back-customize-container">
+				<button id="back">Back</button>
+				<button id="customize">Customize</button>
+			</div>
+		</div>
+		<div id="board">
+			<table></table>
+			<div class="buttons" id="clear-save-container">
+				<button id="clear">Clear</button>
+				<button id="save">Save</button>
+			</div>
+		</div>
+	</div>
+	<div id="buttons">
+			
+	</div>
+
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+    <script src="{{ url_for('static', filename='js/board_editor/board.js') }}"></script>
+	<script>
+        let boardSize = {{board_size}}, // create JS variable for board size
+            cellWidth = $('#board').innerWidth() / (boardSize + 1),
+            cellHeight = $('#board').innerHeight() / (boardSize + 2),
+            current_expiry,
+            future_expiry;
+        
+        {% if future_expiry %}  // convert Python Dates to JS format
+            current_expiry = new Date(
+                {{current_expiry.year}}, 
+                {{current_expiry.month - 1}}, 
+                {{current_expiry.day}}
+            );
+            future_expiry = new Date(
+                {{future_expiry.year}}, 
+                {{future_expiry.month - 1}}, 
+                {{future_expiry.day}}
+            );
+
+            current_expiry.setDate(current_expiry.getDate() + 1); // Increment by 1 day
+        {% endif %}
+        
+        renderBoard(boardSize); // render the goal/reward board
+		$(document).ready(function () {
+			setTimeout(function () {
+				let e, 
+					goalGrid = $("td.goal");
+					rewardGrid = $("td.reward");
+
+                // add user's goals to the board
+				{% for k in range(board|length) %}
+					e = $(".list [key='{{board[k]}}']").clone().draggable(dragOptions);
+					setSize(e, cellWidth, cellHeight)
+						.css({ top: 0, left: 0 })
+						.prependTo(goalGrid.eq({{k}}));
+				{% endfor %}
+                
+                // add user's rewards to the board
+				{% for l in range(board_reward|length) %}
+					e = $(".list [key='{{board_reward[l]}}']").clone().draggable(dragOptions);
+					setSize(e, cellWidth, cellHeight)
+						.css({ top: 0, left: 0 })
+						.prependTo(rewardGrid.eq({{l}}));
+				{% endfor %}
+				
+				fixDroppables(); // fix drop zone sizing
+				alignButtons(); // align bottom row buttons
+			}, 100);
+			
+		});
+	</script>
+    <script src="{{ url_for('static', filename='js/board_editor/utilities.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/board_editor/drag_drop.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/board_editor/drag_activation.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/board_editor/bottom_buttons.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/board_editor/board_editor.js') }}"></script>
+{% endblock body %}
