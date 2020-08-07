@@ -11,19 +11,18 @@ bp = Blueprint("board", __name__)
 @login_required
 def view_board():
     """
-    When retrieving this route, get a restaurant profile's goals and bingo
-    board. Render these items together to show a bingo editor.
+    When retrieving this route, get a restaurant profile's current bingo
+    board. Render these items together to show current bingo board and expiration date.
     """
-    goals = current_user.get_goals(
-    )  # current_user is loaded from load_user so get goals
-    bingo_board = current_user.get_bingo_board()
-    rewards = current_user.get_rewards()
-    return render_template('view_game_board.j2',
-                           goals=goals,
-                           board_name=bingo_board["name"],
-                           rewards=rewards,
-                           board=bingo_board["board"],
-                           board_reward=bingo_board["board_reward"])
+    rest_id = current_user.get_restaurant_id()
+    bingo_board = current_user.get_restaurant_board_by_id(rest_id)
+    return render_template(
+        'view_game_board.j2',
+        goals=[x['goal'] for x in bingo_board["board"]],
+        board_name=bingo_board["name"],
+        rewards=[x['reward'] for x in bingo_board["board_reward"]],
+        board_size=bingo_board["size"],
+        current_expiry=str(bingo_board["expiry_date"]))
 
 
 @bp.route('/edit')

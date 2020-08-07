@@ -287,6 +287,17 @@ class RestaurantProfileManager(ProfileManager):
             print("There was an issue deleting the reward.")
             return False
 
+    def get_restaurant_id(self):
+        """
+        Return the restaurant ID of a restaurant user.
+        """
+        try:
+            user = self.db.query('restaurant_users', {"username": self.id})[0]
+            return user["_id"]
+        except QueryFailureException:
+            print("Something is wrong with the query")
+            return []
+
     def get_restaurant_board_by_id(self, rest_id):
         """
         Return a restaurant board given a restaurant database id. The board will include
