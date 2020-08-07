@@ -126,6 +126,7 @@ li:nth-child(2n + 1) {
 #dark-container {
     background-color: #444;
     box-shadow: 0 0 3px rgba(0, 0, 0, 0.1);
+    box-shadow: 0px 0px 12px 0px rgba(0, 0, 0, 0.75);
 }
 
 #message {
@@ -145,6 +146,7 @@ li:nth-child(2n + 1) {
     font-weight: bold;
     padding: 10px;
     border: 2px solid gray;
+    box-shadow: 0px 0px 3px 0px rgba(0, 0, 0, 0.75);
 }
 
 #advisory span {
@@ -168,11 +170,16 @@ li:nth-child(2n + 1) {
     border: none;
     outline: none;
     height: min-content;
-	width: 60px;
+    width: 60px;
     background: #fff;
-	text-align: center;
+    text-align: center;
     font-size: 12px;
-	box-shadow: 1px 1px 1px #DC143C;
+    box-shadow: 1px 1px 1px #dc143c;
+    cursor: pointer;
+}
+
+.back-button:hover a {
+    color: #dc143c;
 }
 
 .back-button a {
@@ -180,9 +187,9 @@ li:nth-child(2n + 1) {
     font-size: 14px;
     line-height: 20px;
     color: dimgray;
-	font-weight: bold;
+    font-weight: bold;
 }
 
 .space {
-	padding-top: 30px;
+    padding-top: 30px;
 }
