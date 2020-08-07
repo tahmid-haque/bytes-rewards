@@ -15,14 +15,17 @@ def view_board():
     board. Render these items together to show current bingo board and expiration date.
     """
     rest_id = current_user.get_restaurant_id()
-    bingo_board = current_user.get_restaurant_board_by_id(rest_id)
-    return render_template(
+    try:
+        bingo_board = current_user.get_restaurant_board_by_id(rest_id)
+        return render_template(
         'view_game_board.j2',
         goals=[x['goal'] for x in bingo_board["board"]],
         board_name=bingo_board["name"],
         rewards=[x['reward'] for x in bingo_board["board_reward"]],
         board_size=bingo_board["size"],
         current_expiry=str(bingo_board["expiry_date"]))
+    except KeyError:
+        return redirect("/board/edit")
 
 
 @bp.route('/edit')
