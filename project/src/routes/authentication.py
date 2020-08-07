@@ -40,7 +40,6 @@ def get_auth_routes(profile_manager):
         Otherwise prompt user and require them to try again.
         """
         if current_user.is_authenticated:
-            current_user.update_board()
             return redirect("/")
 
         if request.method == 'POST':
@@ -53,7 +52,6 @@ def get_auth_routes(profile_manager):
                 if possible_user and possible_user.check_password(password):
                     login_user(possible_user
                               )  # If username and password are correct, login
-                    current_user.update_board()
                     return redirect("/")
             flash("Incorrect username or password. Please try again.")
         return render_template('login.j2')
