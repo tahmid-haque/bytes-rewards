@@ -4,12 +4,12 @@ It is used to interact with the restaurant profile database.
 """
 
 import copy
+from datetime import datetime
+from dateutil.relativedelta import relativedelta
 from bson.objectid import ObjectId
 from bson.errors import InvalidId
 from modules.profile_manager import ProfileManager
 from modules.database import Database, QueryFailureException, UpdateFailureException
-from datetime import datetime
-from dateutil.relativedelta import relativedelta
 
 
 class RestaurantProfileManager(ProfileManager):
@@ -371,60 +371,46 @@ class RestaurantProfileManager(ProfileManager):
             return ""
 
     def update_board(self):
-        try: 
+        """
+        Checks all public restaurant user's bingo boards and replaces expired
+        boards with future game boards. If no future board exists, expiration
+        date is increased by 90 days.
+        """
+        try:
             public = self.get_public_users()
             reset = 90
             for user in public:
                 if 'expiry_date' in user['bingo_board']:
-                    if datetime.now() > user['bingo_board']['expiry_date']:
+                    if datetime.now() >= user['bingo_board']['expiry_date']:
                         if 'future_board' in user:
+                            future_exp = user['future_board']['expiry_date']
+                            if future_exp <= datetime.now():
+                                future_exp = datetime.now() + relativedelta(
+                                    days=+reset)
+                                user['future_board']['expiry_date'] = future_exp
                             self.db.update(
-                                'restaurant_users', {'username': user['username']},
+                                'restaurant_users',
+                                {'username': user['username']},
                                 {'$set': {
                                     'bingo_board': user['future_board']
                                 }})
-                            future_exp_date = user['future_board'][
-                                'expiry_date'] + relativedelta(days=+reset)
-                            self.db.update(
-                                'restaurant_users', {'username': user['username']},
-                                {
-                                    '$set': {
-                                        'future_board': {
-                                            'name':
-                                                user['future_board']['name'],
-                                            'size':
-                                                user['future_board']['size'],
-                                            'board':
-                                                user['future_board']['board'],
-                                            'board_reward':
-                                                user['future_board']
-                                                ['board_reward'],
-                                            'expiry_date':
-                                                future_exp_date
-                                        }
-                                    }
-                                })
+                            user['future_board'][
+                                'expiry_date'] = future_exp + relativedelta(
+                                    days=+reset)
+                            self.db.update('restaurant_users', {
+                                'username': user['username']
+                            }, {'$set': {
+                                'future_board': user['future_board']
+                            }})
                         else:
-                            exp_date = user['bingo_board'][
-                                'expiry_date'] + relativedelta(days=+reset)
+                            user['bingo_board']['expiry_date'] = datetime.now(
+                            ) + relativedelta(days=+reset)
                             self.db.update(
-                                'restaurant_users', {'username': user['username']},
-                                {
-                                    '$set': {
-                                        'bingo_board': {
-                                            'name':
-                                                user['bingo_board']['name'],
-                                            'size':
-                                                user['bingo_board']['size'],
-                                            'board':
-                                                user['bingo_board']['board'],
-                                            'board_reward':
-                                                user['bingo_board']['board_reward'],
-                                            'expiry_date':
-                                                exp_date
-                                        }
-                                    }
-                                })
+                                'restaurant_users',
+                                {'username': user['username']},
+                                {'$set': {
+                                    'bingo_board': user['bingo_board']
+                                }})
                         return True
             return False
         except UpdateFailureException:

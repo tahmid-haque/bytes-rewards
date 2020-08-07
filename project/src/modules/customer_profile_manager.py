@@ -138,7 +138,7 @@ class CustomerProfileManager(ProfileManager):
             if fav in profiles:
                 list_fav[ObjectId(fav)] = profiles[ObjectId(fav)]
         return list_fav
- 
+
     def get_reward_progress(self):
         """
         Return the current user's reward history as a tuple of two lists:
@@ -189,6 +189,11 @@ class CustomerProfileManager(ProfileManager):
         except IndexError:
             print("Could not find the customer")
             return ([], [])
-    
+
     def update_board(self):
+        """
+        Checks all public restaurant user's bingo boards and replaces expired 
+        boards with future game boards. If no future board exists, expiration
+        date is increased by 90 days.
+        """
         RestaurantProfileManager("").update_board()
