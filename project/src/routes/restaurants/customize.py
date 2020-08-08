@@ -46,8 +46,10 @@ def delete_goal():
     """
     goal_id = request.form["deleted-goal"]
     removed = current_user.remove_custom_goal(goal_id)
-    if not removed:
-        flash("This goal in on your current game board; replace and try again")
+    if removed == "current":
+        flash("This goal in on your current game board; cannot be deleted")
+    elif removed == "future":
+        flash("This goal in on your future game board; replace and try again")
     return redirect("/customize")
 
 
@@ -76,7 +78,8 @@ def delete_reward():
     """
     reward_id = request.form["deleted-reward"]
     removed = current_user.remove_custom_reward(reward_id)
-    if not removed:
-        flash(
-            "This reward in on your current game board; replace and try again")
+    if removed == "current":
+        flash("This reward in on your current game board; cannot be deleted")
+    elif removed == "future":
+        flash("This reward in on your future game board; replace and try again")
     return redirect("/customize")
