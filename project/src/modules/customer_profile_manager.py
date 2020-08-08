@@ -138,7 +138,7 @@ class CustomerProfileManager(ProfileManager):
             if fav in profiles:
                 list_fav[ObjectId(fav)] = profiles[ObjectId(fav)]
         return list_fav
- 
+
     def get_reward_progress(self):
         """
         Return the current user's reward history as a tuple of two lists:

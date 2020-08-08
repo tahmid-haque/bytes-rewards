@@ -8,7 +8,7 @@ from bson.objectid import ObjectId
 from bson.errors import InvalidId
 from modules.profile_manager import ProfileManager
 from modules.database import Database, QueryFailureException, UpdateFailureException
-from datetime import datetime
+from datetime import datetime, timedelta
 
 
 class RestaurantProfileManager(ProfileManager):
@@ -48,35 +48,58 @@ class RestaurantProfileManager(ProfileManager):
 
     def get_bingo_board(self):
         """
-        Return a bingo board attached to the current restaurant user.
+        Return the active bingo board attached to the current restaurant user.
         """
         try:
             profile = self.db.query('restaurant_users', {"username": self.id})
             return profile[0]["bingo_board"]
         except KeyError:  # New User, no bingo board found
-            return {"name": "", "board": [], "board_reward": []}
+            return {
+                "name": "",
+                "board": [],
+                "board_reward": [],
+                "expiry_date": None,
+                "size": 4
+            }
         except (QueryFailureException, IndexError):
             print("There was an issue retrieving a bingo board.")
-            return {"name": "", "board": [], "board_reward": []}
+            return {
+                "name": "",
+                "board": [],
+                "board_reward": [],
+                "expiry_date": None,
+                "size": 4
+            }
 
-    def set_bingo_board(self, name, board, board_reward):
+    def set_bingo_board(self, bingo_board):
         """
-        Update the restaurant user's bingo board using the given name and
-        board.
+        Update the restaurant user's bingo board using the board.
         """
         try:
-            board = Database.replace_object_id(board)
-            board_reward = Database.replace_object_id(board_reward)
-            self.db.update('restaurant_users', {"username": self.id}, {
-                '$set': {
-                    "bingo_board": {
-                        "name": name,
-                        "board": board,
-                        "board_reward": board_reward
-                    }
-                }
-            })
-        except UpdateFailureException:
+            # convert the date string to a python date
+            if not isinstance(bingo_board["expiry_date"], datetime):
+                date = [
+                    int(part) for part in bingo_board["expiry_date"].split("/")
+                ]
+                bingo_board["expiry_date"] = datetime(date[2], date[0], date[1],
+                                                      23, 59, 59)
+
+            # convert ids to object ids
+            bingo_board["board"] = Database.replace_object_id(
+                bingo_board["board"])
+            bingo_board["board_reward"] = Database.replace_object_id(
+                bingo_board["board_reward"])
+
+            # if new user, update current board as well as future board
+            boards = {"future_board": bingo_board}
+            if self.get_future_board()["name"] == "":
+                boards["bingo_board"] = copy.deepcopy(bingo_board)
+                boards["future_board"]["expiry_date"] = boards["future_board"]["expiry_date"] +\
+                                                        timedelta(days=90)
+
+            self.db.update('restaurant_users', {"username": self.id},
+                           {'$set': boards})
+        except (UpdateFailureException, KeyError):
             print("There was an issue updating a bingo board.")
 
     def get_shared_rewards(self):
@@ -303,40 +326,51 @@ class RestaurantProfileManager(ProfileManager):
         a message depending on if it is successful or not.
         """
         try:
-            owner_id = self.db.query('restaurant_users', {"username": self.id})[0]["_id"]
+            owner_id = self.db.query('restaurant_users',
+                                     {"username": self.id})[0]["_id"]
             user_profile = self.db.query('customers', {"username": user})[0]
             if "progress" in user_profile:
                 for restaurant in user_profile["progress"]:
                     if restaurant["restaurant_id"] == owner_id:
                         goals = restaurant["completed_goals"]
                         for goal in goals:
-                            if str(goal["_id"]) == goal_id and position == goal["position"]:
+                            if str(goal["_id"]
+                                  ) == goal_id and position == goal["position"]:
                                 return "This goal has already been completed!"
                         id_exists = True
-            if not isinstance(int(position), int) or not (1 <= len(position) <= 2) or not (0 <= int(position) <= 24) \
-                    or not str(self.get_bingo_board()["board"][int(position)]) == goal_id:
+            if not isinstance(int(position), int) or \
+               not (1 <= len(position) <= 2) or not (0 <= int(position) <= 24) or \
+               not str(self.get_bingo_board()["board"][int(position)]) == goal_id:
                 return "Invalid QR code!"
             try:
                 if "progress" in user_profile and id_exists:
-                    self.db.update('customers', {"username": user, "progress.restaurant_id": ObjectId(owner_id)},
-                                   {"$push": {
-                                       "progress.$.completed_goals": {
-                                           "_id": ObjectId(goal_id),
-                                           "position": position,
-                                           "date_completed": datetime.now()}}})
-                else:
                     self.db.update(
-                        'customers', {"username": self.id},
-                        {"$push": {
+                        'customers', {
+                            "username": user,
+                            "progress.restaurant_id": ObjectId(owner_id)
+                        }, {
+                            "$push": {
+                                "progress.$.completed_goals": {
+                                    "_id": ObjectId(goal_id),
+                                    "position": position,
+                                    "date_completed": datetime.now()
+                                }
+                            }
+                        })
+                else:
+                    self.db.update('customers', {"username": self.id}, {
+                        "$push": {
                             "progress": {
-                                "restaurant_id": ObjectId(owner_id),
+                                "restaurant_id":
+                                    ObjectId(owner_id),
                                 "completed_goals": [{
                                     "_id": ObjectId(goal_id),
                                     "position": position,
                                     "date": datetime.now()
                                 }]
                             }
-                        }})
+                        }
+                    })
                 return "Successfully marked as completed!"
             except UpdateFailureException:
                 print("There was an issue updating")
@@ -358,3 +392,38 @@ class RestaurantProfileManager(ProfileManager):
         except (QueryFailureException, IndexError, KeyError, InvalidId):
             print("Something's wrong with the query.")
             return ""
+
+    def get_future_board(self):
+        """
+        Return the future board attached to the current restaurant user.
+        """
+        try:
+            profile = self.db.query('restaurant_users', {"username": self.id})
+            return profile[0]["future_board"]
+        except KeyError:  # New User, no future board found
+            return {
+                "name": "",
+                "board": [],
+                "board_reward": [],
+                "expiry_date": None,
+                "size": 4
+            }
+        except (QueryFailureException, IndexError):
+            print("There was an issue retrieving a bingo board.")
+            return {
+                "name": "",
+                "board": [],
+                "board_reward": [],
+                "expiry_date": None,
+                "size": 4
+            }
+
+    def get_current_board_expiry(self):
+        """
+        Return the expiry date of the user's active board.
+        """
+        try:
+            profile = self.db.query('restaurant_users', {"username": self.id})
+            return profile[0]["bingo_board"]["expiry_date"]
+        except (QueryFailureException, IndexError, KeyError, InvalidId):
+            return None
