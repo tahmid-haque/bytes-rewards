@@ -196,11 +196,3 @@ class CustomerProfileManager(ProfileManager):
         except IndexError:
             print("Could not find the customer")
             return ([], [])
-
-    def update_board(self):
-        """
-        Checks all public restaurant user's bingo boards and replaces expired 
-        boards with future game boards. If no future board exists, expiration
-        date is increased by 90 days.
-        """
-        RestaurantProfileManager("").update_board()
