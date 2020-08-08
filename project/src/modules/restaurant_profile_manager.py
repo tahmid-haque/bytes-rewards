@@ -320,6 +320,18 @@ class RestaurantProfileManager(ProfileManager):
             print("Something's wrong with the query.")
             return {}
 
+    def get_restaurant_profile_by_id(self, rest_id):
+        """
+        Return a restaurant profile given a restaurant database id.
+        """
+        try:
+            restaurant = self.db.query("restaurant_users",
+                                       {"_id": ObjectId(rest_id)})[0]
+            return restaurant["profile"]
+        except (QueryFailureException, IndexError, KeyError):
+            print("There was an issue retrieving the profile.")
+            return {}
+
     def complete_goal(self, user, goal_id, position):
         """
         Adds a goal to the database that has been completed by the customer and returns
