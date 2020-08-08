@@ -35,8 +35,9 @@ html {
 }
 
 #back:hover {
-    color: #ff0000;
+    color: white;
     cursor: pointer;
+    background-color: rgb(212, 0, 0);
 }
 
 h1 {

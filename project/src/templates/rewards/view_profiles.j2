@@ -19,8 +19,11 @@
 		class="navbar navbar-expand-md navbar-light p-0 sticky-top"
 	>
 		<div class="container">
-			<a class="navbar-brand p-0 m-0" href="/"
+			<a class="navbar-brand p-0 m-0" href="/" id="dark-logo"
 				><img src="{{ url_for('static', filename='resources/logo.png') }}" height="50rem"
+			/></a>
+			<a class="navbar-brand p-0 m-0" href="/" id="light-logo"
+				><img src="{{ url_for('static', filename='resources/light_logo.png') }}" height="50rem"
 			/></a>
 			<button
 				class="navbar-toggler"
@@ -105,24 +108,27 @@
 	<script>
 		const navHeight = $('#navbar').height();
 
-		$(document).scroll(function () {
+		function updateNav() {
 			$('.list-group-item').removeClass('active');
-			if ($(this).scrollTop() > navHeight) {
+			if ($(document).scrollTop() > navHeight) {
 				$('.light-nav-item')
 					.removeClass('light-nav-item')
 					.addClass('dark-nav-item');
 				$('#navbar').addClass('alt-color');
-				$('#navbar img').attr("src", 
-					"{{ url_for('static', filename='resources/light_logo.png') }}")
+				$('#dark-logo').hide();
+				$('#light-logo').show();
 			} else {
 				$('.dark-nav-item')
 					.removeClass('dark-nav-item')
 					.addClass('light-nav-item');
 				$('#navbar').removeClass('alt-color');
-				$('#navbar img').attr("src", 
-					"{{ url_for('static', filename='resources/logo.png') }}")
+				$('#light-logo').hide();
+				$('#dark-logo').show();
 			}
-		});
+		}
+
+		$(document).ready(updateNav)
+		$(document).scroll(updateNav);
 
 		function toggleFavourite() {
 			$(this).toggleClass("far")
