@@ -5,6 +5,8 @@ html {
     margin: 0;
 }
 
+/* Main Container */
+
 #container {
     width: 90%;
     min-width: 1050px;
@@ -18,32 +20,23 @@ html {
     color: white;
 }
 
+/* Build/Edit Area (Left Side) */
+
 #build-area {
     width: 30%;
     min-width: 400px;
     margin-right: 30px;
 }
 
-#board {
-    width: 70%;
-}
+/* Lists */
 
 #goals {
-    height: calc(50% - 6px);
+    height: calc(50% - 90px);
     margin-bottom: 15px;
 }
 
 #rewards {
-    height: calc(50%);
-}
-
-.instruction {
-    text-overflow: ellipsis;
-    overflow: hidden;
-    white-space: nowrap;
-    font-size: 19px;
-    margin-bottom: 10px;
-    text-align: center;
+    height: calc(50% - 76px);
 }
 
 .list {
@@ -77,6 +70,7 @@ html {
     align-items: stretch;
     color: black;
     border-radius: 5px;
+    font-size: 18px;
 }
 
 .index {
@@ -90,67 +84,98 @@ html {
     background-color: rgb(255, 255, 255);
 }
 
-.text {
-    width: 100%;
-    background-color: orange;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+/* List Labels */
+
+.instruction {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+    font-size: 19px;
+    margin-bottom: 10px;
     text-align: center;
-    padding: 10px;
-    box-sizing: border-box;
+}
+
+/* Top-Left Options */
+
+#options-container input {
+    height: 46px;
+}
+
+#options-container label {
+    display: block;
+    margin-bottom: 5px;
+    font-size: 18px;
+    font-weight: bold;
+    line-height: 20px;
+}
+
+#size-date-container {
+    height: 65px;
+    margin-bottom: 10px;
+    display: flex;
+}
+
+#size-date-container > div:first-child {
+    width: 40%;
+}
+
+#size-date-container > div:last-child {
+    width: 60%;
+    margin-left: 10px;
+}
+
+#size-container {
+    display: flex;
+    border: 3px solid white;
+    border-radius: 5px;
+    justify-content: space-between;
+}
+
+#size-container > * {
+    height: 100%;
+    font-size: 22px;
+    line-height: 40px;
+    width: calc(100% / 3);
+    text-align: center;
+    font-weight: bold;
+    transition: all ease-in-out 400ms;
+}
+
+#size-container > *:nth-of-type(2) {
+    border-left: 3px solid white;
+    border-right: 3px solid white;
+}
+
+#size-container > *:hover,
+.current-size {
+    background-color: white;
+    color: black;
     cursor: pointer;
 }
 
-.text.reward,
-.droppable .text.reward.ui-draggable-dragging {
-    background-color: rgb(238, 255, 0);
-    color: black;
-}
-
-.droppable .text.reward {
-    background: none;
-    color: rgb(238, 255, 0);
-}
-
-.text.goal,
-.droppable .text.goal.ui-draggable-dragging,
-.show-bingo.droppable,
-.show-bingo.droppable .text.goal,
-.droppable.goal:hover,
-.droppable .goal.text:hover {
-    background-color: rgb(0, 255, 221);
-    color: black;
-}
-
-.droppable .text.goal {
-    background: none;
-    color: rgb(0, 255, 221);
-}
-
-.droppable {
-    background-color: none;
-    border: 2px solid rgb(0, 255, 221);
-    vertical-align: middle;
-    text-align: center;
-    padding: 0;
-}
-
-table {
-    width: 100%;
-    height: 100%;
-    border-collapse: collapse;
-}
+/* Board Title */
 
 #title {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+    margin: 15px 0 7px 0;
 }
 
-form {
-    width: 70%;
+#title label {
+    text-align: center;
 }
+
+/* Date Picker */
+
+#ui-datepicker-div {
+    width: calc(15.8% - 23px);
+    min-width: 226px;
+}
+
+#ui-datepicker-div,
+#ui-datepicker-div select {
+    font-family: 'Poppins', sans-serif;
+}
+
+/* Inputs */
 
 input {
     font-size: 20px;
@@ -159,10 +184,11 @@ input {
     padding: 10px;
     box-sizing: border-box;
     color: #fff;
-    border: 1px solid white;
+    border: 3px solid white;
     transition: all, linear, 0.4s;
     text-align: center;
     font-family: 'poppins', sans-serif;
+    border-radius: 5px;
 }
 
 input::placeholder {
@@ -180,6 +206,54 @@ input:focus::placeholder {
     color: rgb(0, 138, 202, 0.5);
 }
 
+/* Goals */
+
+.text.goal,
+.droppable .text.goal.ui-draggable-dragging,
+.show-bingo.droppable,
+.show-bingo.droppable .text.goal,
+.droppable .goal.text:hover,
+.droppable.goal:hover:not(.ui-droppable-active) {
+    background-color: rgb(0, 255, 221);
+    color: black;
+}
+
+.droppable .text.goal {
+    background: none;
+    color: rgb(0, 255, 221);
+}
+
+/* Rewards */
+
+.text.reward,
+.droppable .text.reward.ui-draggable-dragging {
+    background-color: rgb(238, 255, 0);
+    color: black;
+}
+
+.droppable .text.reward {
+    background: none;
+    color: rgb(238, 255, 0);
+}
+
+#board td.reward {
+    border: 2px solid rgb(238, 255, 0);
+}
+
+/* Goals/Rewards */
+
+.text {
+    width: 100%;
+    background-color: orange;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 10px;
+    box-sizing: border-box;
+    cursor: pointer;
+}
+
 .ui-draggable-dragging {
     box-shadow: 10px 10px 5px -6px rgba(0, 0, 0, 0.75);
 }
@@ -187,6 +261,36 @@ input:focus::placeholder {
 .placeholder {
     background: red;
 }
+
+/* Board Area (Right Side) */
+
+#board {
+    width: 70%;
+    min-width: 735px;
+}
+
+.droppable {
+    background-color: none;
+    border: 2px solid rgb(0, 255, 221);
+    vertical-align: middle;
+    text-align: center;
+    padding: 0;
+}
+
+#board table {
+    width: 100%;
+    height: 100%;
+    border-collapse: collapse;
+}
+
+#board h1 {
+    font-size: 70px;
+    text-align: center;
+    line-height: 70px;
+    margin: 0;
+}
+
+/* Bottom Row Buttons */
 
 .buttons {
     width: 100%;
@@ -217,6 +321,7 @@ input:focus::placeholder {
     background: none;
     border-radius: 4px;
     cursor: pointer;
+    outline: none;
 }
 
 #save {
@@ -249,8 +354,4 @@ input:focus::placeholder {
 #save:hover {
     background-color: rgb(0, 168, 22);
     color: white;
-}
-
-td.reward {
-    border: 2px solid rgb(238, 255, 0);
 }

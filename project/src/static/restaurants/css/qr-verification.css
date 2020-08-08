@@ -1,0 +1,77 @@
+html {
+  height: 100%;
+}
+
+body {
+  font-family: sans-serif;
+  padding: 0 10px;
+  height: 100%;
+  background: black;
+  margin: 0;
+}
+
+h1 {
+  color: white;
+  margin: 0;
+  padding: 15px;
+}
+
+.verify {
+  text-align: center;
+  color: white;
+}
+
+#message {
+    color: #fb2525;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 20px;
+    text-align: center;
+    background-color: white;
+    padding: 10px;
+    border: 2px;
+    font-weight: bold;
+    width: 50%;
+}
+
+#instructions {
+  color: white;
+  text-align: center;
+}
+#container {
+  text-align: center;
+  margin: 0;
+}
+
+#qr-canvas {
+  margin: auto;
+  width: calc(100% - 20px);
+  max-width: 400px;
+}
+
+#btn-scan-qr {
+  cursor: pointer;
+}
+
+#btn-scan-qr img {
+  height: 10em;
+  padding: 15px;
+  margin: 15px;
+  background: white;
+}
+
+#mark {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 300px;
+    height: 50px;
+    font-size: 150%;
+}
+#qr-result {
+  font-size: 1.2em;
+  margin: 20px auto;
+  padding: 20px;
+  max-width: 700px;
+  background-color: white;
+}
