@@ -62,7 +62,7 @@ def test_remove_custom_reward_on_board():
         old_rewards = rpm.get_custom_rewards()
         board_rewards = rpm.get_bingo_board()["board_reward"]
         for i in range(0, len(old_rewards)):
-            if ObjectId(old_rewards[i]['_id']) in board_rewards:
+            if ObjectId(old_rewards[i]['_id']) in board_rewards or ObjectId(old_rewards[i]['_id']) in future_rewards:
                 rpm.remove_custom_reward(old_rewards[i]['_id'])
                 break
         new_rewards = rpm.get_custom_rewards()
