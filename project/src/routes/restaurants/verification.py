@@ -34,11 +34,30 @@ def finish_goal():
     data = request.form["code"].split("+")
     if len(data) != 3:
         flash("Invalid QR code!")
-        return redirect("/profile/qr-verification")
+        return redirect("/profile/qr-verification-goals")
     user = data[0]
     goal_id = data[1]
     position = data[2]
     msg = current_user.complete_goal(user, goal_id, position)
     flash(msg)
-    return redirect("/profile/qr-verification")
+    return redirect("/profile/qr-verification-goals")
+
+
+@bp.route('/finish-reward', methods=['POST', 'GET'])
+@login_required
+def finish_reward():
+    """
+    This route retrieves a code, and adds a reward as completed to the database.
+    Redirects to the qr reward verification page when done.
+    """
+    data = request.form["code"].split("+")
+    if len(data) != 3:
+        flash("Invalid QR code!")
+        return redirect("/profile/qr-verification-rewards")
+    user = data[0]
+    reward_id = data[1]
+    position = data[2]
+    msg = current_user.complete_reward(user, reward_id, position)
+    flash(msg)
+    return redirect("/profile/qr-verification-rewards")
 

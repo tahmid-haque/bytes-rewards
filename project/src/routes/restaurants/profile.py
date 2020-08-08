@@ -59,11 +59,20 @@ def save_profile():
     current_user.update_profile(profile)
     return redirect("/")
 
-@bp.route('/qr-verification')
+@bp.route('/qr-verification-goals')
 @login_required
-def view_qr_verification():
+def view_qr_verification_goals():
     """
     Display the qr verification page.
     Prerequisite: User is logged in.
     """
     return render_template('qr-verification.j2')
+
+@bp.route('/qr-verification-rewards')
+@login_required
+def view_qr_verification_rewards():
+    """
+    Display the qr verification page.
+    Prerequisite: User is logged in.
+    """
+    return render_template('qr-verification-rewards.j2')

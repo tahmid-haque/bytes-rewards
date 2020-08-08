@@ -297,7 +297,187 @@ class RestaurantProfileManager(ProfileManager):
             print("Something's wrong with the query.")
             return {}
 
+    def add_reward_code(self, customer, reward_index):
+        owner = self.db.query('restaurant_users', {"username": self.id})[0]
+        reward_id = owner["bingo_board"]["board_reward"][reward_index]
+        rewards = self.get_rewards()
+        text = ""
+        for reward in rewards:
+            if str(reward["_id"]) == str(reward_id):
+                text = reward["reward"]
+        customer_profile = self.db.query('customers', {"username": customer})[0]
+        code = str(customer)+"+"+str(reward_id)+"+"+str(reward_index)
+        try:
+            if "client_rewards" not in owner:
+                self.db.update('restaurant_users', {"username": self.id},
+                               {"$set": {
+                                   "client_rewards": [{
+                                       "redemption_code": code,
+                                       "text": text,
+                                       "is_redeemed": False
+                                   }]
+                               }})
+            else:
+                self.db.update('restaurant_users', {"username": self.id},
+                               {"$push": {
+                                   "client_rewards": {
+                                       "redemption_code": code,
+                                       "text": text,
+                                       "is_redeemed": False
+                                   }
+                               }})
+        except UpdateFailureException:
+            print("There was an issue updating")
+
+        try:
+            self.db.update('customers', {"username": customer, "progress.restaurant_id": ObjectId(str(owner["_id"]))},
+                           {"$push": {
+                               "progress.$.completed_rewards": {
+                                   "redemption_code": code,
+                                   "text": text,
+                                   "is_redeemed": False
+                               }
+                           }})
+        except UpdateFailureException:
+            print("There was an issue updating")
+            return "Error"
+
+
+    def check_row(self, position, size, customer, goals):
+        start = int(position)
+        counter = 0
+        while (start%size) != 0:
+            start = start - 1
+        for i in range(start, start + size):
+            for goal in goals:
+                if i == int(goal["position"]):
+                    counter = counter + 1
+        if counter == size:
+            self.add_reward_code(customer, int(int(position)/size) + 1)
+
+    def check_col(self, position, size, customer, goals):
+        start = int(position)
+        counter = 0
+        while (start-size) > 0:
+            start = start-size
+        for i in range(start, size * size, size):
+            for goal in goals:
+                if i == int(goal["position"]):
+                    counter = counter + 1
+        if counter == size:
+            self.add_reward_code(customer, ((int(position) + 1) % size) + 5)
+
+    def check_diagonal(self, position, size, customer, goals):
+        left = False
+        right = False
+        counter = 0
+        start = int(position)
+        while start >= 0:
+            if start == 0:
+                left = True
+            start = start - (size + 1)
+
+        start = int(position)
+        while start >= (size-1):
+            if start == (size - 1):
+                right = True
+            start = start - (size - 1)
+
+        if left:
+            for i in range(0, size*size, size + 1):
+                for goal in goals:
+                    if i == int(goal["position"]):
+                        counter = counter + 1
+            if counter == size:
+                self.add_reward_code(customer, size + size + 1)
+        counter = 0
+        if right:
+            for i in range(size - 1, (size*size-(size-1)), size - 1):
+                for goal in goals:
+                    if i == int(goal["position"]):
+                        counter = counter + 1
+                i = i + size - 1
+            if counter == size:
+                self.add_reward_code(customer, 0)
+
+
+
+
+
     def complete_goal(self, user, goal_id, position):
+        """
+        Adds a goal to the database that has been completed by the customer and returns
+        a message depending on if it is successful or not.
+        """
+        try:
+            owner_id = self.db.query('restaurant_users', {"username": self.id})[0]["_id"]
+            size = self.db.query('restaurant_users', {"username": self.id})[0]["bingo_board"]["size"]
+            user_profile = self.db.query('customers', {"username": user})[0]
+            goals = []
+            if "progress" in user_profile:
+                for restaurant in user_profile["progress"]:
+                    if restaurant["restaurant_id"] == owner_id:
+                        goals = restaurant["completed_goals"]
+                        for goal in goals:
+                            if str(goal["_id"]) == goal_id and position == goal["position"]:
+                                return "This goal has already been completed!"
+                        id_exists = True
+            if not isinstance(int(position), int) or not (1 <= len(position) <= 2) or not (0 <= int(position) <= 24) \
+                    or not str(self.get_bingo_board()["board"][int(position)]) == goal_id:
+                return "Invalid QR code!"
+            try:
+                if "progress" in user_profile and id_exists:
+                    self.db.update('customers', {"username": user, "progress.restaurant_id": ObjectId(owner_id)},
+                                   {"$push": {
+                                       "progress.$.completed_goals": {
+                                           "_id": ObjectId(goal_id),
+                                           "position": position,
+                                           "date_completed": datetime.now()}}})
+                else:
+                    self.db.update(
+                        'customers', {"username": self.id},
+                        {"$push": {
+                            "progress": {
+                                "restaurant_id": ObjectId(owner_id),
+                                "completed_goals": [{
+                                    "_id": ObjectId(goal_id),
+                                    "position": position,
+                                    "date": datetime.now()
+                                }],
+                                "completed_rewards": []
+                            }
+                        }})
+                user_profile = self.db.query('customers', {"username": user})[0]
+                for restaurant in user_profile["progress"]:
+                    if restaurant["restaurant_id"] == owner_id:
+                        goals = restaurant["completed_goals"]
+                self.check_col(position, size, user, goals)
+                self.check_diagonal(position, size, user, goals)
+                self.check_row(position, size, user, goals)
+
+                return "Successfully marked as completed!"
+            except UpdateFailureException:
+                print("There was an issue updating")
+                return "Error"
+        except QueryFailureException:
+            print("Something is wrong with the query")
+            return "Error"
+        return "Error"
+
+    def get_restaurant_name_by_id(self, object_id):
+        """
+        Given a restaurant user's database id, return the restaurant's name.
+        Returns "" on failure.
+        """
+        try:
+            user = self.db.query("restaurant_users",
+                                 {"_id": ObjectId(object_id)})[0]
+            return user["profile"]["name"]
+        except (QueryFailureException, IndexError, KeyError, InvalidId):
+            print("Something's wrong with the query.")
+            return ""
+
+    def complete_reward(self, user, goal_id, position):
         """
         Adds a goal to the database that has been completed by the customer and returns
         a message depending on if it is successful or not.
@@ -345,16 +525,3 @@ class RestaurantProfileManager(ProfileManager):
             print("Something is wrong with the query")
             return "Error"
         return "Error"
-
-    def get_restaurant_name_by_id(self, object_id):
-        """
-        Given a restaurant user's database id, return the restaurant's name.
-        Returns "" on failure.
-        """
-        try:
-            user = self.db.query("restaurant_users",
-                                 {"_id": ObjectId(object_id)})[0]
-            return user["profile"]["name"]
-        except (QueryFailureException, IndexError, KeyError, InvalidId):
-            print("Something's wrong with the query.")
-            return ""

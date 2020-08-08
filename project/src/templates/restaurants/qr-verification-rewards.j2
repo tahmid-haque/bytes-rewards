@@ -1,0 +1,48 @@
+{% extends 'base.j2' %} 
+
+{% block head %}
+    <title>QR Code Reward Verification</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;" />
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/qr-verification-rewards.css') }}" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://rawgit.com/sitepoint-editors/jsqrcode/master/src/qr_packed.js"></script>
+{% endblock head %}
+
+{% block body %}
+    <div id="container">
+      <h1>QR Code Reward Verification</h1>
+    <div id="instructions">
+        <p id="message" 
+            {% with messages = get_flashed_messages() %}
+                {% if not messages %}
+                    style="background-color: black;" class="hidden"> 
+                {% else %}
+                    >{{messages[0]}} 
+                {% endif %}
+            {% endwith %}
+        </p>
+    <p class="instructions">Click the Qr code below to activate camera and start scanning!</p>
+    <p class="instructions">Once a code is scanned, you can scan again or verify for completion.</p>
+    <p class="instructions">You may even manually enter a code if you wish in the input box below.</p>
+    </div>
+      <a id="btn-scan-qr">
+        <img src="https://dab1nmslvvntp.cloudfront.net/wp-content/uploads/2017/07/1499401426qr_icon.svg">
+      <a/>
+
+      <canvas hidden="" id="qr-canvas"></canvas>
+
+      <div id="qr-result" hidden="">
+        <b>Reward:</b> <span id="outputData"></span>
+      </div>
+      <div>
+        <form class="verify" method="post" action="/verification/finish-reward">
+          <label>QR Code:</label>
+          <input type="text" id="code" name="code"><br><br>
+          <input id="mark" type="submit" value="Mark for completion">
+        </form> 
+      </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/qrCodeScanner-rewards.js') }}" ></script>
+{% endblock body %}
