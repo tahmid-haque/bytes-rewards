@@ -1,0 +1,95 @@
+{% extends 'base.j2' %} 
+
+{% block head %}
+    <title>Bytes | View Profile</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/view_profile.css') }}" />
+{% endblock head %}
+
+{% block body %}
+	<div class="main-content">
+		<div class="restaurant-profile">
+			<div class="top-bar" id="top-bar">
+			    <div>
+			    	<div class="back-button">
+						<a href="/profiles">Back</a>
+        			</div>
+        			<div class="restaurant-name">
+						<h1 name="restaurant-name">
+							{% if restaurant_name %}
+								{{ restaurant_name }}
+							{% else %}
+								Restaurant Name
+							{% endif %}
+						</h1>
+					</div>
+						<div class="categories">
+							{% if category %}
+								Category:
+								<br>
+								{{ category }}
+							{% else %}
+								<div>
+									Category
+								</div>
+							{% endif %}
+						</div>
+						<div class="contact-info">
+						    <h4 id="contact-info-title">Contact Information</h4>
+							<h4 name="address" class="clickable-contact"> 
+								{% if address and city and province and postal_code %}
+                                    Click to see on map.
+                                    <br>
+									<a href=" http://maps.google.com/?q= {{ address }} {{ city }} {{ province }} {{ postal_code }}" target="_blank">
+										{{ address }}
+										<br>
+										{{ city }}, {{ province }}
+										<br>
+										{{ postal_code }}
+									</a>
+								{% endif %}	
+							</h4>
+							<h4 name="phone-no" class="clickable-contact"> 
+								{% if phone_number %}
+									Click to call.
+									<br>
+									<a href="tel:{{ phone_number }}" target="_blank">
+										{{ phone_number }}
+									</a>
+								{% else %}
+									Phone Number
+								{% endif %}
+							</h4>
+						</div>
+				</div>
+			</div>
+			<div class="big-content">
+				<div class="img-box">
+				    <a class="lightbox" href="#rest-img">
+					<img
+						src=
+						{% if rest_img %}
+								"{{ rest_img }}"
+						{% else %}
+								"https://filestore.community.support.microsoft.com/api/images/72e3f188-79a1-465f-90ca-27262d769841"
+						{% endif %}
+						name="rest-img">
+					</a>
+					<div class="lightbox-target" id="rest-img">
+                                        <img src="https://filestore.community.support.microsoft.com/api/images/72e3f188-79a1-465f-90ca-27262d769841"/>
+                                        <a class="lightbox-close" href="#"></a>
+                    </div>
+				</div>
+				<div class="description">
+					<p>
+						{% if description %}
+							{{ description }}
+						{% else %}
+							Description
+						{% endif %}
+					</p>
+				</div>
+			</div>
+		</div>
+	</div>
+
+{% endblock body %}
