@@ -4,7 +4,7 @@
  */
 
 /**
- * Activate the back button to redirect the user to the home page when clicked.
+ * Activate the back button to redirect the user to the previous page when clicked.
  */
 $('#back').click(function () {
     if (
@@ -13,7 +13,7 @@ $('#back').click(function () {
             'Are you sure you want to leave this page? All unsaved changes will be lost.'
         )
     ) {
-        window.location.href = '/board'; // redirect user
+        history.back(); // redirect user
     }
 });
 
