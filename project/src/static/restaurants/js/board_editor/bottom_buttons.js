@@ -13,7 +13,7 @@ $('#back').click(function () {
             'Are you sure you want to leave this page? All unsaved changes will be lost.'
         )
     ) {
-        history.back(); // redirect user
+        window.location.href = current_expiry ? '/board' : '/'; // redirect user
     }
 });
 

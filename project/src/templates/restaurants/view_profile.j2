@@ -2,99 +2,75 @@
 
 {% block head %}
     <title>Bytes | View Profile</title>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css" />
+	<link 
+		rel="stylesheet" 
+		href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.2/css/bootstrap.min.css" 
+		integrity="sha512-MoRNloxbStBcD8z3M/2BmnT+rg4IsMxPkXaGh2zD6LGNNFE80W3onsAhRcMAMrSoyWL9xD7Ert0men7vR8LUZg==" 
+		crossorigin="anonymous" />
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/js/bootstrap.min.js"></script>
     <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/view_profile.css') }}" />
 {% endblock head %}
 
 {% block body %}
-	<div class="main-content">
-		<div class="topHeader" id="header">
-			<div class="logout-button">
-				<input
-					type="button"
-					class="button"
-					name="logout-btn"
-					id="logout-btn"
-					onclick="location.href='/logout';"
-					value="Logout" />
-		    </div>
-
-		    <div class="edit-gb-btn">
-				<input
-					type="button"
-					class="button"
-					name="edit-gb-btn"
-					id="edit-gb-btn"
-					onclick="location.href='/board';"
-					value="View Current Bingo Board" />
-		    </div>
-		    <div class="edit-prof-btn">
-		    	<input 
-					type="button"
-					class="button"
-					name="edit-prof-btn" 
-					id="edit-prof-btn" 
-					onclick="location.href='/profile/edit';" 
-					value="Edit Profile" />
-			</div>
-		    <div class="verify-btn">
-			<input
+	<nav
+		id="navbar"
+		class="navbar navbar-light p-0 sticky-top"
+	>
+		<div class="container px-0">
+			<a class="navbar-brand p-0 m-0" href="/"
+				><img src="{{ url_for('static', filename='resources/light_logo.png') }}" height="50rem"
+			/></a>
+			<button
+				class="navbar-toggler"
 				type="button"
-				name="verify-btn"
-				id="verify-btn"
-				onclick="location.href='/profile/qr-verification';"
-				value="Verify QR Codes" />
+				data-toggle="collapse"
+				data-target="#navbarSupportedContent"
+			>
+				<span class="navbar-toggler-icon"></span>
+			</button>
+
+			<div class="collapse navbar-collapse" id="navbarSupportedContent">
+				<ul class="navbar-nav">
+					<a
+						class="nav-item nav-link pl-2"
+						href="/board"
+						><i class="fas fa-dice"></i><strong>Game Board</strong>
+					</a>
+					<a
+						class="nav-item nav-link pl-2"
+						href="/profile/edit"
+						><i class="fas fa-user-circle"></i><strong>Profile Editor</strong>
+					</a>
+					<a
+						class="nav-item nav-link pl-2"
+						href="/profile/qr-verification"
+						><i class="fas fa-qrcode"></i><strong>QR Validator</strong>
+					</a>
+					<a
+						class="nav-item nav-link pl-2"
+						href="/logout"
+						><i class="fas fa-sign-out-alt"></i><strong>Logout</strong>
+					</a>
+				</ul>
 			</div>
 		</div>
-
-		<div class="restaurant-profile">
-			<div class="top-bar" id="top-bar">
-			    <div>
-					<h1 name="restaurant-name">
-						{% if restaurant_name %}
-							{{ restaurant_name }}
-						{% else %}
-							Restaurant Name
-						{% endif %}
-					</h1>
-						<h4 name="address" class="clickable-contact"> 
-							{% if address and city and province and postal_code %}
-								<a href=" http://maps.google.com/?q= {{ address }} {{ city }} {{ province }} {{ postal_code }}" target="_blank">
-									{{ address }}
-									<br>
-									{{ city }}, {{ province }}
-									<br>
-									{{ postal_code }}
-								</a>
-							{% else %}
-								Please enter your address in by clicking Edit Profile.
-							{% endif %}	
-						</h4>
-						<h4 name="phone-no" class="clickable-contact"> 
-							{% if phone_number %}
-								<a href="tel:{{ phone_number }}" target="_blank">
-									{{ phone_number }}
-								</a>
-							{% else %}
-								Phone Number
-							{% endif %}
-						</h4>
-				</div>
-				<div class="top-right-box">
-					<div class="categories">
-						<h4>
-						{% if category %}
-							{{ category }}
-						{% else %}
-							<div>
-								Category
-							</div>
-						{% endif %}
-						</h4>
-					</div>
-				</div>
-			</div>
-			<div class="big-content">
-				<img
+	</nav>
+    <div class="light-container">
+		<div id="name-container">
+			<h1>{{ restaurant_name }}</h1>
+			{% if category %}
+				<hr><h2>{{ category }}</h2><hr>
+			{% endif %}
+		</div>
+		<table id="about-restaurant">
+			<tr>
+				<td>About Restaurant</td>
+			</tr>
+			<tr>
+				<td id="rest-img">
+					<img
 					src=
 					{% if rest_img %}
 							"{{ rest_img }}"
@@ -102,19 +78,45 @@
 							"https://filestore.community.support.microsoft.com/api/images/72e3f188-79a1-465f-90ca-27262d769841"
 					{% endif %}
 					name="rest-img">
-				<div class="description">
-					<p>
-						{% if description %}
-							{{ description }}
-						{% else %}
-							Description
-						{% endif %}
-					</p>
-				</div>
-			</div>
-		</div>
-	</div>
-
-	<script src="{{ url_for('static', filename='js/sticky-header.js') }}"></script>
-
+				</td>
+			</tr>
+			<tr>
+				<td>
+					{% set text = description.split('\n') %}
+					{% for para in text %}
+						{{para}}<br>
+					{% endfor %}
+				</td>
+			</tr>
+		</table>
+		<table id="contact-info">
+			<tr>
+				<td colspan=2>Contact Information</td>
+			</tr>
+			<tr>
+				<td>
+					Address
+				</td>
+				<td>
+					<a href=" http://maps.google.com/?q= {{ address }} {{ city }} {{ province }} {{ postal_code }}" target="_blank">
+						{{ address }}
+						<br>
+						{{ city }}, {{ province }}
+						<br>
+						{{ postal_code }}
+					</a>
+				</td>
+			</tr>
+			<tr>
+				<td>
+					Phone Number
+				</td>
+				<td>
+					<a href="tel:{{ phone_number }}" target="_blank">
+						{{ phone_number }}
+					</a>
+				</td>
+			</tr>
+		</table>
+    </div>
 {% endblock body %}
