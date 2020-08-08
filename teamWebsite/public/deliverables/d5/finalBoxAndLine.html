@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Bytes | Updated Box and Line Diagram & Explanation</title>
+        <link rel="icon" href="/assets/common/logo.png" />
+
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css"
+        />
+        <link rel="stylesheet" href="/assets/common/css/teamStyle.css" />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;700&display=swap"
+            rel="stylesheet"
+        />
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/js/bootstrap.min.js"></script>
+    </head>
+
+    <body>
+        <span id="navbar-placeholder"></span>
+
+        <div class="container my-4">
+            <div class="jumbotron mb-4">
+                <h1 class="display-4">Final Box and Line Diagram &
+                    Explanations</h1>
+                <p class="lead">
+                    Here is the final update of our Box and Line Diagram and
+                    explanations of each component and dependency. Also
+                    included are an explanation of the differences
+					between the latest version and the previous version, and
+                    an explanation of how we maximized cohesion and
+                    minimized decoupling.
+                </p>
+            </div>
+
+            <div class="card border-dark h-100 mb-4">
+                <div class="card-header">Box and Line Diagram</div>
+                <div class="card-body">
+                    <div class="m-0 px-3 h-100">
+						<p>
+							The final Box and Line Diagram is as follows or
+                            as a pdf <a href="/assets/d5/pdf/d5_BoxAndLine
+                            .pdf"> here</a>:
+						</p>
+						<figure>
+							<img
+							src="/assets/d5/img/d5_box_diagram.png"
+							class="sprint-plan-img mb2"
+							title="Figure 1: Deliverable 5 Box and Line
+							Diagram"
+							/>
+							<figcaption> Figure 1: Deliverable 5 Box and
+                                Line Diagram </figcaption>
+						</figure>
+                    </div>
+                </div>
+            </div>
+			
+			<div class="card border-dark h-100 mb-4">
+                <div class="card-header">Box and Line Diagram Component and Dependency Explanation</div>
+                <div class="card-body">
+                    <div class="m-0 px-3 h-100">
+						<hr>
+							<h5><strong>A) Restaurant User Interface</strong></h5>
+							<p>
+								The Restaurant User Interface subsystem contains multiple components.
+								These components are dependent on the Backend. contains one subcomponent
+								with multiple components and two independent components. All of these are dependent on the Backend.
+								The subsystem components and dependencies are further explained as follows:
+
+							</p>
+							<ul>
+								<li>
+									<b>Restaurant Profile Interfaces</b>
+									<ul>
+										<p>
+											The Restaurant Profile Interfaces subcomponent contains all the interfaces pertaining
+											to the restaurant user’s profile. The entire subcomponent is dependent on the Restaurant Profile 
+											Frontend Communication based in the Backend. The subcomponent’s components are further 
+											explained as follows:
+										</p>
+										<ul>
+											<li>
+												<b>Restaurant Owner Login
+                                                    Page</b>
+												<ul>
+													<p>
+														The Restaurant Owner Login
+                                                        Page prompts the user to enter their username and password.
+														An error message will appear if the username or password are incorrect.
+													</p>
+												</ul>
+											</li>
+											<li>
+												<b>Restaurant Owner Summary </b>
+												<ul>
+													<p>
+														The Restaurant Owner Summary displays the restaurant owner's profile information,
+														including restaurant name, phone number location, category, description, and image,
+														as well as provides a link to their bingo board and a link to edit their public profile page.
+													</p>
+												</ul>
+											</li>
+											<li>
+												<b>Create Account Page </b>
+												<ul>
+													<p>
+														The Create Account Page provides a form in which the new user can add their full name,
+														desired username and password in order to create a new restaurant profile.
+													</p>
+												</ul>
+											</li>
+											<li>
+												<b>Restaurant Profile Editor</b>
+												<ul>
+													<p>
+														The Restaurant Profile Editor provides a form in which the restaurant owner can update 
+														their restaurant profile, including restaurant name, location, phone number, category,
+														description, and image.
+													</p>
+												</ul>
+											</li>
+										</ul>
+									</ul>
+								</li>
+								<li>
+									<b>Goals and Rewards Customization Page</b>
+									<ul>
+										<p>
+											The Goals and Rewards Customization Page allows 
+											for a restaurant user to create customized goals and/or rewards that are unique to them. 
+											This component is dependent on the Goals and Rewards Customization Frontend Communication
+											component in the Backend.
+										</p>
+									</ul>
+								</li>
+								<li>
+									<b>Bingo Board Editor</b>
+									<ul>
+										<p>
+											The Bingo Board Editor allows for a restaurant user to edit the setup of their bingo board,
+											including the goals on the board and the rewards earned when a customer gets a bingo. 
+											This component is dependent on the Bingo Board Frontend Communication component in the Backend.
+										</p>
+									</ul>
+								</li>
+							</ul>
+						</hr>
+						<hr>
+							<h5><strong>B) Customer Interface</strong></h5>
+							<p>
+								The Customer Interface subsystem contains multiple components. 
+								These components are dependent on the Backend. The subsystem 
+								components and dependencies are further explained as follows:
+							</p>
+							<ul>
+								<li>
+									<b>Customer Profile Interfaces</b>
+									<ul>
+										<p>
+											The Customer Profile Interfaces subcomponent contains all the interfaces pertaining to the 
+											customer’s profile. The entire subcomponent is dependent on the Customer Profile Frontend 
+											Communication based in the Backend. The subcomponent’s components are further explained as follows:
+										</p>
+										<ul>
+											<li>
+												<b>Account Creation Page</b>
+												<ul>
+													<p>
+														The Account Creation Page provides a form in which the new user
+														can add their First Name, desired username and password in order 
+														to create a new customer profile.
+													</p>
+												</ul>
+											</li>
+											<li>
+												<b>Customer Login Page</b>
+												<ul>
+													<p>
+														The Customer Login
+                                                        Page
+                                                        prompts the customers to enter their username and password.
+														An error message will appear if the username or password are incorrect.
+													</p>
+												</ul>
+											</li>
+											<li>
+												<b>List of Rewards Earned Page </b>
+												<ul>
+													<p>
+														The List of Rewards Earned Page shows the user a list of all the rewards that they redeemed. 
+													</p>
+												</ul>
+											</li>
+											<li>
+												<b>The Compete with Friends Page</b>
+												<ul>
+													<p>
+														The Compete with Friends Page shows the user their ranking in comparison with 
+														their friends who use the application, where rank is calculated based on the
+														number of rewards they have earned.
+													</p>
+												</ul>
+											</li>
+											<li>
+												<b>List of Favourite Restaurant Boards Page</b>
+												<ul>
+													<p>
+														The List of Favourite Restaurant Boards Page displays the boards 
+														that the customer has saved in order for them to access easily.
+													</p>
+												</ul>
+											</li>
+										</ul>
+									</ul>
+								</li>
+								<li>
+									<b>Restaurant Information Interfaces</b>
+									<ul>
+										<p>
+											The Restaurant Information Interfaces subcomponent contains all the interfaces pertaining
+											to the information of the restaurants using the application. The entire subcomponent 
+											is dependent on the Restaurant Information Frontend Communication based in the Backend.
+											The subcomponent’s components are further explained as follows:
+										</p>
+										<ul>
+											<li>
+												<b>List of Restaurant Boards Page</b>
+												<ul>
+													<p>
+														The List of Restaurant Boards Page shows the user a list of all the restaurant boards
+														that are in progress. A restaurant board that is “in progress” has one or more goals completed. 
+													</p>
+												</ul>
+											</li>
+											<li>
+												<b>Restaurant Board Page</b>
+												<ul>
+													<p>
+														The Restaurant Board Page shows the user an individual restaurant game board. 
+													</p>
+												</ul>
+											</li>
+										</ul>
+									</ul>
+								</li>
+							</ul>
+						</hr>
+						<hr>
+							<h5><strong>C) Backend</strong></h5>
+							<p>
+								The Backend subsystem contains multiple components and two subcomponents.
+								The subsystem components and dependencies are further explained as follows:
+							</p>
+							<ul>
+								<li>
+									<b>Restaurant Profile Frontend Communication</b>
+									<ul>
+										<p>
+											The Restaurant Profile Frontend Communication allows the Restaurant Profile Interfaces
+											in the Restaurant User Interface subsystem to interact with the Backend. It is dependent
+											on the Profile Management which is located in the Backend subsystem.
+										</p>
+									</ul>
+								</li>
+								<li>
+									<b>Goals and Rewards Frontend Communication</b>
+									<ul>
+										<p>
+											The Goals and Rewards Frontend Communication allows the Goals and
+											Reward Customization Page in the Restaurant User Interface subsystem to interact with the Backend. 
+											It is dependent on the Profile Management which is located in the Backend subsystem.
+										</p>
+									</ul>
+								</li>
+								<li>
+									<b>Bingo Board Frontend Communication</b>
+									<ul>
+										<p>
+											The Bingo Board Frontend Communication allows the Bingo Board Editor in the
+											Restaurant User Interface subsystem to interact with the Backend.
+											It is dependent on the Profile Management which is located in the Backend subsystem.
+										</p>
+									</ul>
+								</li>
+								<li>
+									<b>Customer Profile Frontend Communication</b>
+									<ul>
+										<p>
+											The Customer Profile Frontend Communication allows the Customer Profile Interfaces
+											in the Customer Interface subsystem to interact with the Backend.
+											It is dependent on the Profile Management which is located in the Backend subsystem.
+										</p>
+									</ul>
+								</li>
+								<li>
+									<b>Restaurant Information Frontend Communication</b>
+									<ul>
+										<p>
+											The Restaurant Information Frontend Communication allows 
+											the Restaurant Information Interfaces in the Customer Interface subsystem to interact with the Backend. 
+											It is dependent on the Profile Management which is located in the Backend subsystem.
+										</p>
+									</ul>
+								</li>
+								<li>
+									<b>Profile Management</b>
+									<ul>
+										<p>
+											The Profile Management subcomponent contains all the interfaces pertaining to the profiles stored in the database. 
+											The entire subcomponent is dependent on the Restaurant Profile Frontend Communication, Goals and Rewards Frontend Communication,
+											Bingo Board Frontend Communication, Customer Profile Frontend Communication, Restaurant Information Frontend Communication,
+											and Database Communication components in order to update and maintain the profiles 
+											of the application users. The subcomponent’s components are further explained as follows:
+										</p>
+										<ul>
+											<li>
+												<b>User Authentication</b>
+												<ul>
+													<p>
+														The User Authentication component allows for the verification of inputted usernames and passwords. 
+													</p>
+												</ul>
+											</li>
+											<li>
+												<b>User Profile Management</b>
+												<ul>
+													<p>
+														The User Profile Management component allows for users in general to modify their account information. 
+														It is dependent on the User Authentication component to verify that the user
+														login information is valid.
+													</p>
+												</ul>
+											</li>
+											<li>
+												<b>Restaurant Profile Management</b>
+												<ul>
+													<p>
+														The Restaurant Profile Management component allows for restaurant owner users to modify
+														their restaurant profiles; these modifications include changes to the goals and rewards they 
+														want to offer. This component is dependent on the User Profile Management.
+													</p>
+												</ul>
+											</li>
+											<li>
+												<b>Customer Profile Management</b>
+												<ul>
+													<p>
+														The Customer Profile Management component allows for customers to modify their friend lists as well as access goals and rewards. 
+														This component is dependent on the User Profile Management.
+														This component is dependent on Friend Reward Comparison, Goal Completition Modifier, and Reward
+														Completion Modifier.
+													</p>
+												</ul>
+											</li>
+										</ul>
+									</ul>
+								</li>
+								<li>
+									<b>Friend Reward Comparison</b>
+									<ul>
+										<p>
+											The Friend Reward Comparison ranks customer users based on 
+											the number of rewards earned compared to their friends. 
+										</p>
+									</ul>
+								</li>
+								<li>
+									<b>Verification</b>
+									<ul>
+										<p>
+											The Verification subcomponent contains all the interfaces pertaining to verifying 
+											that a customer has achieved goals and obtained rewards. The subcomponent’s components
+											are further explained as follows:
+										</p>
+										<ul>
+											<li>
+												<b>Goal Completion Verification</b>
+												<ul>
+													<p>
+														The Goal Completion Verification component allows for restaurant owners to verify
+														if a goal is completed by a customer. 
+													</p>
+												</ul>
+											</li>
+											<li>
+												<b>Reward Completion Verification</b>
+												<ul>
+													<p>
+														The Reward Completion Verification component allows for restaurant owners to verify if a reward is 
+														valid and redeemed by a customer.
+													</p>
+												</ul>
+											</li>
+										</ul>
+									</ul>
+								</li>
+								<li>
+									<b>Goal Completion Modifier</b>
+									<ul>
+										<p>
+											The Goal Completion Modifier component allows for the goals field of the Customer Profile Collection
+											to be updated when a goal is completed. This component is dependent on the Goal Completion Verification 
+											component so that restaurant owners can verify that the goal is completed.
+										</p>
+									</ul>
+								</li>
+								<li>
+									<b>Reward Completion Modifier</b>
+									<ul>
+										<p>
+											The Reward Completion Modifier component allows for the rewards
+											field of the Customer Profile Database to be updated when a reward is redeemed.
+											This component is dependent on the Reward Completion Verification 
+											component so that restaurant owners can verify that the reward is redeemable.
+										</p>
+									</ul>
+								</li>
+								<li>
+                                    <b>Data Access</b>
+                                    <ul>
+                                        <p>
+                                            The Data Access subcomponent contains the component related to accessing data from the database.
+                                            This subcomponent is dependent on the Database subsystem so that it can communicate with the database
+                                            components as well as the Profile Management so that it can update the information in the database.
+                                        </p>
+                                        <ul>
+                                            <li>
+                                                <b>Database Communication</b>
+                                                <ul>
+                                                    <p>
+                                                        The Database Communication allows for the Backend to communicate with the Databases.
+                                                    </p>
+                                                </ul>
+                                            </li>
+                                        </ul>
+                                    </ul>
+								</li>
+							</ul>
+						</hr>
+						<hr>
+							<h5><strong>D) Database</strong></h5>
+							<p>
+								The Database subsystem contains multiple components. 
+								The Database is dependent on the Database Communication in the Backend subsystem.
+								The components are as follows:
+							</p>
+							<ul>
+								<li>
+									<b>Restaurant Profile Collection</b>
+									<ul>
+										<p>
+											The Restaurant Profile Collection stores restaurant 
+											information such as name of the restaurant, the username and password
+											associated with the restaurant, the customized restaurant goals, 
+											the customized restaurant rewards, and the user profile.
+										</p>
+									</ul>
+								</li>
+								<li>
+									<b>Game Goals Collection</b>
+									<ul>
+										<p>
+											The Game Goals Collection stores the premade goals used for 
+											the bingo loyalty game.
+										</p>
+									</ul>
+								</li>
+								<li>
+									<b>Game Rewards Collection</b>
+									<ul>
+										<p>
+											The Game Rewards Collection is used for the storing premade rewards 
+											for the bingo loyalty game.
+										</p>
+									</ul>
+								</li>
+								<li>
+									<b>Customer Profile Collection</b>
+									<ul>
+										<p>
+											The Customer Profile Database is used for storing customer 
+											user information such as username, active game boards, 
+											goals completed, rewards earned, and friends’ usernames.
+										</p>
+									</ul>
+								</li>
+							</ul>
+						</hr>
+					</div>
+                </div>
+            </div>
+		
+			<div class="card border-dark h-100 mb-4">
+                <div class="card-header">Changes to System Components</div>
+                <div class="card-body">
+                    <div class="m-0 px-3 h-100">
+                        <div>
+							<p>
+                                For this deliverable, we introduced a new subcomponent called Data Access to contain the Database
+                                Communication component. This new subcomponent decouples the Database Communication from Profile Management
+                                and allows for it to be related indirectly. In addition, it allows for future components related to data
+                                access to be introduced without affecting the other components directly. However, this subcomponent is still
+                                a part of C)Backend as it resides in the backend of our system.
+                            </p>
+                            <p>
+                                Also, we changed the names of the Login Interface
+                                in A)Restaurant User Interface and Login Page in B) Customer User Interface to Restaurant Owner Login Page and
+                                Customer Login Page to help distinguish the two interfaces. We changed the names and kept them separate because
+                                even though they are very similar they function differently and belong to different subsystems.
+							</p>
+						</div>
+                    </div>
+                </div>
+            </div>
+            <div class="card border-dark h-100 mb-4">
+                <div class="card-header">Minimizing Coupling & Maximizing
+                    Cohesion
+                </div>
+                <div class="card-body">
+                    <div class="m-0 px-3 h-100">
+                        <div>
+                            <p>
+                                In Deliverable 3, the frontend components all shared the same backend communication,
+                                both on the A) Restaurant User Interface and the B) Customer Interface. In Deliverable 4,
+                                we decoupled these features by creating more specific backend communication components.
+                                That is, each feature has its own backend communication. Thus, we minimized coupling in
+                                our current system diagram.
+                            </p>
+                            <p>
+                                We introduced the subcomponents to group together similar components. For example,
+                                we introduced the Profile Management subcomponent in the C) Backend which contains the
+                                components User Authentication, User Profile Management, Restaurant Profile Management,
+                                and Customer Profile Management. These components are all grouped together since they relate
+                                to the management of profiles in the system. In addition, User Profile Management serves as a parent
+                                component, while Restaurant Profile Management and Customer Profile Management inherit from it.
+                                Thus, with the introduction of subcomponents with some inheritance, we maximized cohesion in our
+                                current system diagram.
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+		</div>
+        <script src="/assets/common/js/main.js"></script>
+    </body>
+</html>
