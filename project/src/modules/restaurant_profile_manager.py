@@ -207,22 +207,27 @@ class RestaurantProfileManager(ProfileManager):
     def remove_custom_goal(self, goal_id):
         """
         Remove a restaurant user's custom goal from their database and returns
-        True upon success; throws exception and returns False otherwise.
+        "current" if the goal is on the current board, "future" if it is on
+        the future board, "success" upon sucessful deletion, otherwise "fail"
+        and throws an exception.
         """
         try:
             goals = self.get_bingo_board()["board"]
+            future_goals = self.get_future_board()["board"]
             if ObjectId(goal_id) in goals:
-                return False
+                return "current"
+            elif ObjectId(goal_id) in future_goals:
+                return "future"
             self.db.update('restaurant_users', {"username": self.id},
                            {"$pull": {
                                "goals": {
                                    "_id": ObjectId(goal_id)
                                }
                            }})
-            return True
+            return "sucess"
         except QueryFailureException:
             print("There was an issue deleting the goal.")
-            return False
+            return "fail"
 
     def add_custom_reward(self, reward):
         """
@@ -269,23 +274,28 @@ class RestaurantProfileManager(ProfileManager):
     def remove_custom_reward(self, reward_id):
         """
         Remove a restaurant user's custom reward that is not on their game board
-        from their database and returns
-        True upon success; throws exception and returns False otherwise.
+        from their database and and returns
+        "current" if the goal is on the current board, "future" if it is on
+        the future board, "success" upon sucessful deletion, otherwise "fail"
+        and throws an exception.
         """
         try:
             rewards = self.get_bingo_board()["board_reward"]
+            future_rewards = self.get_future_board()["board_reward"]
             if ObjectId(reward_id) in rewards:
-                return False
+                return "current"
+            elif ObjectId(reward_id) in future_rewards:
+                return "future"
             self.db.update('restaurant_users', {"username": self.id},
                            {"$pull": {
                                "rewards": {
                                    "_id": ObjectId(reward_id)
                                }
                            }})
-            return True
+            return "success"
         except QueryFailureException:
             print("There was an issue deleting the reward.")
-            return False
+            return "fail"
 
     def get_restaurant_id(self):
         """

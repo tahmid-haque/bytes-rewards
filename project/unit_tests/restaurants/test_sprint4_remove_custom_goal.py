@@ -60,7 +60,7 @@ def test_remove_custom_goal_on_board():
         old_goals = rpm.get_custom_goals()
         board_goals = rpm.get_bingo_board()["board"]
         for i in range (0, len(old_goals)):
-            if ObjectId(old_goals[i]['_id']) in board_goals:
+            if ObjectId(old_goals[i]['_id']) in board_goals or ObjectId(old_goals[i]['_id']) in future_goals:
                 rpm.remove_custom_goal(old_goals[i]['_id'])
                 break
         new_goals = rpm.get_custom_goals()
