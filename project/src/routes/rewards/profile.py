@@ -36,7 +36,9 @@ def view_board(obj_id):
                            goals=board["board"],
                            name=board["name"],
                            rewards=board["board_reward"],
-                           cust_id=username)
+                           cust_id=username,
+                           size=board["size"],
+                           date=board["expiry_date"])
 
 
 @bp.route('/<string:prof_id>/profile', methods=['GET', 'POST'])
