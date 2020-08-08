@@ -2,7 +2,7 @@
 This file contains routes related to verifying customer goals
 """
 
-from flask import Blueprint, render_template, request, redirect, flash, jsonify
+from flask import Blueprint, request, redirect, flash, jsonify
 from flask_login import current_user, login_required
 
 bp = Blueprint("verification", __name__)
@@ -41,4 +41,3 @@ def finish_goal():
     msg = current_user.complete_goal(user, goal_id, position)
     flash(msg)
     return redirect("/profile/qr-verification")
-

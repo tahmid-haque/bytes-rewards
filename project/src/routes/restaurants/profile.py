@@ -18,8 +18,6 @@ def view_profile():
     if rest_info == {}:
         flash("Please create a restaurant profile to continue.")
         return redirect("/profile/edit")
-    rest_id = current_user.get_restaurant_id()
-    current_user.update_board(rest_id)
     return render_template('view_profile.j2',
                            restaurant_name=rest_info["name"],
                            address=rest_info["location"]["address"],
@@ -60,6 +58,7 @@ def save_profile():
             profile["location"][key[9:-1]] = request.form[key]
     current_user.update_profile(profile)
     return redirect("/")
+
 
 @bp.route('/qr-verification')
 @login_required

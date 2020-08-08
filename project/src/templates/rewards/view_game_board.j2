@@ -12,17 +12,19 @@
 	<div id="container">
 		<button id="back" onclick=history.back()><i class="fas fa-long-arrow-alt-left"></i></button>
 		<h1>{{name}}</h1>
+		<h3>This bingo board expires on: {{date}}</h3>
 		<table id="board">
-		    {% for i in range(25) %}
-				{% if i % 5 == 0 %}
+		    {% for i in range(size*size) %}
+				<meta id="board_size" data-size="{{size}}">
+				{% if i % size == 0 %}
 					<tr>
 				{% endif %}
 				<td 
-					class="goal r{{i // 5}} c{{i % 5}}
-					{% if i % 5 == i // 5 %}
+					class="goal r{{i // size}} c{{i % size}}
+					{% if i % size == i // size %}
 						d0
 					{% endif %}
-					{% if i // 5 == 4 - (i % 5) %}
+					{% if i // size == (size-1) - (i % size) %}
 						d1
 					{% endif %}
 					{% if goals[i]['is_complete'] and goals[i]['is_bingo'] %}
@@ -42,14 +44,14 @@
 							fa-hamburger
 						{% endif %}"></i>
 				</td>
-				{% if i % 5 == 4 %}
+				{% if i % size == (size-1) %}
 					</tr>
 				{% endif %}
 			{% endfor %}
 		</table>
 
 		<span class="cards">
-			{% for i in range(25) %}
+			{% for i in range(size*size) %}
 				<div class="hidden card">
 					<div class="goal-info">
 						<h2>{{goals[i]['goal']}}</h2>
@@ -67,35 +69,35 @@
 							</tr>
 							{% set earned = {'is_earned': False} %}
 							<tr>
-								{% if rewards[(i // 5 + 1)]["is_earned"] %}
+								{% if rewards[(i // size + 1)]["is_earned"] %}
 									<td height="50" class="bingo-reward"><h2>Horizontal</h2></td>
 									{% if earned.update({'is_earned':True}) %} {% endif %}
 								{% else %}
 									<td height="50" style="background-color: orange">Horizontal</td>
 								{% endif %}
-								<td>{{rewards[(i // 5 + 1)]["reward"]}}</td>
+								<td>{{rewards[(i // size + 1)]["reward"]}}</td>
 							</tr>
 							<tr>
-								{% if rewards[(i % 5 + 6)]["is_earned"] %}
+								{% if rewards[(i % size + (size+1))]["is_earned"] %}
 									<td height="50" class="bingo-reward"><h2>Vertical</h2></td>
 									{% if earned.update({'is_earned':True}) %} {% endif %}
 								{% else %}
 									<td height="50" style="background-color: cyan">Vertical</td>
 								{% endif %}
-								<td>{{rewards[(i % 5 + 6)]["reward"]}}</td>
+								<td>{{rewards[(i % size + (size+1))]["reward"]}}</td>
 							</tr>
-							{% if i % 5 == i // 5 %}
+							{% if i % size == i // size %}
 								<tr>
-									{% if rewards[11]["is_earned"] %}
+									{% if rewards[size*2+1]["is_earned"] %}
 										<td height="50" class="bingo-reward"><h2>Descending Diagonal</h2></td>
 										{% if earned.update({'is_earned':True}) %} {% endif %}
 									{% else %}
 										<td height="50" style="background-color: yellow">Descending Diagonal</td>
 									{% endif %}
-									<td>{{rewards[11]["reward"]}}</td>
+									<td>{{rewards[size*2+1]["reward"]}}</td>
 								</tr>
 							{% endif %}
-							{% if i // 5 == 4 - (i % 5) %}
+							{% if i // size == (size-1) - (i % size) %}
 								<tr>
 									{% if rewards[0]["is_earned"] %}
 										<td height="50" class="bingo-reward"><h2>Ascending Diagonal</h2></td>
@@ -143,7 +145,7 @@
 						</div>
 					{% else %}
 						<div class="instructions">
-							<img src="{{qrcode(cust_id + '+' + goals[i]['_id']|string + '+' + i|string, box_size=24)}}">
+							<img src="{{qrcode(cust_id + '+' + goals[i]['_id']|string + '+' + i|string, box_size=(size*size-1))}}">
 							<div class="code-header">Code</div>
 							<strong class="code">
 								{{cust_id + '+' + goals[i]['_id']|string + '+' + i|string}}
@@ -171,6 +173,6 @@
 		<div id="hint">Click on goals (boxes) to find out more!</div>
 	</div>
 	
-  <script src="{{ url_for('static', filename='js/view_board.js') }}"></script>
+	<script src="{{ url_for('static', filename='js/view_board.js') }}"></script>
 		
 {% endblock body %}

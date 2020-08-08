@@ -192,10 +192,9 @@ def test_set_board_rewards():
     can be used to update a user's list of rewards.
     """
     rpm = RestaurantProfileManager("vchang")
-    old_rewards = (rpm.get_bingo_board())["board_reward"]
-    board = (rpm.get_bingo_board())["board"]
-    name = (rpm.get_bingo_board())["name"]
-
+    board = rpm.get_bingo_board()
+    old_rewards = board["board_reward"]
+    
     new_rewards = [
         ObjectId('5ef50127ccd1e88ead4cd07b'),
         ObjectId('5ef50127ccd1e88ead4cd07b'),
@@ -210,8 +209,11 @@ def test_set_board_rewards():
         ObjectId('5ef50127ccd1e88ead4cd07b'),
         ObjectId('5ef50127ccd1e88ead4cd07b')
     ]
-    rpm.set_bingo_board(name, board, new_rewards)
+
+    board["board_reward"] = new_rewards
+    rpm.set_bingo_board(board)
 
     assert (rpm.get_bingo_board())["board_reward"] == new_rewards
 
-    rpm.set_bingo_board(name, board, old_rewards)
+    board["board_reward"] = old_rewards
+    rpm.set_bingo_board(board)
