@@ -68,11 +68,11 @@ h3 {
 }
 
 h4 {
-	text-align: center;
+    text-align: center;
     font-weight: bold;
     font-size: 15px;
     margin: 10px 10px 20px 10px;
-	color: dimgray;
+    color: dimgray;
 }
 
 #board {
@@ -231,7 +231,8 @@ h4 {
     margin-bottom: 5px;
 }
 
-#hint {
+#hint,
+#expiry-date {
     width: calc(100% - 4px);
     text-align: center;
     background-color: white;
@@ -277,9 +278,9 @@ h4 {
 }
 
 .button-padding {
-	  display: flex;
+    display: flex;
     justify-content: center;
-	  margin-bottom: 10px;
+    margin-bottom: 10px;
 }
 
 .rewards-button {
@@ -334,14 +335,14 @@ h4 {
 }
 
 .reset {
-	border: none;
+    border: none;
     outline: none;
     height: min-content;
     padding: 5px 10px;
     width: 190px;
     background: mediumblue;
     border-radius: 10px;
-	text-align: center;
+    text-align: center;
     box-shadow: 3px 3px 3px black;
 }
 
@@ -352,3 +353,58 @@ h4 {
     color: white;
     font-weight: bold;
 }
+
+/* Reward Progress */
+
+.reward-progress {
+    margin: 15px 0;
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.reward-progress .reward-progress-text {
+    font-size: 24px;
+}
+
+.reward-progress td:first-child {
+    font-weight: bold;
+}
+
+.reward-progress tr:first-of-type td[colspan='2'] {
+    font-weight: bold;
+    font-size: 30px;
+    background-color: black;
+    color: white;
+}
+
+.reward-progress td {
+    border: 2px solid black;
+    vertical-align: middle;
+    text-align: center;
+    padding: 5px;
+}
+
+.reward-progress td:nth-of-type(2) {
+    width: 20%;
+    font-size: 40px;
+}
+
+/* .horizontal {
+    background-color: orange;
+    color: white;
+}
+
+.vertical {
+    background-color: cyan;
+    color: white;
+}
+
+.d-diagonal {
+    background-color: yellow;
+    color: white;
+}
+
+.a-diagonal {
+    background-color: pink;
+    color: white;
+} */

@@ -12,7 +12,7 @@
 	<div id="container">
 		<button id="back" onclick=history.back()><i class="fas fa-long-arrow-alt-left"></i></button>
 		<h1>{{name}}</h1>
-		<h3>This bingo board expires on: {{date}}</h3>
+		{# <h3>This bingo board expires on: {{date}}</h3> #}
 		{% if goals[0]['board_complete'] %}
 			<div class="complete-card">
 				<h3>Congratulations!</h3>
@@ -62,6 +62,11 @@
 			{% endfor %}
 		</table>
 
+		<div id="expiry-date">
+			This board will expire on:<br>
+			<strong>{{date}}</strong>
+		</div>
+
 		<span class="cards">
 			{% for i in range(size*size) %}
 				<div class="hidden card">
@@ -76,7 +81,8 @@
 							</tr>
 							<tr>
 								<td colspan=2 id="reward-instruction">
-									Complete all goals highlighted by the same colour to earn the rewards below!
+									Complete all goals highlighted by the same colour to earn the 
+									rewards below! <br> Tap on a reward to see current progress.
 								</td>
 							</tr>
 							{% set earned = {'is_earned': False} %}
@@ -121,6 +127,22 @@
 								</tr>
 							{% endif %}
 						</table>
+
+						<table class="reward-progress">
+							<tr>
+								<td colspan=2>Reward Progress</td>
+							</tr>
+							<tr>
+								<td colspan=2 class="reward-progress-text">
+									Lorem ipsum dolor sit amet.
+								</td>
+							</tr>
+							<tr>
+								<td>Lorem ipsum dolor sit amet.</td>
+								<td><i class="fas fa-check"></i></td>
+							</tr>
+						</table>
+
 						{% if earned.is_earned %}
 							<div class="button-padding">
 								<div class="rewards-button">
