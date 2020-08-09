@@ -42,6 +42,15 @@
           <input id="mark" type="submit" value="Mark for completion">
         </form> 
       </div>
+      <br>
+      <div class="verify">
+	<input
+		type="button"
+		name="back"
+		id="back"
+		onclick="location.href='/profile';"
+		value="Back To Profile" />
+	</div>
     </div>
 
     <script src="{{ url_for('static', filename='js/qrCodeScanner-rewards.js') }}" ></script>
