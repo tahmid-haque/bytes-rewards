@@ -39,7 +39,7 @@ def test_verification_route_logged_in(client):
 
 def test_valid_completed_reward(client):
     """
-    Test that a user can mark a valid goal as complete.
+    Test that a user can mark a valid reward as complete.
     """
     rpm = RestaurantProfileManager("junaid")
     code = "junaid+5f03a9fd7aae4a086d810102+6".split("+")
@@ -48,7 +48,7 @@ def test_valid_completed_reward(client):
 
 def test_duplicate_completed_reward(client):
     """
-    Test that a duplicate goal can't be completed again.
+    Test that a duplicate reward can't be completed again.
     """
     rpm = RestaurantProfileManager("junaid")
     code = "junaid+5f03a9fd7aae4a086d810102+6".split("+")
@@ -57,7 +57,7 @@ def test_duplicate_completed_reward(client):
 
 def test_invalid_reward(client):
     """
-    Test that a user can't complete an invalid goal.
+    Test that a user can't complete an invalid reward.
     """
     rpm = RestaurantProfileManager("junaid")
     code = "junaid+5f03a9fd7aae4a086d810102+7".split("+")
