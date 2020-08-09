@@ -13,6 +13,18 @@
 		<button id="back" onclick=history.back()><i class="fas fa-long-arrow-alt-left"></i></button>
 		<h1>{{name}}</h1>
 		<h3>This bingo board expires on: {{date}}</h3>
+		{% if goals[0]['board_complete'] %}
+			<div class="complete-card">
+				<h3>Congratulations!</h3>
+				<h4>You have completed the bingo board. Click "Reset" to reset the board and keep earning rewards!
+				The rewards that you have already earned will not be reset.</h4>
+				<div class="button-padding">
+					<div class="reset">
+						<a href="reset-board" onclick="return confirm('Are you sure you want to reset your goals?')">Reset</a>
+					</div>
+				</div>
+			</div>
+		{% endif %}
 		<table id="board">
 		    {% for i in range(size*size) %}
 				<meta id="board_size" data-size="{{size}}">
@@ -110,7 +122,7 @@
 							{% endif %}
 						</table>
 						{% if earned.is_earned %}
-							<div class="rewards-button-padding">
+							<div class="button-padding">
 								<div class="rewards-button">
 									<a href="/personal/rewards">Redeem Rewards</a>
 								</div>
@@ -174,5 +186,18 @@
 	</div>
 	
 	<script src="{{ url_for('static', filename='js/view_board.js') }}"></script>
-		
+	<script src="{{ url_for('static', filename='js/reset_board.js') }}"></script>
+	<script>
+	function myFunction() {
+		if (
+        confirm(
+            // get user confirmation
+            'Are you sure you want to leave this page? All unsaved changes will be lost.'
+        )
+    ) {
+        history.back(); // redirect user
+    }
+	</script>
+
+	
 {% endblock body %}

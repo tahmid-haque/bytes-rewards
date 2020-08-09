@@ -65,6 +65,14 @@ h3 {
 	color: black;
 }
 
+h4 {
+	text-align: center;
+    font-weight: bold;
+    font-size: 15px;
+    margin: 10px 10px 20px 10px;
+	color: dimgray;
+}
+
 #board {
     width: 100%;
     height: min(520px, calc(100vw - 2 * min(40px, 5vw)));
@@ -264,9 +272,10 @@ h3 {
     background-color: #ff0000;
 }
 
-.rewards-button-padding {
+.button-padding {
 	display: flex;
     justify-content: center;
+	margin-bottom: 10px;
 }
 
 .rewards-button {
@@ -306,4 +315,35 @@ h3 {
     background-color: white;
     color: black;
     font-size: 16px;
+}
+
+.complete-card {
+    padding: 10px 10x 10px 10px;
+    box-sizing: border-box;
+    background-color: white;
+    color: black;
+    width: calc(100% - 4px);
+    border: 2px solid black;
+    margin: 0 auto;
+    overflow: hidden;
+}
+
+.reset {
+	border: none;
+    outline: none;
+    height: min-content;
+    padding: 5px 10px;
+    width: 190px;
+    background: mediumblue;
+    border-radius: 10px;
+	text-align: center;
+    box-shadow: 3px 3px 3px black;
+}
+
+.reset a {
+    text-decoration: none;
+    font-size: 18px;
+    line-height: 20px;
+    color: white;
+    font-weight: bold;
 }

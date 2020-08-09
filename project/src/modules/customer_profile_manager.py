@@ -4,7 +4,7 @@ It is used to interact with the customer profile database.
 """
 from bson.objectid import ObjectId
 from modules.profile_manager import ProfileManager
-from modules.database import QueryFailureException
+from modules.database import QueryFailureException, UpdateFailureException
 from modules.restaurant_profile_manager import RestaurantProfileManager
 
 
@@ -39,6 +39,8 @@ class CustomerProfileManager(ProfileManager):
         for i in range(0, size):
             ranges[-1].append(d_diag * i)
 
+        if len(completed_indices) == size * size:
+            board["board"][0]["board_complete"] = True
         count = 0
         for rang in ranges:
             is_bingo = True
@@ -79,7 +81,7 @@ class CustomerProfileManager(ProfileManager):
                     if restaurant["restaurant_id"] == rest_id:
                         for goal in restaurant["completed_goals"]:
                             completed_index = [
-                                x["position"]
+                                int(x["position"])
                                 for x in restaurant["completed_goals"]
                             ]
                             index = int(goal["position"])
@@ -92,6 +94,20 @@ class CustomerProfileManager(ProfileManager):
             print("Something's wrong with the query.")
         except IndexError:
             print("Could not find the customer")
+
+    def reset_complete_board(self, rest_id):
+        """
+        Clears the bingo board once the entire board has been filled.
+        """
+        try:
+            self.db.update('customers', {
+                "username": self.id,
+                "progress.restaurant_id": rest_id
+            }, {"$set": {
+                "progress.$.completed_goals": []
+            }})
+        except UpdateFailureException:
+            print("There was an issue updating")
 
     def get_favourite(self):
         """
