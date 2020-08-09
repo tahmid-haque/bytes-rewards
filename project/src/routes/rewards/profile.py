@@ -41,6 +41,17 @@ def view_board(obj_id):
                            date=board["expiry_date"])
 
 
+@bp.route('/<string:obj_id>/reset-board', methods=['GET', 'POST'])
+@login_required
+def reset_board(obj_id):
+    """
+    When posting to this route, reset the bingo board goals.
+    Redirect to the bingo board on completion.
+    """
+    current_user.reset_complete_board(obj_id)
+    return redirect("board")
+
+
 @bp.route('/<string:prof_id>/profile', methods=['GET', 'POST'])
 @login_required
 def view_restaurant_profile(prof_id):
