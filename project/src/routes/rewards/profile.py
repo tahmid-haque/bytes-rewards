@@ -33,6 +33,7 @@ def view_board(obj_id):
     rpm.update_board(obj_id)
     board = rpm.get_restaurant_board_by_id(obj_id)
     current_user.set_board_progress(board, obj_id)
+    board["expiry_date"] = board["expiry_date"].strftime("%B %-d, %Y - %-I:%-M %p UTC")
     return render_template('view_game_board.j2',
                            goals=board["board"],
                            name=board["name"],

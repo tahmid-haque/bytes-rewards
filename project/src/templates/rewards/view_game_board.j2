@@ -12,7 +12,7 @@
 	<div id="container">
 		<button id="back" onclick=history.back()><i class="fas fa-long-arrow-alt-left"></i></button>
 		<h1>{{name}}</h1>
-		<h3>This bingo board expires on: {{date}}</h3>
+		{# <h3>This bingo board expires on: {{date}}</h3> #}
 		{% if goals[0]['board_complete'] %}
 			<div class="complete-card">
 				<h3>Congratulations!</h3>
@@ -62,6 +62,11 @@
 			{% endfor %}
 		</table>
 
+		<div id="expiry-date">
+			This board will expire on:<br>
+			<strong>{{date}}</strong>
+		</div>
+
 		<span class="cards">
 			{% for i in range(size*size) %}
 				<div class="hidden card">
@@ -76,11 +81,12 @@
 							</tr>
 							<tr>
 								<td colspan=2 id="reward-instruction">
-									Complete all goals highlighted by the same colour to earn the rewards below!
+									Complete all goals highlighted by the same colour to earn the 
+									rewards below! <br><br> Tap on a reward to see current progress.
 								</td>
 							</tr>
 							{% set earned = {'is_earned': False} %}
-							<tr>
+							<tr class="reward-path" path="horizontal">
 								{% if rewards[(i // size + 1)]["is_earned"] %}
 									<td height="50" class="bingo-reward"><h2>Horizontal</h2></td>
 									{% if earned.update({'is_earned':True}) %} {% endif %}
@@ -89,7 +95,7 @@
 								{% endif %}
 								<td>{{rewards[(i // size + 1)]["reward"]}}</td>
 							</tr>
-							<tr>
+							<tr class="reward-path" path="vertical">
 								{% if rewards[(i % size + (size+1))]["is_earned"] %}
 									<td height="50" class="bingo-reward"><h2>Vertical</h2></td>
 									{% if earned.update({'is_earned':True}) %} {% endif %}
@@ -99,7 +105,7 @@
 								<td>{{rewards[(i % size + (size+1))]["reward"]}}</td>
 							</tr>
 							{% if i % size == i // size %}
-								<tr>
+								<tr class="reward-path" path="d-diagonal">
 									{% if rewards[size*2+1]["is_earned"] %}
 										<td height="50" class="bingo-reward"><h2>Descending Diagonal</h2></td>
 										{% if earned.update({'is_earned':True}) %} {% endif %}
@@ -110,7 +116,7 @@
 								</tr>
 							{% endif %}
 							{% if i // size == (size-1) - (i % size) %}
-								<tr>
+								<tr class="reward-path" path="a-diagonal">
 									{% if rewards[0]["is_earned"] %}
 										<td height="50" class="bingo-reward"><h2>Ascending Diagonal</h2></td>
 										{% if earned.update({'is_earned':True}) %} {% endif %}
@@ -121,6 +127,22 @@
 								</tr>
 							{% endif %}
 						</table>
+
+						<table class="reward-progress hidden">
+							<tr>
+								<td colspan=2>Reward Progress</td>
+							</tr>
+							<tr>
+								<td colspan=2 class="reward-progress-text"></td>
+							</tr>
+							{% for _ in range(size) %}
+								<tr class="goal-progress">
+									<td></td>
+									<td><i class="fas"></i></td>
+								</tr>
+							{% endfor %}
+						</table>
+
 						{% if earned.is_earned %}
 							<div class="button-padding">
 								<div class="rewards-button">
@@ -188,15 +210,15 @@
 	<script src="{{ url_for('static', filename='js/view_board.js') }}"></script>
 	<script src="{{ url_for('static', filename='js/reset_board.js') }}"></script>
 	<script>
-	function myFunction() {
-		if (
-        confirm(
-            // get user confirmation
-            'Are you sure you want to leave this page? All unsaved changes will be lost.'
-        )
-    ) {
-        history.back(); // redirect user
-    }
+		function myFunction() {
+			if (
+			confirm(
+				// get user confirmation
+				'Are you sure you want to leave this page? All unsaved changes will be lost.'
+			)
+		) {
+			history.back(); // redirect user
+		}
 	</script>
 
 	
