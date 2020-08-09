@@ -15,11 +15,11 @@ qr.callback = res => {
   if (res) {
 
     $.ajax({
-        url: '/verification/verify-goal/' + res,        
+        url: '/verification/verify-reward/' + res,        
         type: 'POST',
     })
     .done(function(data){
-      $('#outputData').text(data.goal)
+      $('#outputData').text(data.reward)
 
     });
     inputBox.value = res;

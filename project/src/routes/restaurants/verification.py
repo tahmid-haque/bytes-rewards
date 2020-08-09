@@ -1,5 +1,5 @@
 """
-This file contains routes related to verifying customer goals
+This file contains routes related to verifying customer goals and rewards
 """
 
 from flask import Blueprint, render_template, request, redirect, flash, jsonify
@@ -16,7 +16,6 @@ def verify_goal(code_data):
     """
     data = code_data.split("+")
     goals = current_user.get_goals()
-    goal = ""
     for goal in goals:
         if str(goal['_id']) == data[1]:
             return jsonify({'goal': goal['goal']})
@@ -43,6 +42,20 @@ def finish_goal():
     return redirect("/profile/qr-verification-goals")
 
 
+@bp.route('/verify-reward/<string:code_data>', methods=['POST', 'GET'])
+@login_required
+def verify_reward(code_data):
+    """
+    This route is used in the ajax call to return a json object for when a qr code is scanned.
+    """
+    data = code_data.split("+")
+    rewards = current_user.get_rewards()
+    for reward in rewards:
+        if str(reward['_id']) == data[1]:
+            return jsonify({'reward': reward['reward']})
+
+    return jsonify({'reward': 'No Reward Found'})
+
 @bp.route('/finish-reward', methods=['POST', 'GET'])
 @login_required
 def finish_reward():
@@ -50,14 +63,15 @@ def finish_reward():
     This route retrieves a code, and adds a reward as completed to the database.
     Redirects to the qr reward verification page when done.
     """
-    data = request.form["code"].split("+")
+    code = request.form["code"]
+    data = code.split("+")
     if len(data) != 3:
         flash("Invalid QR code!")
         return redirect("/profile/qr-verification-rewards")
     user = data[0]
     reward_id = data[1]
     position = data[2]
-    msg = current_user.complete_reward(user, reward_id, position)
+    msg = current_user.complete_reward(user, code)
     flash(msg)
     return redirect("/profile/qr-verification-rewards")
 

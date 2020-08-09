@@ -298,6 +298,9 @@ class RestaurantProfileManager(ProfileManager):
             return {}
 
     def add_reward_code(self, customer, reward_index):
+        """
+        Adds a reward code to the databases if there is a bingo on the board
+        """
         owner = self.db.query('restaurant_users', {"username": self.id})[0]
         reward_id = owner["bingo_board"]["board_reward"][reward_index]
         rewards = self.get_rewards()
@@ -344,6 +347,9 @@ class RestaurantProfileManager(ProfileManager):
 
 
     def check_row(self, position, size, customer, goals):
+        """
+        Checks if there is a bingo on the rows
+        """
         start = int(position)
         counter = 0
         while (start%size) != 0:
@@ -356,6 +362,9 @@ class RestaurantProfileManager(ProfileManager):
             self.add_reward_code(customer, int(int(position)/size) + 1)
 
     def check_col(self, position, size, customer, goals):
+        """
+        Checks if there is a bingo on the columns
+        """
         start = int(position)
         counter = 0
         while (start-size) > 0:
@@ -368,6 +377,9 @@ class RestaurantProfileManager(ProfileManager):
             self.add_reward_code(customer, ((int(position) + 1) % size) + 5)
 
     def check_diagonal(self, position, size, customer, goals):
+        """
+        Checks if there is a bingo on the diagonals
+        """
         left = False
         right = False
         counter = 0
@@ -399,10 +411,6 @@ class RestaurantProfileManager(ProfileManager):
                 i = i + size - 1
             if counter == size:
                 self.add_reward_code(customer, 0)
-
-
-
-
 
     def complete_goal(self, user, goal_id, position):
         """
@@ -477,50 +485,61 @@ class RestaurantProfileManager(ProfileManager):
             print("Something's wrong with the query.")
             return ""
 
-    def complete_reward(self, user, goal_id, position):
+    def complete_reward(self, user, code):
         """
-        Adds a goal to the database that has been completed by the customer and returns
+        Adds a reward to the database that has been completed by the customer and returns
         a message depending on if it is successful or not.
         """
         try:
-            owner_id = self.db.query('restaurant_users', {"username": self.id})[0]["_id"]
+            owner = self.db.query('restaurant_users', {"username": self.id})[0]
             user_profile = self.db.query('customers', {"username": user})[0]
+            in_user = False
+            counter = -1
             if "progress" in user_profile:
                 for restaurant in user_profile["progress"]:
-                    if restaurant["restaurant_id"] == owner_id:
-                        goals = restaurant["completed_goals"]
-                        for goal in goals:
-                            if str(goal["_id"]) == goal_id and position == goal["position"]:
-                                return "This goal has already been completed!"
-                        id_exists = True
-            if not isinstance(int(position), int) or not (1 <= len(position) <= 2) or not (0 <= int(position) <= 24) \
-                    or not str(self.get_bingo_board()["board"][int(position)]) == goal_id:
-                return "Invalid QR code!"
-            try:
-                if "progress" in user_profile and id_exists:
-                    self.db.update('customers', {"username": user, "progress.restaurant_id": ObjectId(owner_id)},
-                                   {"$push": {
-                                       "progress.$.completed_goals": {
-                                           "_id": ObjectId(goal_id),
-                                           "position": position,
-                                           "date_completed": datetime.now()}}})
-                else:
-                    self.db.update(
-                        'customers', {"username": self.id},
-                        {"$push": {
-                            "progress": {
-                                "restaurant_id": ObjectId(owner_id),
-                                "completed_goals": [{
-                                    "_id": ObjectId(goal_id),
-                                    "position": position,
-                                    "date": datetime.now()
-                                }]
-                            }
-                        }})
-                return "Successfully marked as completed!"
-            except UpdateFailureException:
-                print("There was an issue updating")
-                return "Error"
+                    counter += 1
+                    if restaurant["restaurant_id"] == owner["_id"]:
+                        restaurant_index = counter
+                        rewards = restaurant['completed_rewards']
+                        counter = -1
+                        for reward in rewards:
+                            counter += 1
+                            if reward["redemption_code"] == code:
+                                text = reward["text"]
+                                in_user = True
+                                customer_index = counter
+                                if "redemption_date" in reward:
+                                    return "Code has already been redeemed!"
+                if not in_user:
+                    return "Invalid QR code!"
+            counter = -1
+            for reward in owner["client_rewards"]:
+                counter += 1
+                if reward["redemption_code"] == code:
+                    owner_index = counter
+
+            self.db.update('restaurant_users', {"username": self.id, "client_rewards.redemption_code": code},
+                           {"$set": {
+                               "client_rewards." + str(owner_index): {
+                                   "redemption_code": code,
+                                   "text": text,
+                                   "is_redeemed": True,
+                                   "redemption_date": datetime.now()
+                               }
+                           }})
+
+            self.db.update('customers', {"username": user, "progress.restaurant_id": ObjectId(str(owner["_id"])),
+                                         "progress.completed_rewards.redemption_code": code},
+                           {"$set": {
+                               "progress." + str(restaurant_index) + ".completed_rewards." + str(customer_index): {
+                                   "redemption_code": code,
+                                   "text": text,
+                                   "is_redeemed": True,
+                                   "redemption_date": datetime.now()
+                               }
+                           }})
+
+            return "Successfully marked as completed!"
         except QueryFailureException:
             print("Something is wrong with the query")
             return "Error"
