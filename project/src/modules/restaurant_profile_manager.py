@@ -4,11 +4,11 @@ It is used to interact with the restaurant profile database.
 """
 
 import copy
+from datetime import datetime, timedelta
 from bson.objectid import ObjectId
 from bson.errors import InvalidId
 from modules.profile_manager import ProfileManager
 from modules.database import Database, QueryFailureException, UpdateFailureException
-from datetime import datetime, timedelta
 
 
 class RestaurantProfileManager(ProfileManager):
@@ -425,6 +425,58 @@ class RestaurantProfileManager(ProfileManager):
         except (QueryFailureException, IndexError, KeyError, InvalidId):
             print("Something's wrong with the query.")
             return ""
+
+    def update_board(self, id):
+        """
+        Checks all public restaurant user's bingo boards and replaces expired
+        boards with future game boards. If no future board exists, expiration
+        date is increased by 90 days.
+        """
+        try:
+            user = self.db.query('restaurant_users', {'_id': id})
+            reset = 90 # expiration date deafault is set to 90 days
+            if 'expiry_date' in user[0]['bingo_board']:
+                if datetime.now() >= user[0]['bingo_board'][
+                        'expiry_date']:  # expired current board
+                    if 'future_board' in user[0]:
+                        future_exp = user[0]['future_board']['expiry_date']
+                        if future_exp <= datetime.now():  # expired future goal
+                            future_exp = datetime.now() + timedelta(days=reset)
+                        user[0]['future_board'][
+                            'expiry_date'] = future_exp  # updates future exp date
+                        self.db.update(  # updates current board in db
+                            'restaurant_users',
+                            {'username': user[0]['username']},
+                            {'$set': {
+                                'bingo_board': user[0]['future_board']
+                            }})
+                        user[0]['future_board'][  # updates future board in db
+                            'expiry_date'] = future_exp + timedelta(days=reset)
+                        self.db.update(
+                            'restaurant_users',
+                            {'username': user[0]['username']},
+                            {'$set': {
+                                'future_board': user[0]['future_board']
+                            }})
+                    customers = self.db.query('customers')
+                    for c in customers:  
+                        if 'progress' in c:
+                            for item in c['progress']:
+			                     # checks for completed goals corresponding to expired board
+                                if item['restaurant_id'] == ObjectId(
+                                        id) and 'completed_goals' in item:
+                                    self.db.update( #removes current goals in customer profiles
+                                        'customers', {
+                                            "username": c['username'],
+                                            "progress.restaurant_id": id
+                                        }, {
+                                            "$set": {
+                                                "progress.$.completed_goals": [
+                                                ]
+                                            }
+                                        })
+        except UpdateFailureException:
+            print("There was an issue updating")
 
     def get_future_board(self):
         """

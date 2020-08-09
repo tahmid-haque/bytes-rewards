@@ -16,6 +16,7 @@ def view_board():
     """
     rest_id = current_user.get_restaurant_id()
     try:
+        current_user.update_board(rest_id)
         bingo_board = current_user.get_restaurant_board_by_id(rest_id)
         return render_template(
         'view_game_board.j2',
@@ -35,6 +36,8 @@ def edit_board():
     When retrieving this route, get a restaurant profile's goals, rewards and future
     board. Render these items together to show a bingo editor.
     """
+    rest_id = current_user.get_restaurant_id()
+    current_user.update_board(rest_id)
     goals = current_user.get_goals(
     )  # current_user is loaded from load_user so get goals
     bingo_board = current_user.get_future_board()

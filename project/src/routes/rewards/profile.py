@@ -30,6 +30,7 @@ def view_board(obj_id):
     """
     username = current_user.get_id()
     rpm = RestaurantProfileManager("")
+    rpm.update_board(obj_id)
     board = rpm.get_restaurant_board_by_id(obj_id)
     current_user.set_board_progress(board, obj_id)
     return render_template('view_game_board.j2',
