@@ -253,7 +253,24 @@
                 <div class="card-header">Difficulties We Encountered</div>
                 <div class="card-body">
                     <div class="m-0 px-3 h-100">
-                       
+						<p>
+						A difficulty that we encountered occurred after our team discussed 
+						integrating the feature to allow restaurant owners to choose individual 
+						expiry dates for goals and rewards on their bingo board. This feature was 
+						suggested by our client, as they did not think having an expiration date 
+						for a 5x5 board was a good idea, as customers may not be able to complete 
+						25 goals before the expiration date. While discussing the implementation 
+						of this feature we discovered many problems with it. Some of these problems
+						included what would happen to the completion status of a completed goal if 
+						it were to expire and how a restaurant can feasibly maintain the expiry 
+						dates of 25 goals and 12 rewards. 
+						</p>
+						<p>
+						We came up with the idea that a restaurant owner could choose a smaller 3x3
+						board with an expiry date for the entire board, and brought up this idea 
+						with the client. They agreed this was a good solution, and thus our 
+						difficulty was resolved.
+						</p>
                     </div>
                 </div>
             </div>
@@ -263,7 +280,19 @@
                 <div class="card-body">
                     <div class="m-0 px-3 h-100">
                         <div>
-							
+							<p>
+							We did not have to use our contingency plan for the past 3 sprints; no
+							team members dropped out, were sick, consistently missed meetings, or 
+							were academically dishonest. As a result of this, we did not have to 
+							use our contingency plan or come up with new solutions.
+							</p>
+							<p>
+							We tried to complete as much work as possible before the project 
+							deadline by assigning a higher number of story points for each sprint. 
+							As a result of the higher project velocity, some stories had to be 
+							pushed to following sprints. However, this did not affect our plan 
+							drastically, due to our just-in-time planning strategy for each sprint.
+							</p>
 						</div>
                     </div>
                 </div>
@@ -294,11 +323,175 @@
                     <div class="m-0 px-3 h-100">
                         <div>
                             <strong>Client Interactions and Questions Asked</strong>
-                             
+                            <p>
+							The following outlines the questions we asked our client, the answer
+							we received, and how we implemented their feedback.
+							</p>
+							<ul>
+								<strong>July 27, 2020</strong>
+								<li>
+									<p>
+									<strong>Q:</strong>
+									What do you think about the layout of the customer view bingo 
+									board page and the highlighted achievement paths? Do we need a 
+									help button for clarity?
+									</p>
+									<p>
+									<strong>A:</strong>
+									The client said that the layout of the customer view bingo 
+									board page and the highlighted achievement paths were intuitive
+									and a help button was not needed.
+									</p>
+									<p>
+									<strong>How we Incorporated Feedback:</strong>
+									We incorporated this feedback by not including a help button.
+									</p>
+								</li>
+								<li>				
+									<p>
+									<strong>Q:</strong>
+									Should the goals on the customer bingo board reset after an 
+									achievement path is complete or after the entire board has been
+									completed?
+									</p>
+									<p>
+									<strong>A:</strong>
+									The client said the board should be cleared after the entire 
+									bingo board has been completed.
+									</p>
+									<p>
+									<strong>How we Incorporated Feedback:</strong>
+									We incorporated this feedback by adding a function to clear the
+									board when a customer has completed the entire board.
+									</p>
+								</li>							
+								<li>				
+									<p>
+									<strong>Q:</strong>
+									What do you think of the idea for restaurants to be able to 
+									create a 3x3 board with an expiration date?
+									</p>
+									<p>
+									<strong>A:</strong>
+									The client said the 3x3 board idea would work, as 9 goals to 
+									complete is more feasible than 25. They also mentioned they 
+									would like there to be incentive to complete the entire board.
+									</p>
+									<p>
+									<strong>How we Incorporated Feedback:</strong>
+									We incorporated this feedback by letting the restaurant owner 
+									choose the size of their bingo board; the options for sizes are
+									3x3, 4x4, and 5x5. They can also choose the expiry date for 
+									their board. We were unable to complete the feature to offer an
+									additional reward once the entire board was completed due to 
+									time restrictions; however, this could easily be appended if 
+									the client chose to proceed with our project.
+									</p>
+								</li>
+							</ul>
                         </div>
                         <hr />
 						<strong>Demo of Second Release: Meeting Minutes</strong>
-						
+						<p>
+						On July 27, 2020 at 3:00 p.m., we demonstrated our second release to our 
+						client. The following state the demonstration agenda, feedback from the 
+						client, and how we incorporated their feedback.
+						</p>
+						<strong>Demonstration Agenda</strong>
+						<ul>
+							<li>
+								<strong>Show restaurant side</strong>
+								<ul>
+									<li>
+										Make restaurant owner account
+									</li>
+								</ul>
+								<ul>
+									<li>
+										Edit bingo board - show drag and drop functionality
+									</li>
+								</ul>
+								<ul>
+									<li>
+										Customize goals feature - show adding and removing 
+										custom goal functionality; show error checking functionality
+									</li>
+								</ul>
+								<ul>
+									<li>
+										Add custom goal to bingo board
+									</li>
+								</ul>
+								<ul>
+									<li>
+										Edit profile feature
+									</li>
+								</ul>
+							</li>
+							<li>
+								<strong>Show customer side</strong>
+								<ul>
+									<li>
+										Make customer account
+									</li>
+								</ul>
+								<ul>
+									<li>
+										View game board feature - show how achievement paths are 
+										displayed; show how QR codes are displayed
+									</li>
+								</ul>
+							</li>
+							<li>
+								<strong>Ask for feedback</strong>
+							</li>
+							<li>
+								<strong>Ask client questions</strong>
+							</li>
+						</ul>
+						<hr />
+						<strong>Feedback from the Client and how we Incorporated their Feedback</strong>
+						<ul>
+							<li>
+								<p>
+								<strong>Feedback 1:</strong>
+								The client did not like the lack of words and visuals on the customer 
+								view board page. They especially did not like the ‘x’ to show 
+								uncompleted goals.
+								</p>
+								<p>
+								<strong>How We Incorporated Feedback:</strong>
+								We incorporated this feedback by changing the image on uncompleted 
+								goals to a hamburger icon, so that it looked more appealing than 
+								the ‘x’. Additionally, we added a drop-down menu per each reward, 
+								that shows a list of goals that the user would need to complete to 
+								achieve the reward. This resolves the issue of lack of words, while
+								still maintaining readability on a mobile device.
+								</p>
+							</li>
+						</ul>
+						<ul>
+							<li>
+								<p>
+								<strong>Feedback 2:</strong>
+								The client suggested that each individual goal and reward have an 
+								expiry date instead of the entire board, as completing 25 goals is 
+								not feasible.
+								</p>
+								<p>
+								<strong>How we Incorporated Feedback:</strong>
+								We discussed this idea further with our client after realizing 
+								problems with it. Some of these problems include what would happen 
+								to the completion status of a completed goal if it were to expire 
+								and how a restaurant can feasibly maintain the expiry dates of 25 
+								goals and 12 rewards. We brought up the idea that a restaurant 
+								owner could choose a smaller 3x3 board with an expiry date for 
+								the entire board. They agreed this was a good solution, so we 
+								implemented a feature that allows the restaurant user to choose 
+								between a 3x3, 4x4, and 5x5 board with a single expiry date.
+								</p>
+							</li>
+						</ul>
                     </div>
                 </div>
             </div>
