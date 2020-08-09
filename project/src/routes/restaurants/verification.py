@@ -65,7 +65,7 @@ def finish_reward():
     """
     code = request.form["code"]
     data = code.split("+")
-    if len(data) != 3:
+    if len(data) != 4:
         flash("Invalid QR code!")
         return redirect("/profile/qr-verification-rewards")
     user = data[0]

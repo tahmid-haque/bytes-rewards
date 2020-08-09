@@ -309,7 +309,7 @@ class RestaurantProfileManager(ProfileManager):
             if str(reward["_id"]) == str(reward_id):
                 text = reward["reward"]
         customer_profile = self.db.query('customers', {"username": customer})[0]
-        code = str(customer)+"+"+str(reward_id)+"+"+str(reward_index)
+        code = str(customer)+"+"+str(reward_id)+"+"+str(reward_index)+"+"+str(datetime.now())
         try:
             if "client_rewards" not in owner:
                 self.db.update('restaurant_users', {"username": self.id},
