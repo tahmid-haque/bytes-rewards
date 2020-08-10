@@ -153,6 +153,7 @@ class Validator():
                 {"username": self.rpm.get_id()})[0]["bingo_board"]["size"]
             user_profile = self.rpm.db.query('customers', {"username": user})[0]
             goals = []
+            id_exists = False
             if "progress" in user_profile:
                 for restaurant in user_profile["progress"]:
                     if restaurant["restaurant_id"] == owner_id:
