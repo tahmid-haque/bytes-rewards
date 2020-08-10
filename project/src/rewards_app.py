@@ -9,7 +9,7 @@ from flask_qrcode import QRcode
 from modules.customer.customer_profile_manager import CustomerProfileManager
 from routes.authentication import get_auth_routes, add_auth
 from routes.rewards.profile import bp as profile_routes
-from routes.rewards.customer import bp as customer_routes
+from routes.rewards.restaurants import bp as restaurant_routes
 
 app = Flask(
     __name__,
@@ -18,8 +18,8 @@ app = Flask(
 add_auth(app, CustomerProfileManager)
 QRcode(app)
 app.register_blueprint(get_auth_routes(CustomerProfileManager))
-app.register_blueprint(profile_routes, url_prefix="/profiles")
-app.register_blueprint(customer_routes, url_prefix="/personal")
+app.register_blueprint(profile_routes, url_prefix="/personal")
+app.register_blueprint(restaurant_routes, url_prefix="/restaurants")
 
 
 @app.route('/')
@@ -27,7 +27,7 @@ def index():
     """
     Redirect to the view profiles page.
     """
-    return redirect("/profiles")
+    return redirect("/restaurants")
 
 
 if __name__ == "__main__":
