@@ -163,10 +163,12 @@ class Validator():
                                 return "This goal has already been completed!"
                         id_exists = True
 
+            
+
             gbm = GameBoardManager(self.rpm)
             if not isinstance(int(position), int) or \
                     not (1 <= len(position) <= 2) or not (0 <= int(position) <= 24) or \
-                    not str(gbm.get_bingo_board()["board"][int(position)]) == goal_id:
+                    not str(gbm.get_bingo_board()["board"][int(position)]['_id']) == goal_id:
                 return "Invalid QR code!"
             try:
                 if "progress" in user_profile and id_exists:
@@ -281,7 +283,7 @@ class Validator():
                     }
                 })
 
-            return "Successfully marked as completed!"
+            return "Successfully marked as redeemed!"
         except QueryFailureException:
             print("Something is wrong with the query")
             return "Error"
