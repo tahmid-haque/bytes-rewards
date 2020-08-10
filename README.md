@@ -64,3 +64,7 @@ For the second part of Deliverable 3 we added the following:
 : [Box and Line Diagram & Explanations](https://bytes-cs.web.app/deliverables/d5/finalBoxAndLine.html), or in this repository at [Repo Final
  Box and
  Line](teamWebsite/public/deliverables/d5/finalBoxAndLine.html).
+ 
+ -   The links to our project have been updated!
+    -   [Restaurant Interface](https://bytes-restaurants.herokuapp.com/)
+    -   [Customer Interface](https://bytes-rewards.herokuapp.com/)
