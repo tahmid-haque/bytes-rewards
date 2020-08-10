@@ -600,6 +600,8 @@ class RestaurantProfileManager(ProfileManager):
                                         })
         except UpdateFailureException:
             print("There was an issue updating")
+        except KeyError:
+            print("No current board")
 
     def get_future_board(self):
         """
