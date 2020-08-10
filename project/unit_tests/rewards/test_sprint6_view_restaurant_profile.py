@@ -10,7 +10,8 @@ sys.path.insert(1, os.path.join(os.path.dirname(__file__),
                                 '../../src'))  # Import the src folder
 
 from rewards_app import app
-from modules.restaurant_profile_manager import RestaurantProfileManager
+from modules.owner.restaurant_profile_manager import RestaurantProfileManager
+from modules.owner.public_profile import PublicProfileModifier
 
 
 @pytest.fixture
@@ -27,7 +28,7 @@ def test_view_restaurant_profile_route_no_login(client):
     """
     Test that restaurant profile page does not load unless user is logged in.
     """
-    res = client.get("/profiles/5f15c084143cb39bfc5619b8/profile", follow_redirects=True)
+    res = client.get("/restaurants/5f15c084143cb39bfc5619b8/profile", follow_redirects=True)
     assert res != 0
 
 def test_get_restaurant_profile_by_id():
@@ -37,7 +38,8 @@ def test_get_restaurant_profile_by_id():
     """
     with app.app_context():
         rpm = RestaurantProfileManager("")
-        profile = rpm.get_restaurant_profile_by_id("5f15c084143cb39bfc5619b8")
+        ppm = PublicProfileModifier(rpm)
+        profile = ppm.get_restaurant_profile_by_id("5f15c084143cb39bfc5619b8")
 
         assert profile["name"] == "KFC"
 
@@ -53,5 +55,5 @@ def test_view_restaurant_profile_route_logged_in(client):
     Test that restaurant profile page loads when the user is logged in.
     """
     client.post("/login", data={"username": "unitTestUser", "password": "Password!"})
-    res = client.get("/profiles/5f15c084143cb39bfc5619b8/profile", follow_redirects=True)
+    res = client.get("/restaurants/5f15c084143cb39bfc5619b8/profile", follow_redirects=True)
     assert b'View Profile'

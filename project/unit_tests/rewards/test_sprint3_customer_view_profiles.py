@@ -10,7 +10,8 @@ sys.path.insert(1, os.path.join(os.path.dirname(__file__),
                                 '../../src'))  # Import the src folder
 
 from rewards_app import app
-from modules.restaurant_profile_manager import RestaurantProfileManager
+from modules.owner.restaurant_profile_manager import RestaurantProfileManager
+from modules.owner.public_profile import PublicProfileModifier
 
 
 @pytest.fixture
@@ -23,7 +24,7 @@ def client():
     return app.test_client()
 
 
-def test_edit_profile_route_logged_in(client):
+def test_view_profile_route_logged_in(client):
     """
     Test that customer view restaurant profile page loads when the user is logged in.
     """
@@ -32,8 +33,8 @@ def test_edit_profile_route_logged_in(client):
                     "username": "unitTestUser",
                     "password": "Password!"
                 })
-    res = client.get("/profiles", follow_redirects=True)
-    assert b"Choose a Game Board" in res.data
+    res = client.get("/restaurants", follow_redirects=True)
+    assert b"Welcome" in res.data
 
 
 def test_get_restaurant_profiles():
@@ -42,7 +43,8 @@ def test_get_restaurant_profiles():
     restaurant profile fields that are public.
     """
     rpm = RestaurantProfileManager("unitTestUser")
-    profiles = rpm.get_public_profiles()
+    ppm = PublicProfileModifier(rpm)
+    profiles = ppm.get_public_profiles()
     expected_fields = ["name", "category", "image", "is_public"]
 
     has_id = True
