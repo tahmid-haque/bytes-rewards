@@ -504,7 +504,7 @@ class RestaurantProfileManager(ProfileManager):
                             }
                         })
                 else:
-                    self.db.update('customers', {"username": self.id}, {
+                    self.db.update('customers', {"username": user}, {
                         "$push": {
                             "progress": {
                                 "restaurant_id":
