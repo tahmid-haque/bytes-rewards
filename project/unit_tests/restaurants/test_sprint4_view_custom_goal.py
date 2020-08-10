@@ -11,7 +11,8 @@ sys.path.insert(1, os.path.join(os.path.dirname(__file__),
                                 '../../src'))  # Import the src folder
 
 from restaurants_app import app
-from modules.restaurant_profile_manager import RestaurantProfileManager
+from modules.owner.restaurant_profile_manager import RestaurantProfileManager
+from modules.owner.goals import GoalsManager
 
 @pytest.fixture
 def client():
@@ -58,7 +59,8 @@ def test_get_custom_goals():
     retrieves the correct list of custom goals of a restaurant profile.
     """
     rpm = RestaurantProfileManager("janedoe")
-    custom_goals = rpm.get_custom_goals()
+    gm = GoalsManager(rpm)
+    custom_goals = gm.get_custom_goals()
     expected_custom_goals = [{
         '_id': ObjectId("5f11c9721a52881b3573c029"),
         'goal': "This is a custom goal."
