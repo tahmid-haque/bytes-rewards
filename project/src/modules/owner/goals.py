@@ -85,7 +85,7 @@ class GoalsManager:
         and throws an exception.
         """
         try:
-            user = self.rpm.db("restaurant_users", {"username": self.rpm.get_id()})[0]
+            user = self.rpm.db.query("restaurant_users", {"username": self.rpm.get_id()})[0]
             goals = user["bingo_board"]["board"] if 'bingo_board' in user else []
             future_goals = user["future_board"]["board"] if 'future_board' in user else []
             if ObjectId(goal_id) in goals:

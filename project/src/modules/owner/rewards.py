@@ -93,9 +93,9 @@ class RewardsManager():
         and throws an exception.
         """
         try:
-            user = self.rpm.db("restaurant_users", {"username": self.rpm.get_id()})[0]
-            goals = user["bingo_board"]["board_reward"] if 'bingo_board' in user else []
-            future_goals = user["future_board"]["board_reward"] if 'future_board' in user else []
+            user = self.rpm.db.query("restaurant_users", {"username": self.rpm.get_id()})[0]
+            rewards = user["bingo_board"]["board_reward"] if 'bingo_board' in user else []
+            future_rewards = user["future_board"]["board_reward"] if 'future_board' in user else []
             if ObjectId(reward_id) in rewards:
                 return "current"
             if ObjectId(reward_id) in future_rewards:

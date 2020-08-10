@@ -11,7 +11,8 @@ sys.path.insert(1, os.path.join(os.path.dirname(__file__),
                                 '../../src'))  # Import the src folder
 
 from restaurants_app import app
-from modules.restaurant_profile_manager import RestaurantProfileManager
+from modules.owner.restaurant_profile_manager import RestaurantProfileManager
+from modules.owner.validator import Validator
 
 @pytest.fixture
 def client():
@@ -42,8 +43,9 @@ def test_valid_completed_goal(client):
     Test that a user can mark a valid goal as complete.
     """
     rpm = RestaurantProfileManager("junaid")
+    vm = Validator(rpm)
     code = "junaid+5ef5009bccd1e88ead4cd076+0".split("+")
-    msg = rpm.complete_goal(code[0], code[1], code[2])
+    msg = vm.complete_goal(code[0], code[1], code[2])
     assert msg == "This goal has already been completed!"
 
 def test_duplicate_completed_goal(client):
@@ -51,8 +53,9 @@ def test_duplicate_completed_goal(client):
     Test that a duplicate goal can't be completed again.
     """
     rpm = RestaurantProfileManager("junaid")
+    vm = Validator(rpm)
     code = "junaid+5ef5009bccd1e88ead4cd076+0".split("+")
-    msg = rpm.complete_goal(code[0], code[1], code[2])
+    msg = vm.complete_goal(code[0], code[1], code[2])
     assert msg == "This goal has already been completed!"
 
 def test_invalid_goal(client):
@@ -60,8 +63,9 @@ def test_invalid_goal(client):
     Test that a user can't complete an invalid goal.
     """
     rpm = RestaurantProfileManager("junaid")
+    vm = Validator(rpm)
     code = "junaid+5ef5009bccd1e88ead4cd076+1".split("+")
-    msg = rpm.complete_goal(code[0], code[1], code[2])
+    msg = vm.complete_goal(code[0], code[1], code[2])
     assert msg == "Invalid QR code!"
 
 
