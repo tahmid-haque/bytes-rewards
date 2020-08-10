@@ -10,7 +10,8 @@ sys.path.insert(1, os.path.join(os.path.dirname(__file__),
                                 '../../src'))  # Import the src folder
 from bson.objectid import ObjectId
 from rewards_app import app
-from modules.restaurant_profile_manager import RestaurantProfileManager
+from modules.owner.public_profile import PublicProfileModifier
+from modules.owner.restaurant_profile_manager import RestaurantProfileManager
 from modules.customer.customer_profile_manager import CustomerProfileManager
 from modules.customer.favourite import *
 from modules.customer.customer_board import *
@@ -71,7 +72,8 @@ def test_get_favourite_doc():
     with app.app_context():
         cpm = CustomerProfileManager("testuser")
         rpm = RestaurantProfileManager("")
-        all_profiles = rpm.get_public_profiles()
+        ppm = PublicProfileModifier(rpm)
+        all_profiles = ppm.get_public_profiles()
         favourite = get_favourite(cpm)
         profiles = get_favourite_doc(all_profiles, favourite)
         expected_fields = ["name", "category", "image", "is_public"]
@@ -99,14 +101,14 @@ def test_favourite_not_logged_in(client):
     Test that a user cannot favourite a restaurant when they're not logged in.
     """
     restaurant = {"restaurant-id": "5f15c084143cb39bfc5619b8"} # Utilize an actual existing ID.
-    res = client.post("/profiles/restaurant-id/favourite", data=restaurant, follow_redirects=True)
+    res = client.post("/personal/favourites", data=restaurant, follow_redirects=True)
     assert b"Please log in to access this page" in res.data
 
 def test_view_favourites_not_logged_in(client):
     """
     Test that user cannot view favourite restaurants when they're not logged in.
     """
-    res = client.post("/profiles/view-favourites", follow_redirects=True)
+    res = client.post("/personal/favourites", follow_redirects=True)
     assert b"Please log in to access this page" in res.data
 
 def test_view_and_favourite_not_logged_in(client):
@@ -114,6 +116,6 @@ def test_view_and_favourite_not_logged_in(client):
     Test that a user cannot favourite a restaurant when they're not logged in.
     """
     restaurant = {"restaurant-id": "5f15c084143cb39bfc5619b8"} # Utilize an actual existing ID.
-    res = client.post("/profiles/view-favourites/restaurant-id/favourite", 
+    res = client.post("/personal/favourites", 
                       data=restaurant, follow_redirects=True)
     assert b"Please log in to access this page" in res.data

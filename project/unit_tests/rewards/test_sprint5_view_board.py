@@ -15,6 +15,12 @@ from modules.customer.customer_profile_manager import CustomerProfileManager
 from modules.customer.favourite import *
 from modules.customer.customer_board import *
 
+def create_app():
+    app = Flask(__name__)
+
+    with app.app_context():
+        init_db()
+    return app
 
 @pytest.fixture
 def client():
@@ -81,7 +87,6 @@ def test_set_board_progress_some_progress():
     """
     Test that set_board_progress() updates all goals on a bingo board to the correct progress info.
     """
-    app.config['TESTING'] = True
     with app.app_context():
         rpm = RestaurantProfileManager("")
         board = GameBoardManager(rpm).get_restaurant_board_by_id("5f15c084143cb39bfc5619b8")
@@ -100,17 +105,19 @@ def test_view_board_goal_qr_code_data(client):
     """
     Test that the data for goal QR codes are being set correctly.
     """
-    client.post("/login",
-                data={
-                    "username": "unittestuser",
-                    "password": "Password!"
-                })
-    res = client.get("/restaurants/5f0df6a10bb07c8199d4405a/board",
-                     follow_redirects=True)
+    with app.app_context():
+        client.post("/login",
+                    data={
+                        "username": "unittestuser",
+                        "password": "Password!"
+                    })
+        res = client.get("/restaurants/5f0df6a10bb07c8199d4405a/board",
+                         follow_redirects=True)
 
-    rpm = RestaurantProfileManager("")
-    board = GameBoardManager(rpm).get_restaurant_board_by_id("5f0df6a10bb07c8199d4405a")
+        rpm = RestaurantProfileManager("")
+        bpm = GameBoardManager(rpm)
+        board = bpm.get_restaurant_board_by_id("5f0df6a10bb07c8199d4405a")
 
-    for i in range(len(board["board"])):
-        assert str.encode("unittestuser+{}+{}".format(board["board"][i]["_id"],
-                                                      i)) in res.data
+        for i in range(len(board["board"])):
+            assert str.encode("unittestuser+{}+{}".format(board["board"][i]["_id"],
+                                                          i)) in res.data
