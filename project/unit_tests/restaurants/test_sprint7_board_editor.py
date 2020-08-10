@@ -11,8 +11,9 @@ sys.path.insert(1, os.path.join(os.path.dirname(__file__),
                                 '../../src'))  # Import the src folder
 
 from restaurants_app import app
-from modules.restaurant_profile_manager import RestaurantProfileManager
+from modules.owner.restaurant_profile_manager import RestaurantProfileManager
 from modules.database import Database
+from modules.owner.game_board import GameBoardManager
 
 
 @pytest.fixture
@@ -103,7 +104,8 @@ def test_set_bingo_board_new_user(db):
     """
     with app.app_context():
         rpm = RestaurantProfileManager("newuser")
-        rpm.set_bingo_board(get_board())
+        gm = GameBoardManager(rpm)
+        gm.set_bingo_board(get_board())
         user = db.query("restaurant_users", {"username": "newuser"})[0]
 
         db_board = get_database_board()
@@ -130,7 +132,8 @@ def test_set_bingo_board_old_user(db):
                              {"username": "boardeditoruser"})[0]
 
         rpm = RestaurantProfileManager("boardeditoruser")
-        rpm.set_bingo_board(get_board())
+        gm = GameBoardManager(rpm)
+        gm.set_bingo_board(get_board())
         user = db.query("restaurant_users", {"username": "boardeditoruser"})[0]
 
         assert user["future_board"] == get_database_board()
@@ -147,7 +150,8 @@ def test_get_future_board_new_user():
     """
     with app.app_context():
         rpm = RestaurantProfileManager("newuser")
-        assert rpm.get_future_board() == {
+        gm = GameBoardManager(rpm)
+        assert gm.get_future_board() == {
             "board": [],
             "name": "",
             "board_reward": [],
@@ -162,7 +166,8 @@ def test_get_future_board_old_user():
     """
     with app.app_context():
         rpm = RestaurantProfileManager("boardeditoruser")
-        assert rpm.get_future_board() == {
+        gm = GameBoardManager(rpm)
+        assert gm.get_future_board() == {
             "name":
                 "My 3x3",
             "size":
@@ -199,7 +204,8 @@ def test_get_current_expiry_new_user():
     """
     with app.app_context():
         rpm = RestaurantProfileManager("newuser")
-        assert rpm.get_current_board_expiry() is None
+        gm = GameBoardManager(rpm)
+        assert gm.get_current_board_expiry() is None
 
 
 def test_get_current_expiry_old_user():
@@ -209,7 +215,8 @@ def test_get_current_expiry_old_user():
     """
     with app.app_context():
         rpm = RestaurantProfileManager("boardeditoruser")
-        assert rpm.get_current_board_expiry() == datetime(
+        gm = GameBoardManager(rpm)
+        assert gm.get_current_board_expiry() == datetime(
             2020, 11, 23, 23, 59, 59)
 
 
