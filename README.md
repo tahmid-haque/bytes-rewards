@@ -7,6 +7,10 @@ Welcome to the project repository of team_02, also known as Bytes.
 
 Our team website may be found at [https://bytes-cs.web.app/](https://bytes-cs.web.app/), where you can find a deployed website containing all major team information and deliverable content.
 
+## Project Links
+ -   [Restaurant Interface](https://bytes-restaurants.herokuapp.com/)
+ -   [Customer Interface](https://bytes-rewards.herokuapp.com/)
+
 ## Sprint Progress
 
 Snapshots of the task board and burndown charts: [Sprint Progress](https://github.com/CSCC01/team_02-project/tree/master/sprintProgress)
@@ -17,6 +21,8 @@ Snapshots of the task board and burndown charts: [Sprint Progress](https://githu
 -   [Deliverable 2](#deliverable-2)
 -   [Deliverable 3 Part 1](#deliverable-3-part-1)
 -   [Deliverable 3 Part 2](#deliverable-3-part-2)
+-   [Deliverable 4](#deliverable-4)
+-   [Deliverable 5](#deliverable-5)
 
 ## Deliverable 1
 
@@ -47,3 +53,16 @@ For the second part of Deliverable 3 we added the following:
 -   The links to our project have been updated!
     -   [Restaurant Interface](https://bytes-restaurants.herokuapp.com/)
     -   [Customer Interface](https://bytes-rewards.herokuapp.com/)
+    
+## Deliverable 5
+
+-   The final report includes the Third Release Reflection, which is found on
+ our website: [Third Release Reflection](https://bytes-cs.web.app
+ /deliverables/d5/thirdReleaseReflection.html), or in this repository [Repo
+  Third
+  Release Reflection](teamWebsite/public/deliverables/d5/thirdReleaseReflection.html).
+-   The final Box and Line diagram with explanations is found on our website
+: [Box and Line Diagram & Explanations](https://bytes-cs.web.app/deliverables/d5/finalBoxAndLine.html), or in this repository at [Repo Final
+ Box and
+ Line](teamWebsite/public/deliverables/d5/finalBoxAndLine.html).
+   
