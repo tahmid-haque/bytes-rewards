@@ -43,7 +43,9 @@
                     <div class="m-0 px-3 h-100">
 						<p>
 							The final Box and Line Diagram is as follows or
-                            as a pdf <a href="/assets/d5/pdf/d5_box_and_line_new.pdf"> here</a>:
+                            with explanations as a pdf here<a
+                                href="/assets/d5/pdf/d5_boxAndLine
+                            .pdf"> here</a>:
 						</p>
 						<figure>
 							<img
@@ -339,86 +341,87 @@
 												<b>Restaurant Profile Management</b>
 												<ul>
 													<p>
-														The Restaurant Profile Management component allows for restaurant owner users to modify
-														their restaurant profiles; these modifications include changes to the goals and rewards they 
-														want to offer. This component is dependent on the User Profile Management.
-													</p>
+                                                        The Restaurant Profile Management component allows for restaurant owner users to modify their restaurant
+                                                        profiles; these modifications include changes to the goals and rewards they want to offer. This component
+                                                        inherits from the User Profile Management. This component is dependent on the Goal Modifier, Rewards Modifier,
+                                                        Restaurant Bingo Board Modifier and Goal and Reward Completion Verification components as they are
+                                                        features that the restaurant owner users have access to.
+
+                                                    </p>
 												</ul>
 											</li>
 											<li>
 												<b>Customer Profile Management</b>
 												<ul>
 													<p>
-														The Customer Profile Management component allows for customers to modify their friend lists as well as access goals and rewards. 
-														This component is dependent on the User Profile Management.
-														This component is dependent on Friend Reward Comparison, Goal Completition Modifier, and Reward
-														Completion Modifier.
-													</p>
+                                                        The Customer Profile Management component allows for customers to modify their friend
+                                                        lists as well as access goals and rewards. This component inherits from the User Profile
+                                                        Management. This component is dependent on Customer Favourites Modifier and Customer
+                                                        Bingo Board Viewer as they are features that the customer users have access to.
+                                                    </p>
 												</ul>
 											</li>
 										</ul>
 									</ul>
 								</li>
 								<li>
-									<b>Friend Reward Comparison</b>
+									<b>Goal and Reward Completion
+                                        Verification</b>
 									<ul>
 										<p>
-											The Friend Reward Comparison ranks customer users based on 
-											the number of rewards earned compared to their friends. 
+                                            The Goal and Reward Completion
+                                            Verification component allows
+                                            for restaurant owners to verify if a goal is completed by a customer,
+                                            or if a reward is valid and redeemed by a customer.
+										</p>
+									</ul>
+								</li>
+
+								<li>
+									<b>Goal Modifier</b>
+									<ul>
+										<p>
+                                            The Goal Modifier component allows for restaurant owner users to add, edit, or delete custom goals.
 										</p>
 									</ul>
 								</li>
 								<li>
-									<b>Verification</b>
+									<b>Reward Modifier</b>
 									<ul>
 										<p>
-											The Verification subcomponent contains all the interfaces pertaining to verifying 
-											that a customer has achieved goals and obtained rewards. The subcomponent’s components
-											are further explained as follows:
-										</p>
-										<ul>
-											<li>
-												<b>Goal Completion Verification</b>
-												<ul>
-													<p>
-														The Goal Completion Verification component allows for restaurant owners to verify
-														if a goal is completed by a customer. 
-													</p>
-												</ul>
-											</li>
-											<li>
-												<b>Reward Completion Verification</b>
-												<ul>
-													<p>
-														The Reward Completion Verification component allows for restaurant owners to verify if a reward is 
-														valid and redeemed by a customer.
-													</p>
-												</ul>
-											</li>
-										</ul>
-									</ul>
-								</li>
-								<li>
-									<b>Goal Completion Modifier</b>
-									<ul>
-										<p>
-											The Goal Completion Modifier component allows for the goals field of the Customer Profile Collection
-											to be updated when a goal is completed. This component is dependent on the Goal Completion Verification 
-											component so that restaurant owners can verify that the goal is completed.
+                                            The Reward Modifier component allows for restaurant owner users to add, edit, or delete custom rewards.
 										</p>
 									</ul>
 								</li>
-								<li>
-									<b>Reward Completion Modifier</b>
-									<ul>
-										<p>
-											The Reward Completion Modifier component allows for the rewards
-											field of the Customer Profile Database to be updated when a reward is redeemed.
-											This component is dependent on the Reward Completion Verification 
-											component so that restaurant owners can verify that the reward is redeemable.
-										</p>
-									</ul>
-								</li>
+                                <li>
+                                    <b>Restaurant Bingo Board Modifier</b>
+                                    <ul>
+                                        <p>
+                                            The Restaurant Bingo Board Modifier allows for restaurant owner users to edit their public bingo boards,
+                                            such as changing the contents, the size or the expiration date.
+                                        </p>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <b>Customer Favourites Modifier</b>
+                                    <ul>
+                                        <p>
+                                            The Customer Favourites Modifier component allows for a customer user to save any of the restaurant bingo
+                                            boards as a favourite so that
+                                            they can access easily.
+                                        </p>
+                                    </ul>
+                                </li>
+                                <li>
+                                    <b>Customer Bingo Board Viewer</b>
+                                    <ul>
+                                        <p>
+                                            The Customer Bingo Board Viewer component allows for a customer user to view a restaurant bingo board
+                                            as well as their progress for goals, goals they need to complete to receive rewards, rewards they have achieved,
+                                            QR codes for goals to verify, and QR codes for rewards to redeem.
+                                        </p>
+                                    </ul>
+                                </li>
 								<li>
                                     <b>Data Access</b>
                                     <ul>
@@ -512,6 +515,12 @@
                                 Customer Login Page to help distinguish the two interfaces. We changed the names and kept them separate because
                                 even though they are very similar they function differently and belong to different subsystems.
 							</p>
+                            <p>
+                                In addition, we added new components such as the Goal Modifier, Rewards Modifier, Restaurant Bingo Modifier
+                                for which Restaurant Profile Manager is now dependent on, and Customer Favourites Modifier and Customer Bingo Board Viewer
+                                for which Customer Profile Manager is dependent on. We also combined the Goal and Reward Completion Verification as they function the same.
+                            </p>
+
 						</div>
                     </div>
                 </div>
