@@ -10,7 +10,9 @@ sys.path.insert(1, os.path.join(os.path.dirname(__file__),
 from bson.objectid import ObjectId
 from rewards_app import app
 from modules.restaurant_profile_manager import RestaurantProfileManager
-from modules.customer_profile_manager import CustomerProfileManager
+from modules.customer.customer_profile_manager import CustomerProfileManager
+from modules.customer.favourite import *
+from modules.customer.customer_board import *
 
 
 @pytest.fixture
@@ -66,7 +68,7 @@ def test_set_board_progress_no_progress():
     board = rpm.get_restaurant_board_by_id("5f15c084143cb39bfc5619b8")
     cpm = CustomerProfileManager("newuser")
 
-    cpm.set_board_progress(board, "5f15c084143cb39bfc5619b8")
+    set_board_progress(cpm, board, "5f15c084143cb39bfc5619b8")
 
     for goal in board["board"]:
         assert not goal["is_complete"]
@@ -80,7 +82,7 @@ def test_set_board_progress_some_progress():
     board = rpm.get_restaurant_board_by_id("5f15c084143cb39bfc5619b8")
     cpm = CustomerProfileManager("unittestuser")
 
-    cpm.set_board_progress(board, "5f15c084143cb39bfc5619b8")
+    set_board_progress(cpm, board, "5f15c084143cb39bfc5619b8")
 
     for i in range(len(board["board"])):
         if i in [0, 8, 14, 23]:
