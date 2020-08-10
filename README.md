@@ -17,6 +17,8 @@ Snapshots of the task board and burndown charts: [Sprint Progress](https://githu
 -   [Deliverable 2](#deliverable-2)
 -   [Deliverable 3 Part 1](#deliverable-3-part-1)
 -   [Deliverable 3 Part 2](#deliverable-3-part-2)
+-   [Deliverable 4](#deliverable-4)
+-   [Deliverable 5](#deliverable-5)
 
 ## Deliverable 1
 
