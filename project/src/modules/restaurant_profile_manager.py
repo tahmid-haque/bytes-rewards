@@ -420,16 +420,14 @@ class RestaurantProfileManager(ProfileManager):
         """
         Checks if there is a bingo on the columns
         """
-        start = int(position)
+        start = int(position) % size
         counter = 0
-        while (start - size) > 0:
-            start = start - size
         for i in range(start, size * size, size):
             for goal in goals:
                 if i == int(goal["position"]):
                     counter = counter + 1
         if counter == size:
-            self.add_reward_code(customer, ((int(position) + 1) % size) + 5)
+            self.add_reward_code(customer, start + size + 1)
 
     def check_diagonal(self, position, size, customer, goals):
         """
