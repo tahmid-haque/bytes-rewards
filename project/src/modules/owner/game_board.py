@@ -35,7 +35,7 @@ class GameBoardManager():
             rewards = RewardsManager(self.rpm).get_rewards()
             board = self.rpm.db.query(
                 "restaurant_users",
-                {"_id": self.rpm.get_id()})[0]["bingo_board"]
+                {"username": self.rpm.get_id()})[0]["bingo_board"]
 
             board["board"] = [
                 copy.deepcopy(goal)
@@ -53,7 +53,13 @@ class GameBoardManager():
             return board
         except (QueryFailureException, IndexError, KeyError):
             print("Something's wrong with the query.")
-            return {}
+            return {
+                "name": "",
+                "board": [],
+                "board_reward": [],
+                "expiry_date": None,
+                "size": 4
+            }
 
     def get_restaurant_board_by_id(self, rest_id):
         """

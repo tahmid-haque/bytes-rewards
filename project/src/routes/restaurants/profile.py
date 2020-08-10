@@ -61,3 +61,12 @@ def save_profile():
             profile["location"][key[9:-1]] = request.form[key]
     PublicProfileModifier(current_user).update_profile(profile)
     return redirect("/")
+
+@bp.route('/qr-verification')
+@login_required
+def view_qr_verification_goals():
+    """
+    Display the qr verification page.
+    Prerequisite: User is logged in.
+    """
+    return render_template('qr-verification.j2')

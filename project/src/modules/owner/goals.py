@@ -5,7 +5,6 @@ restaurant users.
 """
 from bson.objectid import ObjectId
 from modules.database import QueryFailureException, UpdateFailureException
-from modules.owner.game_board import GameBoardManager
 
 
 class GoalsManager:
@@ -86,10 +85,9 @@ class GoalsManager:
         and throws an exception.
         """
         try:
-            gbm = GameBoardManager(self.rpm)
-
-            goals = gbm.get_bingo_board()["board"]
-            future_goals = gbm.get_future_board()["board"]
+            user = self.rpm.db("restaurant_users", {"username": self.rpm.get_id()})[0]
+            goals = user["bingo_board"]["board"] if 'bingo_board' in user else []
+            future_goals = user["future_board"]["board"] if 'future_board' in user else []
             if ObjectId(goal_id) in goals:
                 return "current"
             if ObjectId(goal_id) in future_goals:
