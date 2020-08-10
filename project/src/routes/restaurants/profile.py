@@ -4,6 +4,8 @@ This file contains routes related to a restaurant user's profile.
 
 from flask import Blueprint, render_template, request, redirect, flash
 from flask_login import current_user, login_required
+from modules.owner.public_profile import PublicProfileModifier
+from modules.owner.game_board import GameBoardManager
 
 bp = Blueprint("profile", __name__)
 
@@ -14,7 +16,7 @@ def view_profile():
     """
     Displays the current user's restaurant profile page.
     """
-    rest_info = current_user.get_profile()
+    rest_info = PublicProfileModifier(current_user).get_profile()
     if rest_info == {}:
         flash("Please create a restaurant profile to continue.")
         return redirect("/profile/edit")
@@ -37,8 +39,9 @@ def edit_profile():
     Display the edit restaurant profile page.
     Prerequisite: User is logged in.
     """
-    profile = current_user.get_profile()
-    ready_for_publish = current_user.get_bingo_board()["board"] != []
+    profile = PublicProfileModifier(current_user).get_profile()
+    ready_for_publish = GameBoardManager(
+        current_user).get_bingo_board()["board"] != []
     return render_template('edit_profile.j2',
                            profile=profile,
                            allow_public=ready_for_publish)
@@ -56,10 +59,10 @@ def save_profile():
     for key in request.form:  # Add location items to profile
         if '[' in key:
             profile["location"][key[9:-1]] = request.form[key]
-    current_user.update_profile(profile)
+    PublicProfileModifier(current_user).update_profile(profile)
     return redirect("/")
 
-@bp.route('/qr-verification-goals')
+@bp.route('/qr-verification')
 @login_required
 def view_qr_verification_goals():
     """
@@ -67,12 +70,3 @@ def view_qr_verification_goals():
     Prerequisite: User is logged in.
     """
     return render_template('qr-verification.j2')
-
-@bp.route('/qr-verification-rewards')
-@login_required
-def view_qr_verification_rewards():
-    """
-    Display the qr verification page.
-    Prerequisite: User is logged in.
-    """
-    return render_template('qr-verification-rewards.j2')

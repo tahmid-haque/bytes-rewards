@@ -4,6 +4,8 @@ This file contains routes related to customizing restaurant user's goals and rew
 
 from flask import Blueprint, render_template, request, redirect, flash
 from flask_login import current_user, login_required
+from modules.owner.goals import GoalsManager
+from modules.owner.rewards import RewardsManager
 
 bp = Blueprint("customize", __name__)
 
@@ -16,8 +18,8 @@ def view_customize():
     customized goals and rewards.
     Prerequisite: User is logged in.
     """
-    goals = current_user.get_custom_goals()
-    rewards = current_user.get_custom_rewards()
+    goals = GoalsManager(current_user).get_custom_goals()
+    rewards = RewardsManager(current_user).get_custom_rewards()
     return render_template('customization.j2', goals=goals, rewards=rewards)
 
 
@@ -30,7 +32,7 @@ def add_goal():
     Prerequisite: User is logged in.
     """
     goal = request.form["goal"]
-    added = current_user.add_custom_goal(goal)
+    added = GoalsManager(current_user).add_custom_goal(goal)
     if not added:
         flash("This is a duplicate goal. Goal not added.")
     return redirect("/customize")
@@ -45,7 +47,7 @@ def delete_goal():
     Prerequisite: User is logged in.
     """
     goal_id = request.form["deleted-goal"]
-    removed = current_user.remove_custom_goal(goal_id)
+    removed = GoalsManager(current_user).remove_custom_goal(goal_id)
     if removed == "current":
         flash("This goal in on your current game board; cannot be deleted")
     elif removed == "future":
@@ -62,7 +64,7 @@ def add_reward():
     Prerequisite: User is logged in.
     """
     reward = request.form["reward"]
-    added = current_user.add_custom_reward(reward)
+    added = RewardsManager(current_user).add_custom_reward(reward)
     if not added:
         flash("This is a duplicate reward. Reward not added.")
     return redirect("/customize")
@@ -77,7 +79,7 @@ def delete_reward():
     Prerequisite: User is logged in.
     """
     reward_id = request.form["deleted-reward"]
-    removed = current_user.remove_custom_reward(reward_id)
+    removed = RewardsManager(current_user).remove_custom_reward(reward_id)
     if removed == "current":
         flash("This reward in on your current game board; cannot be deleted")
     elif removed == "future":

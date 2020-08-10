@@ -10,7 +10,8 @@ sys.path.insert(1, os.path.join(os.path.dirname(__file__),
                                 '../../src'))  # Import the src folder
 
 from restaurants_app import app
-from modules.restaurant_profile_manager import RestaurantProfileManager
+from modules.owner.restaurant_profile_manager import RestaurantProfileManager
+from modules.owner.goals import GoalsManager
 
 def create_app():
     app = Flask(__name__)
@@ -37,7 +38,8 @@ def test_add_custom_goal():
     """
     with app.app_context():
         rpm = RestaurantProfileManager("vchang")
-        existing_goal_dict = rpm.get_goals()
+        gm = GoalsManager(rpm)
+        existing_goal_dict = gm.get_goals()
         existing_goal_list = [x['goal'] for x in existing_goal_dict]
         count = 2
         inList = True
@@ -46,8 +48,8 @@ def test_add_custom_goal():
             count += 1
             if expected_goal not in existing_goal_list:
                 inList = False
-        rpm.add_custom_goal(expected_goal)
-        goal_list = rpm.get_goals()
+        gm.add_custom_goal(expected_goal)
+        goal_list = gm.get_goals()
         
         goal = [x for x in goal_list if x['goal'] == expected_goal]
         
@@ -62,11 +64,12 @@ def test_add__duplicate_custom_goal():
     """
     with app.app_context():
         rpm = RestaurantProfileManager("vchang")
-        existing_goal_dict = rpm.get_goals()
+        gm = GoalsManager(rpm)
+        existing_goal_dict = gm.get_goals()
         existing_goal_list = [x['goal'] for x in existing_goal_dict]
         dupe_goal = existing_goal_list[0]
-        rpm.add_custom_goal(dupe_goal)
-        goal_list = rpm.get_goals()
+        gm.add_custom_goal(dupe_goal)
+        goal_list = gm.get_goals()
         
         goal = [x for x in goal_list if x['goal'] == dupe_goal]
         
@@ -79,7 +82,8 @@ def test_get_custom_goals():
     """
     with app.app_context():
         rpm = RestaurantProfileManager("vchang")
-        goals = rpm.get_custom_goals()
+        gm = GoalsManager(rpm)
+        goals = gm.get_custom_goals()
         hasFields = True
         for goal in goals:
             if goal['_id'] == None and goal['goal'] == None:

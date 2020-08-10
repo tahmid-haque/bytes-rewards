@@ -2,8 +2,11 @@
 This file contains routes related to verifying customer goals and rewards
 """
 
-from flask import Blueprint, request, redirect, flash, jsonify
+from flask import Blueprint, request, jsonify
 from flask_login import current_user, login_required
+from modules.owner.goals import GoalsManager
+from modules.owner.rewards import RewardsManager
+from modules.owner.verification import Validator
 
 bp = Blueprint("verification", __name__)
 
@@ -17,13 +20,13 @@ def verify():
     data = request.form["data"].split("+")
 
     if len(data) == 3:
-        goals = current_user.get_goals()
+        goals = GoalsManager(current_user).get_goals()
         for goal in goals:
             if str(goal['_id']) == data[1]:
                 return jsonify({'goal': goal['goal']})
 
     elif len(data) == 4:
-        rewards = current_user.get_rewards()
+        rewards = RewardsManager(current_user).get_rewards()
         for reward in rewards:
             if str(reward['_id']) == data[1]:
                 return jsonify({'reward': reward['reward']})
@@ -44,7 +47,7 @@ def finish_goal():
     user = data[0]
     goal_id = data[1]
     position = data[2]
-    msg = current_user.complete_goal(user, goal_id, position)
+    msg = Validator(current_user).complete_goal(user, goal_id, position)
     return jsonify({'message': msg})
 
 
@@ -60,8 +63,5 @@ def finish_reward():
     if len(data) != 4:
         return jsonify({'message': "Invalid QR code!"})
     user = data[0]
-    reward_id = data[1]
-    position = data[2]
-    msg = current_user.complete_reward(user, code)
+    msg = Validator(current_user).complete_reward(user, code)
     return jsonify({'message': msg})
-

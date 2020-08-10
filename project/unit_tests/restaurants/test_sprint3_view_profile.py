@@ -9,7 +9,8 @@ sys.path.insert(1, os.path.join(os.path.dirname(__file__),
                                 '../../src'))  # Import the src folder
 
 from restaurants_app import app
-from modules.restaurant_profile_manager import RestaurantProfileManager
+from modules.owner.restaurant_profile_manager import RestaurantProfileManager
+from modules.owner.public_profile import PublicProfileModifier
 
 
 @pytest.fixture
@@ -28,7 +29,7 @@ def test_view_profile_route_logged_in(client):
     """
     client.post("/login", data={"username": "janedoe", "password": "Aa123456"})
     res = client.get("/profile", follow_redirects=True)
-    assert b"Edit Profile" in res.data
+    assert b"Profile" in res.data
 
 
 def test_get_profile():
@@ -36,7 +37,8 @@ def test_get_profile():
     Test that a user is able to retrieve their profile when they are logged in.
     """
     rpm = RestaurantProfileManager("janedoe")
-    profile = rpm.get_profile()
+    pm = PublicProfileModifier(rpm)
+    profile = pm.get_profile()
     expected_profile = {
         "name":
             "Cinco de Mayo",

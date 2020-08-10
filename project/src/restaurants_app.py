@@ -5,7 +5,7 @@ owner app together and provide a way to start a server.
 
 import os
 from flask import Flask, redirect
-from modules.restaurant_profile_manager import RestaurantProfileManager
+from modules.owner.restaurant_profile_manager import RestaurantProfileManager
 from routes.authentication import get_auth_routes, add_auth
 from routes.restaurants.profile import bp as profile_routes
 from routes.restaurants.board import bp as board_routes

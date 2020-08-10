@@ -9,8 +9,8 @@ import pytest
 sys.path.insert(1, os.path.join(os.path.dirname(__file__),
                                 '../../src'))  # Import the src folder
 from restaurants_app import app
-from modules.restaurant_profile_manager import RestaurantProfileManager
-
+from modules.owner.restaurant_profile_manager import RestaurantProfileManager
+from modules.owner.goals import GoalsManager
 
 @pytest.fixture
 def client():
@@ -72,7 +72,8 @@ def test_get_custom_goals():
     Test that the get_custom_goals() function in restaurant_profile_manager.py retrieves the user's custom goals
     """
     rpm = RestaurantProfileManager("unittestuser")
-    goals = rpm.get_custom_goals()
+    gm = GoalsManager(rpm)
+    goals = gm.get_custom_goals()
     assert len(goals) == 2
 
 def test_get_goals():
@@ -81,7 +82,8 @@ def test_get_goals():
     20 shared goals, then anything extra will custom goals
     """
     rpm = RestaurantProfileManager("vchang")
-    goals = rpm.get_goals()
+    gm = GoalsManager(rpm)
+    goals = gm.get_goals()
     assert len(goals) >= 20
 
 
