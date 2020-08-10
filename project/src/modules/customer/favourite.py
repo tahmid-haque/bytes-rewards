@@ -51,7 +51,7 @@ def update_favourite(cpm, obj_id):
         print("Could not find the customer")
 
 
-def get_favourite_doc(cpm, profiles, favourite):
+def get_favourite_doc(profiles, favourite):
     """
 	Gets a dictionary of the user's favourite restaurant profiles
 	"""

@@ -7,7 +7,7 @@ from modules.database import QueryFailureException, UpdateFailureException
 from modules.restaurant_profile_manager import RestaurantProfileManager
 
 
-def check_bingo(cpm, board, completed_indices, size):
+def check_bingo(board, completed_indices, size):
     """
 	Helper function to update a board with the customer's bingos.
 	"""
@@ -73,7 +73,7 @@ def set_board_progress(cpm, board, rest_id):
                         index = int(goal["position"])
                         if board["board"][index]["_id"] == goal["_id"]:
                             board["board"][index]["is_complete"] = True
-                            check_bingo(cpm, board, completed_index,
+                            check_bingo(board, completed_index,
                                         board["size"])
 
     except QueryFailureException:

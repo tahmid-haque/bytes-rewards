@@ -73,7 +73,7 @@ def test_get_favourite_doc():
         rpm = RestaurantProfileManager("")
         all_profiles = rpm.get_public_profiles()
         favourite = get_favourite(cpm)
-        profiles = get_favourite_doc(cpm, all_profiles, favourite)
+        profiles = get_favourite_doc(all_profiles, favourite)
         expected_fields = ["name", "category", "image", "is_public"]
 
         has_id = True

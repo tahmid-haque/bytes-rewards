@@ -94,7 +94,7 @@ def view_favourites():
     favourite = get_favourite(current_user)
     rpm = RestaurantProfileManager("")
     profiles = rpm.get_public_profiles()
-    list_fav = get_favourite_doc(current_user, profiles, favourite)
+    list_fav = get_favourite_doc(profiles, favourite)
     return render_template('view_favourites.j2',
                            profiles=list_fav,
                            favourite=favourite)
