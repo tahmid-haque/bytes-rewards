@@ -4,78 +4,15 @@ This file contains routes related to customer profiles.
 
 from flask import Blueprint, render_template, redirect
 from flask_login import current_user, login_required
-from modules.restaurant_profile_manager import RestaurantProfileManager
-from modules.customer.favourite import *
-from modules.customer.customer_board import *
+from modules.owner.restaurant_profile_manager import RestaurantProfileManager
+from modules.owner.public_profile import PublicProfileModifier
+from modules.customer.favourite import update_favourite, get_favourite, get_favourite_doc
+from modules.customer.customer_board import get_reward_progress
 
 bp = Blueprint("profile", __name__)
 
 
-@bp.route('/', methods=['GET', 'POST'])
-@login_required
-def view_profiles():
-    """
-    Allows users to view restaurant profiles that are set to public.
-    """
-    restaurant_profiles = RestaurantProfileManager("").get_public_profiles()
-    favourite = get_favourite(current_user)
-    return render_template('view_profiles.j2',
-                           profiles=restaurant_profiles,
-                           favourite=favourite)
-
-
-@bp.route('/<string:obj_id>/board', methods=['GET', 'POST'])
-@login_required
-def view_board(obj_id):
-    """
-    Allows users to view the chosen restaurant's game board.
-    """
-    username = current_user.get_id()
-    rpm = RestaurantProfileManager("")
-    rpm.update_board(obj_id)
-    board = rpm.get_restaurant_board_by_id(obj_id)
-    set_board_progress(current_user, board, obj_id)
-    return render_template('view_game_board.j2',
-                           goals=board["board"],
-                           name=board["name"],
-                           rewards=board["board_reward"],
-                           cust_id=username,
-                           size=board["size"],
-                           date=board["expiry_date"])
-
-
-@bp.route('/<string:obj_id>/reset-board', methods=['GET', 'POST'])
-@login_required
-def reset_board(obj_id):
-    """
-    When posting to this route, reset the bingo board goals.
-    Redirect to the bingo board on completion.
-    """
-    reset_complete_board(current_user, obj_id)
-    return redirect("board")
-
-
-@bp.route('/<string:prof_id>/profile', methods=['GET', 'POST'])
-@login_required
-def view_restaurant_profile(prof_id):
-    """
-    Allows users to view the chosen restaurant's profile.
-    """
-    rpm = RestaurantProfileManager("")
-    rest_info = rpm.get_restaurant_profile_by_id(prof_id)
-    return render_template('view_profile.j2',
-                           restaurant_name=rest_info["name"],
-                           address=rest_info["location"]["address"],
-                           city=rest_info["location"]["city"],
-                           province=rest_info["location"]["province"],
-                           postal_code=rest_info["location"]["postal_code"],
-                           phone_number=rest_info["phone_number"],
-                           category=rest_info["category"],
-                           rest_img=rest_info["image"],
-                           description=rest_info["description"])
-
-
-@bp.route('/<string:obj_id>/favourite', methods=['GET', 'POST'])
+@bp.route('/favourites/<string:obj_id>/update', methods=['GET', 'POST'])
 @login_required
 def favourite_restaurant(obj_id):
     """
@@ -85,7 +22,7 @@ def favourite_restaurant(obj_id):
     return redirect("/")
 
 
-@bp.route('/view-favourites', methods=['GET', 'POST'])
+@bp.route('/favourites', methods=['GET', 'POST'])
 @login_required
 def view_favourites():
     """
@@ -93,18 +30,30 @@ def view_favourites():
     """
     favourite = get_favourite(current_user)
     rpm = RestaurantProfileManager("")
-    profiles = rpm.get_public_profiles()
+    profiles = PublicProfileModifier(rpm).get_public_profiles()
     list_fav = get_favourite_doc(profiles, favourite)
     return render_template('view_favourites.j2',
                            profiles=list_fav,
                            favourite=favourite)
 
 
-@bp.route('/view-favourites/<string:obj_id>/favourite', methods=['GET', 'POST'])
+@bp.route('/favourites/<string:obj_id>/favourite', methods=['GET', 'POST'])
 @login_required
 def view_favourite_restaurant(obj_id):
     """
     Allows users to remove restaurants from "favourite" while on "favourites" page
     """
     update_favourite(current_user, obj_id)
-    return redirect('/profiles/view-favourites')
+    return redirect('/personal/favourites')
+
+
+@bp.route('/rewards')
+@login_required
+def show_rewards():
+    """
+    Shows the user their reward progress for all restaurants.
+    """
+    active_rewards, redeemed_rewards = get_reward_progress(current_user)
+    return render_template('rewards.j2',
+                           active_rewards=active_rewards,
+                           redeemed_rewards=redeemed_rewards)

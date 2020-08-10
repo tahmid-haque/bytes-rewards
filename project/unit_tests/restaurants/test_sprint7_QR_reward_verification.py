@@ -12,6 +12,7 @@ sys.path.insert(1, os.path.join(os.path.dirname(__file__),
 
 from restaurants_app import app
 from modules.restaurant_profile_manager import RestaurantProfileManager
+from modules.owner.rewards import RewardsManager
 
 @pytest.fixture
 def client():
@@ -28,8 +29,9 @@ def test_valid_completed_reward(client):
     """
     with app.app_context():
         rpm = RestaurantProfileManager("junaid")
+        rm = RewardsManager(rpm)
         code = "junaid+5f03a9fd7aae4a086d810102+6".split("+")
-        msg = rpm.complete_reward(code[0], "junaid+5f03a9fd7aae4a086d810102+6")
+        msg = rm.complete_reward(code[0], "junaid+5f03a9fd7aae4a086d810102+6")
         assert msg == "Code has already been redeemed!"
 
 def test_duplicate_completed_reward(client):
@@ -38,8 +40,9 @@ def test_duplicate_completed_reward(client):
     """
     with app.app_context():
         rpm = RestaurantProfileManager("junaid")
+        rm = RewardsManager(rpm)
         code = "junaid+5f03a9fd7aae4a086d810102+6".split("+")
-        msg = rpm.complete_reward(code[0], "junaid+5f03a9fd7aae4a086d810102+6")
+        msg = rm.complete_reward(code[0], "junaid+5f03a9fd7aae4a086d810102+6")
         assert msg == "Code has already been redeemed!"
 
 def test_invalid_reward(client):
@@ -48,6 +51,7 @@ def test_invalid_reward(client):
     """
     with app.app_context():
         rpm = RestaurantProfileManager("junaid")
+        rm = RewardsManager(rpm)
         code = "junaid+5f03a9fd7aae4a086d810102+7".split("+")
-        msg = rpm.complete_reward(code[0], "junaid+5f03a9fd7aae4a086d810102+7")
+        msg = rm.complete_reward(code[0], "junaid+5f03a9fd7aae4a086d810102+7")
         assert msg == "Invalid QR code!"

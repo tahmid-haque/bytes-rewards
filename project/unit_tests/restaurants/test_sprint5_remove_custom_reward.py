@@ -9,7 +9,9 @@ from bson.objectid import ObjectId
 sys.path.insert(1, os.path.join(os.path.dirname(__file__),
                                 '../../src'))  # Import the src folder
 from restaurants_app import app
-from modules.restaurant_profile_manager import RestaurantProfileManager
+from modules.owner.restaurant_profile_manager import RestaurantProfileManager
+from modules.owner.rewards import RewardsManager
+from modules.owner.game_board import GameBoardManager
 
 
 def create_app():
@@ -38,15 +40,17 @@ def test_remove_custom_reward():
     """
     with app.app_context():
         rpm = RestaurantProfileManager("vchang")
-        old_rewards = rpm.get_custom_rewards()
-        board_rewards = rpm.get_bingo_board()["board_reward"]
+        rm = RewardsManager(rpm)
+        gm = GameBoardManager(rpm)
+        old_rewards = rm.get_custom_rewards()
+        board_rewards = gm.get_bingo_board()["board_reward"]
         found = False
         for i in range(0, len(old_rewards)):
             if ObjectId(old_rewards[i]['_id']) not in board_rewards:
                 found = True
-                rpm.remove_custom_reward(old_rewards[i]['_id'])
+                rm.remove_custom_reward(old_rewards[i]['_id'])
                 break
-        new_rewards = rpm.get_custom_rewards()
+        new_rewards = rm.get_custom_rewards()
         assert (len(new_rewards) == len(old_rewards) and not found) or \
                (len(new_rewards) == (len(old_rewards) - 1) and found)
 
@@ -59,13 +63,15 @@ def test_remove_custom_reward_on_board():
     """
     with app.app_context():
         rpm = RestaurantProfileManager("vchang")
-        old_rewards = rpm.get_custom_rewards()
-        board_rewards = rpm.get_bingo_board()["board_reward"]
+        rm = RewardsManager(rpm)
+        gm = GameBoardManager(rpm)
+        old_rewards = rm.get_custom_rewards()
+        board_rewards = gm.get_bingo_board()["board_reward"]
         for i in range(0, len(old_rewards)):
             if ObjectId(old_rewards[i]['_id']) in board_rewards or ObjectId(old_rewards[i]['_id']) in future_rewards:
-                rpm.remove_custom_reward(old_rewards[i]['_id'])
+                rm.remove_custom_reward(old_rewards[i]['_id'])
                 break
-        new_rewards = rpm.get_custom_rewards()
+        new_rewards = rm.get_custom_rewards()
         assert len(new_rewards) == len(old_rewards)
 
 def test_delete_custom_reward_not_logged_in(client):

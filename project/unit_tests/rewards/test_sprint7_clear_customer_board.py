@@ -10,7 +10,9 @@ sys.path.insert(1, os.path.join(os.path.dirname(__file__),
                                 '../../src'))  # Import the src folder
 
 from rewards_app import app
-from modules.restaurant_profile_manager import RestaurantProfileManager
+from modules.owner.restaurant_profile_manager import RestaurantProfileManager
+from modules.owner.game_board import GameBoardManager
+from modules.owner.verification import Validator
 from modules.customer.customer_profile_manager import CustomerProfileManager
 from modules.database import Database
 from modules.customer.favourite import *
@@ -40,9 +42,11 @@ def test_reset_board(db):
     rpm = RestaurantProfileManager("boardtest3x3")
     cpm = CustomerProfileManager("tester2")
     
-    board = rpm.get_bingo_board()
+    bpm = GameBoardManager(rpm)
+    board = bpm.get_bingo_board()
+    vpm = Validator(rpm)
     for i in range(board['size']):
-        rpm.complete_goal("tester", board['board'][i], str(i))
+        vpm.complete_goal("tester", board['board'][i], str(i))
     
     rest_id = rpm.get_restaurant_id()
     reset_complete_board(cpm, rest_id)

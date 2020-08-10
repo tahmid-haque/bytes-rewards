@@ -10,7 +10,9 @@ sys.path.insert(1, os.path.join(os.path.dirname(__file__),
                                 '../../src'))  # Import the src folder
 
 from restaurants_app import app
-from modules.restaurant_profile_manager import RestaurantProfileManager
+from modules.owner.restaurant_profile_manager import RestaurantProfileManager
+from modules.owner.game_board import GameBoardManager
+from modules.owner.rewards import RewardsManager
 
 
 @pytest.fixture
@@ -28,9 +30,11 @@ def test_get_rewards_new_user():
     Test that the get_bingo_board() function in restaurant_profile_manager.py 
     retrieves an empty board and reward list when a new user is detected.
     """
-    rpm = RestaurantProfileManager("newuser")
-    rewards = (rpm.get_bingo_board())["board_reward"]
-    assert rewards == []
+    with app.app_context():
+        rpm = RestaurantProfileManager("newuser")
+        gbm = GameBoardManager(rpm)
+        rewards = (gbm.get_bingo_board())["board_reward"]
+        assert rewards == []
 
 
 def test_get_shared_rewards():
@@ -38,48 +42,50 @@ def test_get_shared_rewards():
     Test that get_shared_rewards() function in restaurant_profile_manager.py
     retrieves the list of shared rewards from the database.
     """
-    rpm = RestaurantProfileManager("vchang")
-    shared = rpm.get_shared_rewards()
-    expected_shared = [{
-        '_id': ObjectId('5f03a9df7aae4a086d810100'),
-        'reward': '$5 off a purchase of $30+'
-    }, {
-        '_id': ObjectId('5f03a9fd7aae4a086d810102'),
-        'reward': 'Free drink'
-    }, {
-        '_id':
-            ObjectId('5f03aa287aae4a086d810105'),
-        'reward':
-            'Buy one entree, get another 50% off (of lesser or equal value)'
-    }, {
-        '_id': ObjectId('5f03aa1a7aae4a086d810104'),
-        'reward': 'Free dessert'
-    }, {
-        '_id': ObjectId('5f03a9c87aae4a086d8100ff'),
-        'reward': '$10 off a purchase of $50+'
-    }, {
-        '_id': ObjectId('5f03aa0b7aae4a086d810103'),
-        'reward': 'Free appetizer'
-    }, {
-        '_id': ObjectId('5f03a9967aae4a086d8100fd'),
-        'reward': '10% off a purchase'
-    }, {
-        '_id': ObjectId('5f03aa377aae4a086d810106'),
-        'reward': '$3 off any entree'
-    }, {
-        '_id': ObjectId('5f03aa437aae4a086d810107'),
-        'reward': 'One free drink refill'
-    }, {
-        '_id': ObjectId('5f03aa507aae4a086d810108'),
-        'reward': 'All desserts $6 each'
-    }, {
-        '_id': ObjectId('5f03a9b57aae4a086d8100fe'),
-        'reward': '15% off a purchase'
-    }, {
-        '_id': ObjectId('5f03a9ec7aae4a086d810101'),
-        'reward': '$5 gift voucher'
-    }]
-    assert shared == expected_shared
+    with app.app_context():
+        rpm = RestaurantProfileManager("vchang")
+        rm = RewardsManager(rpm)
+        shared = rm.get_shared_rewards()
+        expected_shared = [{
+            '_id': ObjectId('5f03a9df7aae4a086d810100'),
+            'reward': '$5 off a purchase of $30+'
+        }, {
+            '_id': ObjectId('5f03a9fd7aae4a086d810102'),
+            'reward': 'Free drink'
+        }, {
+            '_id':
+                ObjectId('5f03aa287aae4a086d810105'),
+            'reward':
+                'Buy one entree, get another 50% off (of lesser or equal value)'
+        }, {
+            '_id': ObjectId('5f03aa1a7aae4a086d810104'),
+            'reward': 'Free dessert'
+        }, {
+            '_id': ObjectId('5f03a9c87aae4a086d8100ff'),
+            'reward': '$10 off a purchase of $50+'
+        }, {
+            '_id': ObjectId('5f03aa0b7aae4a086d810103'),
+            'reward': 'Free appetizer'
+        }, {
+            '_id': ObjectId('5f03a9967aae4a086d8100fd'),
+            'reward': '10% off a purchase'
+        }, {
+            '_id': ObjectId('5f03aa377aae4a086d810106'),
+            'reward': '$3 off any entree'
+        }, {
+            '_id': ObjectId('5f03aa437aae4a086d810107'),
+            'reward': 'One free drink refill'
+        }, {
+            '_id': ObjectId('5f03aa507aae4a086d810108'),
+            'reward': 'All desserts $6 each'
+        }, {
+            '_id': ObjectId('5f03a9b57aae4a086d8100fe'),
+            'reward': '15% off a purchase'
+        }, {
+            '_id': ObjectId('5f03a9ec7aae4a086d810101'),
+            'reward': '$5 gift voucher'
+        }]
+        assert shared == expected_shared
 
 
 def test_get_rewards_old_user():
@@ -87,48 +93,50 @@ def test_get_rewards_old_user():
     Test that get_rewards() inrestaurant_profile_manager.py for an existin
     user retrieves a list of their available rewards.
     """
-    rpm = RestaurantProfileManager("vchang")
-    rewards = rpm.get_rewards()
-    expected_rewards = [{
-        '_id': ObjectId('5f03a9df7aae4a086d810100'),
-        'reward': '$5 off a purchase of $30+'
-    }, {
-        '_id': ObjectId('5f03a9fd7aae4a086d810102'),
-        'reward': 'Free drink'
-    }, {
-        '_id':
-            ObjectId('5f03aa287aae4a086d810105'),
-        'reward':
-            'Buy one entree, get another 50% off (of lesser or equal value)'
-    }, {
-        '_id': ObjectId('5f03aa1a7aae4a086d810104'),
-        'reward': 'Free dessert'
-    }, {
-        '_id': ObjectId('5f03a9c87aae4a086d8100ff'),
-        'reward': '$10 off a purchase of $50+'
-    }, {
-        '_id': ObjectId('5f03aa0b7aae4a086d810103'),
-        'reward': 'Free appetizer'
-    }, {
-        '_id': ObjectId('5f03a9967aae4a086d8100fd'),
-        'reward': '10% off a purchase'
-    }, {
-        '_id': ObjectId('5f03aa377aae4a086d810106'),
-        'reward': '$3 off any entree'
-    }, {
-        '_id': ObjectId('5f03aa437aae4a086d810107'),
-        'reward': 'One free drink refill'
-    }, {
-        '_id': ObjectId('5f03aa507aae4a086d810108'),
-        'reward': 'All desserts $6 each'
-    }, {
-        '_id': ObjectId('5f03a9b57aae4a086d8100fe'),
-        'reward': '15% off a purchase'
-    }, {
-        '_id': ObjectId('5f03a9ec7aae4a086d810101'),
-        'reward': '$5 gift voucher'
-    }]
-    assert rewards == expected_rewards
+    with app.app_context():
+        rpm = RestaurantProfileManager("vchang")
+        rm = RewardsManager(rpm)
+        rewards = rm.get_rewards()
+        expected_rewards = [{
+            '_id': ObjectId('5f03a9df7aae4a086d810100'),
+            'reward': '$5 off a purchase of $30+'
+        }, {
+            '_id': ObjectId('5f03a9fd7aae4a086d810102'),
+            'reward': 'Free drink'
+        }, {
+            '_id':
+                ObjectId('5f03aa287aae4a086d810105'),
+            'reward':
+                'Buy one entree, get another 50% off (of lesser or equal value)'
+        }, {
+            '_id': ObjectId('5f03aa1a7aae4a086d810104'),
+            'reward': 'Free dessert'
+        }, {
+            '_id': ObjectId('5f03a9c87aae4a086d8100ff'),
+            'reward': '$10 off a purchase of $50+'
+        }, {
+            '_id': ObjectId('5f03aa0b7aae4a086d810103'),
+            'reward': 'Free appetizer'
+        }, {
+            '_id': ObjectId('5f03a9967aae4a086d8100fd'),
+            'reward': '10% off a purchase'
+        }, {
+            '_id': ObjectId('5f03aa377aae4a086d810106'),
+            'reward': '$3 off any entree'
+        }, {
+            '_id': ObjectId('5f03aa437aae4a086d810107'),
+            'reward': 'One free drink refill'
+        }, {
+            '_id': ObjectId('5f03aa507aae4a086d810108'),
+            'reward': 'All desserts $6 each'
+        }, {
+            '_id': ObjectId('5f03a9b57aae4a086d8100fe'),
+            'reward': '15% off a purchase'
+        }, {
+            '_id': ObjectId('5f03a9ec7aae4a086d810101'),
+            'reward': '$5 gift voucher'
+        }]
+        assert rewards == expected_rewards
 
 
 def test_get_rewards_from_board():
@@ -136,24 +144,26 @@ def test_get_rewards_from_board():
     Test that the get_bingo_board() function in restaurant_profile_manager.py 
     retrieves a user's list of rewards on their bingo board.
     """
-    rpm = RestaurantProfileManager("unittestuser")
-    board = rpm.get_bingo_board()
-    rewards = board["board_reward"]
-    expected_rewards = [
-        ObjectId('5f03aa437aae4a086d810107'),
-        ObjectId('5f03a9b57aae4a086d8100fe'),
-        ObjectId('5f03a9c87aae4a086d8100ff'),
-        ObjectId('5f03a9ec7aae4a086d810101'),
-        ObjectId('5f03aa507aae4a086d810108'),
-        ObjectId('5f03a9c87aae4a086d8100ff'),
-        ObjectId('5f03aa287aae4a086d810105'),
-        ObjectId('5f03a9967aae4a086d8100fd'),
-        ObjectId('5f03a9fd7aae4a086d810102'),
-        ObjectId('5f03a9fd7aae4a086d810102'),
-        ObjectId('5f03a9fd7aae4a086d810102'),
-        ObjectId('5f03a9ec7aae4a086d810101')
-    ]
-    assert rewards == expected_rewards
+    with app.app_context():
+        rpm = RestaurantProfileManager("unittestuser")
+        gbm = GameBoardManager(rpm)
+        board = gbm.get_bingo_board()
+        rewards = board["board_reward"]
+        expected_rewards = [
+            ObjectId('5f03aa437aae4a086d810107'),
+            ObjectId('5f03a9b57aae4a086d8100fe'),
+            ObjectId('5f03a9c87aae4a086d8100ff'),
+            ObjectId('5f03a9ec7aae4a086d810101'),
+            ObjectId('5f03aa507aae4a086d810108'),
+            ObjectId('5f03a9c87aae4a086d8100ff'),
+            ObjectId('5f03aa287aae4a086d810105'),
+            ObjectId('5f03a9967aae4a086d8100fd'),
+            ObjectId('5f03a9fd7aae4a086d810102'),
+            ObjectId('5f03a9fd7aae4a086d810102'),
+            ObjectId('5f03a9fd7aae4a086d810102'),
+            ObjectId('5f03a9ec7aae4a086d810101')
+        ]
+        assert rewards == expected_rewards
 
 
 def test_index_route_no_login(client):
@@ -191,29 +201,31 @@ def test_set_board_rewards():
     Test that the set_bingo_board() function in restaurant_profile_manager.py 
     can be used to update a user's list of rewards.
     """
-    rpm = RestaurantProfileManager("vchang")
-    board = rpm.get_bingo_board()
-    old_rewards = board["board_reward"]
-    
-    new_rewards = [
-        ObjectId('5ef50127ccd1e88ead4cd07b'),
-        ObjectId('5ef50127ccd1e88ead4cd07b'),
-        ObjectId('5ef50127ccd1e88ead4cd07b'),
-        ObjectId('5ef50127ccd1e88ead4cd07b'),
-        ObjectId('5ef50127ccd1e88ead4cd07b'),
-        ObjectId('5ef50127ccd1e88ead4cd07b'),
-        ObjectId('5ef50127ccd1e88ead4cd07b'),
-        ObjectId('5ef50127ccd1e88ead4cd07b'),
-        ObjectId('5ef50127ccd1e88ead4cd07b'),
-        ObjectId('5ef50127ccd1e88ead4cd07b'),
-        ObjectId('5ef50127ccd1e88ead4cd07b'),
-        ObjectId('5ef50127ccd1e88ead4cd07b')
-    ]
+    with app.app_context():
+        rpm = RestaurantProfileManager("vchang")
+        gbm = GameBoardManager(rpm)
+        board = gbm.get_bingo_board()
+        old_rewards = board["board_reward"]
 
-    board["board_reward"] = new_rewards
-    rpm.set_bingo_board(board)
+        new_rewards = [
+            ObjectId('5ef50127ccd1e88ead4cd07b'),
+            ObjectId('5ef50127ccd1e88ead4cd07b'),
+            ObjectId('5ef50127ccd1e88ead4cd07b'),
+            ObjectId('5ef50127ccd1e88ead4cd07b'),
+            ObjectId('5ef50127ccd1e88ead4cd07b'),
+            ObjectId('5ef50127ccd1e88ead4cd07b'),
+            ObjectId('5ef50127ccd1e88ead4cd07b'),
+            ObjectId('5ef50127ccd1e88ead4cd07b'),
+            ObjectId('5ef50127ccd1e88ead4cd07b'),
+            ObjectId('5ef50127ccd1e88ead4cd07b'),
+            ObjectId('5ef50127ccd1e88ead4cd07b'),
+            ObjectId('5ef50127ccd1e88ead4cd07b')
+        ]
 
-    assert (rpm.get_bingo_board())["board_reward"] == new_rewards
+        board["board_reward"] = new_rewards
+        gbm.set_bingo_board(board)
 
-    board["board_reward"] = old_rewards
-    rpm.set_bingo_board(board)
+        assert (gbm.get_bingo_board())["board_reward"] == new_rewards
+
+        board["board_reward"] = old_rewards
+        gbm.set_bingo_board(board)

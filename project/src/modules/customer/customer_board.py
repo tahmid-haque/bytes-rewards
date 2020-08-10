@@ -4,7 +4,7 @@ It is used to interact with the customer profile database for boards.
 """
 from bson.objectid import ObjectId
 from modules.database import QueryFailureException, UpdateFailureException
-from modules.restaurant_profile_manager import RestaurantProfileManager
+from modules.owner.restaurant_profile_manager import RestaurantProfileManager
 
 
 def check_bingo(board, completed_indices, size):
@@ -137,7 +137,7 @@ def get_reward_progress(cpm):
         # format all dates
         for index, reward in enumerate(redeemed_rewards):
             redeemed_rewards[index]["redemption_date"] = reward[
-                "redemption_date"].strftime("%B %d, %Y")
+                "redemption_date"].strftime("%B X%d, %Y").replace("X0", "X").replace("X", "")
 
         return (active_rewards, redeemed_rewards)
 

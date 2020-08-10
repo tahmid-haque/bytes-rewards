@@ -10,7 +10,9 @@ import pytest
 sys.path.insert(1, os.path.join(os.path.dirname(__file__),
                                 '../../src'))  # Import the src folder
 from restaurants_app import app
-from modules.restaurant_profile_manager import RestaurantProfileManager
+from modules.owners.restaurant_profile_manager import RestaurantProfileManager
+from modules.owners.public_profile import PublicProfileModifier
+from modules.owner.game_board import GameBoardManager
 
 @pytest.fixture
 def client():
@@ -31,7 +33,9 @@ def test_update_current_with_future():
     """
     with app.app_context():
         rpm = RestaurantProfileManager('testuser')
-        public_users = rpm.get_public_users()
+        pm = PublicProfileModifier(rpm)
+        gm = GameBoardManager(rpm)
+        public_users = pm.get_public_users()
         expired_board_user = []
         current_boards = []
         actual_future = []
@@ -51,8 +55,8 @@ def test_update_current_with_future():
                     'expiry_date'] + timedelta(days=90)
                 # expected future board has increased exp date
                 expected_future.append(to_add)
-                rpm.update_board(user['_id'])
-        public_users = rpm.get_public_users()
+                gm.update_board(user['_id'])
+        public_users = pm.get_public_users()
         for user in public_users:
             #searches for users whose boards were updated
             if user['_id'] in expired_board_user:
@@ -77,7 +81,9 @@ def test_update_expired_future_expiry_date():
     """
     with app.app_context():
         rpm = RestaurantProfileManager('testuser')
-        public_users = rpm.get_public_users()
+        pm = PublicProfileModifier(rpm)
+        gm = GameBoardManager(rpm)
+        public_users = pm.get_public_users()
         expired_board = []
         expected = True
         for user in public_users:
@@ -86,7 +92,7 @@ def test_update_expired_future_expiry_date():
                     'expiry_date'] < datetime.now(
                     ) and user['future_board']['expiry_date'] < datetime.now():
                 expired_board.append(user)
-                rpm.update_board(user['_id'])
+                gm.update_board(user['_id'])
         public_users = rpm.get_public_users()
         for expired_user in expired_board:
             for user in public_users:
