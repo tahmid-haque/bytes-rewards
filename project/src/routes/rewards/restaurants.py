@@ -35,7 +35,8 @@ def view_board(obj_id):
     """
     username = current_user.get_id()
     rpm = RestaurantProfileManager("")
-    gpm = GameBoardManager(rpm).update_board(obj_id)
+    gpm = GameBoardManager(rpm)
+    gpm.update_board(obj_id)
     board = gpm.get_restaurant_board_by_id(obj_id)
     set_board_progress(current_user, board, obj_id)
     board["expiry_date"] = board["expiry_date"].strftime(
