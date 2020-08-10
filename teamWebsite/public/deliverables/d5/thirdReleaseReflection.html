@@ -1,0 +1,904 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Bytes | Third Release Reflection</title>
+        <link rel="icon" href="/assets/common/logo.png" />
+
+        <link
+            rel="stylesheet"
+            href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css"
+        />
+        <link rel="stylesheet" href="/assets/common/css/teamStyle.css" />
+        <link
+            href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;700&display=swap"
+            rel="stylesheet"
+        />
+
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/js/bootstrap.min.js"></script>
+    </head>
+
+    <body>
+        <span id="navbar-placeholder"></span>
+
+        <div class="container my-4">
+            <div class="jumbotron mb-4">
+                <h1 class="display-4">Third Release Reflection</h1>
+                <p class="lead">
+                    Here is our work for Deliverable 5.
+                    <span class="d-md-block">
+                        It contains changes to the product backlog, sprint backlogs, project velocity,
+						difficulties we encountered, use of contingency planning, progression from
+						D4 to D5, and client interactions.
+                    </span>
+                </p>
+            </div>
+			
+			<div class="card border-dark h-100 mb-4">
+                <div class="card-header">Product Backlog</div>
+                <div class="card-body">
+                    <div class="m-0 px-3 h-100">
+						<strong>Changes to the Product Backlog</strong>
+						<p>
+						Our product backlog changed throughout the last three sprints after 
+						conversations with our client and eliminating stories due to time constraints.
+						</p>
+						<p>
+						Changes to our user stories relating to bingo board expiration dates occurred
+						after conversations with our client. Our original plan had a 5x5 bingo 
+						board and an expiration date for the entire board. After discussing with 
+						our client, they mentioned that it would be unfeasible for a customer to 
+						complete 25 goals, depending on the expiration date chosen by the 
+						restaurant owner. They suggested having individual expiration dates for 
+						goals and rewards. While our team was  discussing the implementation of 
+						this feature, we discovered many problems with it. Some of these problems 
+						included what would happen to the completion status of a completed goal 
+						if it were to expire, and how a restaurant owner could feasibly maintain 
+						the expiry dates of 25 goals and 12 rewards. We came up with a solution 
+						to have the option to have smaller, 3x3 or 4x4, bingo boards with 
+						expiration dates, and discussed this idea with our client. After receiving
+						their approval, we modified our backlog to reflect these changes.
+						</p>
+						<p>
+						An additional story relating to the clearing of a customer bingo board once
+						the customer completed the entire bingo board was added after meeting with 
+						our client. They mentioned that the board should be cleared once the 
+						customer completed the entire board, and thus we modified our backlog to 
+						add this user story.
+						</p>
+						<p>
+						Two of our user stories were removed from our backlog due to time 
+						constraints on the project. The stories that were removed were related to 
+						the friend competition aspect of our bingo board. We decided to remove this
+						feature as it was not explicitly asked for by the client; they were 
+						included because we thought it would add a more gamified aspect to our 
+						loyalty program, however, our product meets the client requirements without
+						this feature. These stories were also the lowest priority.
+						</p>
+						</hr>
+						<p>
+						The product backlog is as follows or as a pdf <a href="/assets/d5/pdf/d5_backlog.pdf"> here</a>:
+						</p>
+						<img
+                            src="/assets/d5/img/d5_backlog1.png"
+                            class="sprint-plan-img mb2"
+                        />
+						<img
+                            src="/assets/d5/img/d5_backlog2.png"
+                            class="sprint-plan-img mb2"
+                        />
+						<img
+                            src="/assets/d5/img/d5_backlog3.png"
+                            class="sprint-plan-img mb2"
+                        />
+                    </div>
+                </div>
+            </div>
+			
+            <div class="card border-dark h-100 mb-4">
+                <div class="card-header">Release Plan</div>
+                <div class="card-body">
+                    <div class="m-0 px-3 h-100">
+                        <div>
+                            <li>
+                            The length of our sprints continue to be one week long.
+							</li>
+							<li>
+                            We chose this length because we want to have a larger number of sprints
+							while still lining up with deadlines.
+							</li>
+							<li>
+							Our releases, including time taken for peer reviews, should fall 
+							exactly on each deliverable’s due date, including the final due date
+							of the project.
+							</li>
+                        </div>
+                    </div>
+                </div>
+            </div>
+			
+			<div class="card border-dark h-100 mb-4">
+                <div class="card-header">Sprint Plans</div>
+                <div class="card-body">
+                    <div class="m-0 px-3 h-100">
+						<p> Three sprints were completed and are described in detail below. </p>
+						<hr>
+						<strong>Sprint 5: Backlog</strong>
+						<li>
+                            For each user story in the Sprint Backlog, there are the following details:
+                        </li>
+						<ul>
+							<li>
+								<b>Priorities</b> are labelled at the top of each card.
+							</li>
+							<li>
+								<b>Groupings of user stories</b> are shown through the labels.
+							</li>
+							<li>
+								<b>Story points</b> are shown in brackets in the user story
+								titles.
+							</li>
+							<li>
+								1 story point = 2 hours
+							</li>
+						</ul>
+						<hr>
+							<p>
+								The full sprint backlog is as follows or as a pdf <a href="/assets/d5/pdf/Sprint5_Backlog.pdf"> here</a>:
+							</p>
+						<hr />
+                        <img
+                            src="/assets/d5/img/Sprint5_Backlog_Part1.png"
+                            class="sprint-plan-img mb2"
+                        />
+						<img
+                            src="/assets/d5/img/Sprint5_Backlog_Part2.png"
+                            class="sprint-plan-img mb2"
+                        />
+						<img
+                            src="/assets/d5/img/Sprint5_Backlog_Part3.png"
+                            class="sprint-plan-img mb2"
+                        />
+					    <strong>Sprint 5: Intitial</strong>
+						<p>
+						The following images contain the initial task board, division of tasks,
+						and burndown chart for sprint 5, respectively.
+						</p>
+						<img
+                            src="/assets/d5/img/d5_sprint5_initial_taskboard.png"
+                            class="sprint-plan-img mb2"
+                        />
+                        <img
+                            src="/assets/d5/img/Sprint5_Initial_Task_Board.png"
+                            class="sprint-plan-img mb2"
+                        />
+						<img
+                            src="/assets/d5/img/Sprint5_Initial_Burndown.png"
+                            class="sprint-plan-img mb2"
+                        />
+						<hr/>
+						<strong>Sprint 5: Final</strong>
+						<p>
+						The following images contain the final task board, division of tasks,
+						and burndown chart for sprint 5, respectively.
+						</p>
+						<img
+                            src="/assets/d5/img/d5_sprint5_final_taskboard.png"
+                            class="sprint-plan-img mb2"
+                        />
+                        <img
+                            src="/assets/d5/img/Sprint5_Final_Task_Board.png"
+                            class="sprint-plan-img mb2"
+                        />
+						<img
+                            src="/assets/d5/img/Sprint5_Final_Burndown.png"
+                            class="sprint-plan-img mb2"
+                        />
+						<hr/>
+						<strong>Sprint 6: Backlog</strong>
+						<li>
+                            For each user story in the Sprint Backlog, there are the following details:
+                        </li>
+						<ul>
+							<li>
+								<b>Priorities</b> are labelled at the top of each card.
+							</li>
+							<li>
+								<b>Groupings of user stories</b> are shown through the labels.
+							</li>
+							<li>
+								<b>Story points</b> are shown in brackets in the user story
+								titles.
+							</li>
+							<li>
+								1 story point = 2 hours
+							</li>
+						</ul>
+						<hr>
+							<p>
+								The full sprint backlog is as follows or as a pdf <a href="/assets/d5/pdf/Sprint6_Backlog.pdf"> here</a>:
+							</p>
+						<hr />
+                        <img
+                            src="/assets/d5/img/Sprint6_Backlog_Part1.png"
+                            class="sprint-plan-img mb2"
+                        />
+						<img
+                            src="/assets/d5/img/Sprint6_Backlog_Part2.png"
+                            class="sprint-plan-img mb2"
+                        />
+						<img
+                            src="/assets/d5/img/Sprint6_Backlog_Part3.png"
+                            class="sprint-plan-img mb2"
+                        />
+						<img
+                            src="/assets/d5/img/Sprint6_Backlog_Part4.png"
+                            class="sprint-plan-img mb2"
+                        />
+						<img
+                            src="/assets/d5/img/Sprint6_Backlog_Part5.png"
+                            class="sprint-plan-img mb2"
+                        />
+						<strong>Sprint 6: Intitial</strong>
+						<p>
+						The following images contain the initial task board, division of tasks,
+						and burndown chart for sprint 6, respectively.
+						</p>
+						<img
+                            src="/assets/d5/img/d5_sprint6_initial_taskboard.png"
+                            class="sprint-plan-img mb2"
+                        />
+                        <img
+                            src="/assets/d5/img/Sprint6_Initial_Task_Board_Part1.png"
+                            class="sprint-plan-img mb2"
+                        />
+						<img
+                            src="/assets/d5/img/Sprint6_Initial_Task_Board_Part2.png"
+                            class="sprint-plan-img mb2"
+                        />
+						<img
+                            src="/assets/d5/img/Sprint6_Initial_Burndown.png"
+                            class="sprint-plan-img mb2"
+                        />
+						<hr/>
+						<strong>Sprint 6: Final</strong>
+						<p>
+						The following images contain the final task board, division of tasks,
+						and burndown chart for sprint 6, respectively.
+						</p>
+						<img
+                            src="/assets/d5/img/d5_sprint6_final_taskboard.png"
+                            class="sprint-plan-img mb2"
+                        />
+                        <img
+                            src="/assets/d5/img/Sprint6_Final_Task_Board_Part1.png"
+                            class="sprint-plan-img mb2"
+                        />
+						<img
+                            src="/assets/d5/img/Sprint6_Final_Task_Board_Part2.png"
+                            class="sprint-plan-img mb2"
+                        />
+						<img
+                            src="/assets/d5/img/Sprint6_Final_Burndown.png"
+                            class="sprint-plan-img mb2"
+                        />
+						<hr/>
+						<strong>Sprint 7: Backlog</strong>
+						<li>
+                            For each user story in the Sprint Backlog, there are the following details:
+                        </li>
+						<ul>
+							<li>
+								<b>Priorities</b> are labelled at the top of each card.
+							</li>
+							<li>
+								<b>Groupings of user stories</b> are shown through the labels.
+							</li>
+							<li>
+								<b>Story points</b> are shown in brackets in the user story
+								titles.
+							</li>
+							<li>
+								1 story point = 2 hours
+							</li>
+							<hr>
+							<p>
+								The full sprint backlog is as follows or as a pdf <a href="/assets/d5/pdf/Sprint7_Backlog.pdf"> here</a>:
+							</p>
+						<hr />
+                        <img
+                            src="/assets/d5/img/Sprint7_Backlog_Part1.png"
+                            class="sprint-plan-img mb2"
+                        />
+						<img
+                            src="/assets/d5/img/Sprint7_Backlog_Part2.png"
+                            class="sprint-plan-img mb2"
+                        />
+						<img
+                            src="/assets/d5/img/Sprint7_Backlog_Part3.png"
+                            class="sprint-plan-img mb2"
+                        />
+						</ul>
+						<strong>Sprint 7: Intitial</strong>
+						<p>
+						The following images contain the initial task board, division of tasks,
+						and burndown chart for sprint 7, respectively.
+						</p>
+						<img
+                            src="/assets/d5/img/d5_sprint7_initial_taskboard.png"
+                            class="sprint-plan-img mb2"
+                        />
+                        <img
+                            src="/assets/d5/img/Sprint7_Initial_Task_Board_Part1.png"
+                            class="sprint-plan-img mb2"
+                        />
+						<img
+                            src="/assets/d5/img/Sprint7_Initial_Task_Board_Part2.png"
+                            class="sprint-plan-img mb2"
+                        />
+						<img
+                            src="/assets/d5/img/Sprint7_Initial_Burndown.png"
+                            class="sprint-plan-img mb2"
+                        />
+						<hr/>
+						<strong>Sprint 7: Middle</strong>
+						<p>
+						The following images contain the final task board, division of tasks,
+						and burndown chart for sprint 7, respectively.
+						</p>
+						<img
+                            src="/assets/d5/img/d5_sprint7_middle_taskboard.png"
+                            class="sprint-plan-img mb2"
+                        />
+						<img
+                            src="/assets/d5/img/Sprint7_Mid_Task_Board_Part1.png"
+                            class="sprint-plan-img mb2"
+                        />
+						<img
+                            src="/assets/d5/img/Sprint7_Mid_Task_Board_Part2.png"
+                            class="sprint-plan-img mb2"
+                        />
+						<img
+                            src="/assets/d5/img/Sprint7_Mid_Burndown.png"
+                            class="sprint-plan-img mb2"
+                        />
+						<hr/>
+						<strong>Sprint 7: Final</strong>
+						<p>
+						The following images contain the final task board, division of tasks,
+						and burndown chart for sprint 7, respectively.
+						</p>
+						<img
+                            src="/assets/d5/img/d5_sprint7_final_taskboard.png"
+                            class="sprint-plan-img mb2"
+                        />
+						<img
+                            src="/assets/d5/img/Sprint7_Final_Task_Board_Part1.png"
+                            class="sprint-plan-img mb2"
+                        />
+						<img
+                            src="/assets/d5/img/Sprint7_Final_Task_Board_Part2.png"
+                            class="sprint-plan-img mb2"
+                        />
+						<img
+                            src="/assets/d5/img/Sprint7_Final_Burndown.png"
+                            class="sprint-plan-img mb2"
+                        />
+                    </div>
+                </div>
+            </div>
+			
+			<div class="card border-dark h-100 mb-4">
+                <div class="card-header">Estimated and Actual Project Velocities</div>
+                <div class="card-body">
+                    <div class="m-0 px-3 h-100">
+                        <strong>Estimated Project Velocities</strong>
+                        <ul>
+                            <li> Sprint 5: 39 story points
+                            <li> Sprint 6: 61 story points
+                            <li> Sprint 7: 54.5 story points
+                        </ul>
+                        <p>
+                            Our estimated project velocity increased as some story points were
+                            carried over. Also, as a part of our initial planning for sprint 6,
+                            we decided to assign more than usual with the intention of carrying over
+                            whatever was left into sprint 7, since sprint 7 would be our final sprint.
+                        </p>
+                        <strong>Actual Project Velocities</strong>
+                        <ul>
+                            <li> Sprint 5: 34 story points
+                                <br>
+                                We were unable to complete all tasks for this sprint as school
+                                    had become very busy for most of us, and for some, it was still midterm season.
+                                    The remaining story points were carried over to the next sprint.
+                            </li>
+                            <li> Sprint 6: 49 story points
+                                <br>
+                                The reason we were unable to complete some of the tasks is similar to the reason for
+                                the last sprint. The carry over of story points from the previous sprint and the larger
+                                estimated project velocity also contributed to the difference between estimated and actual.
+                            </li>
+                            <li> Sprint 7: 54.5 story points
+                                <br>
+                                Majority of these points were what was left
+                                from the previous sprint. However, as we
+                                were merging our final project we realized
+                                there were some tasks needed to be completed
+                                in order to make our project more cohesive
+                                and presentable.
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card border-dark h-100 mb-4">
+                <div class="card-header">Following Our Plans and Replanning
+                </div>
+                <div class="card-body">
+                    <div class="m-0 px-3 h-100">
+                        <p>
+                            For the first sprint of this deliverable, sprint 5, we were mostly able to follow our plans,
+                            since our estimated project velocity was relatively low; some story points carried over,
+                            but no replanning was necessary. Our planning for sprint 6 was not followed exactly,
+                            but this could be due to the fact that our plans for sprint 6 included sprint 7.
+                            Again, points needed to be carried over without any replanning.
+                        </p>
+                        <p>
+                            One thing we did need to replan was how to deal with the expiration dates of bingo boards, goals and rewards.
+                            After receiving our client’s feedback, we held a
+                            quick meeting discussing how we would solve the issue. Thus, we replanned accordingly.
+                        </p>
+                        <p>
+                            For the whole of our project, we have mostly managed to follow our plans almost exactly.
+                            As was mentioned in our previous deliverable reports, we have overcome the times where
+                            our plans were not met exactly. However, some
+                            features we planned initially were not able to
+                            make it into our final release as we had run out
+                            of time. These features were of a lower priority,
+                            which is why they were left to the later sprints. However, we deemed it more important to clean up
+                            bugs and our user interfaces in order to make our final product more professional.
+                            Thus, we may not have followed our plans exactly, but we were able to finish the majority
+                            of the features that we had planned initially.
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+			<div class="card border-dark h-100 mb-4">
+                <div class="card-header">Difficulties We Encountered</div>
+                <div class="card-body">
+                    <div class="m-0 px-3 h-100">
+						<p>
+						A difficulty that we encountered occurred after our team discussed 
+						integrating the feature to allow restaurant owners to choose individual 
+						expiry dates for goals and rewards on their bingo board. This feature was 
+						suggested by our client, as they did not think having an expiration date 
+						for a 5x5 board was a good idea, as customers may not be able to complete 
+						25 goals before the expiration date. While discussing the implementation 
+						of this feature we discovered many problems with it. Some of these problems
+						included what would happen to the completion status of a completed goal if 
+						it were to expire and how a restaurant can feasibly maintain the expiry 
+						dates of 25 goals and 12 rewards. 
+						</p>
+						<p>
+						We came up with the idea that a restaurant owner could choose a smaller 3x3
+						board with an expiry date for the entire board, and brought up this idea 
+						with the client. They agreed this was a good solution, and thus our 
+						difficulty was resolved.
+						</p>
+                    </div>
+                </div>
+            </div>
+			
+			<div class="card border-dark h-100 mb-4">
+                <div class="card-header">How Our Contingency Plan Was Useful/ How It Varied</div>
+                <div class="card-body">
+                    <div class="m-0 px-3 h-100">
+                        <div>
+							<p>
+							We did not have to use our contingency plan for the past 3 sprints; no
+							team members dropped out, were sick, consistently missed meetings, or 
+							were academically dishonest. As a result of this, we did not have to 
+							use our contingency plan or come up with new solutions.
+							</p>
+							<p>
+							We tried to complete as much work as possible before the project 
+							deadline by assigning a higher number of story points for each sprint. 
+							As a result of the higher project velocity, some stories had to be 
+							pushed to following sprints. However, this did not affect our plan 
+							drastically, due to our just-in-time planning strategy for each sprint.
+							</p>
+						</div>
+                    </div>
+                </div>
+            </div>
+
+
+			<div class="card border-dark h-100 mb-4">
+                <div class="card-header">Project Progression from Deliverable 4 to 5</div>
+                <div class="card-body">
+                    <div class="m-0 px-3 h-100">
+						<p>
+						At the end of Deliverable 4, our team’s release included a lots of implemented 
+						functionality. Restaurant users and customers have dedicated interfaces to sign 
+						up to make an account and login. Restaurant users have a customizable profile, 
+						and can choose to create, view, and remove custom goals on a dedicated interface.
+						They can edit and save changes to their bingo board with pre-defined and customized goals, 
+						as well as rewards from a pre-defined list. For customers, when they log in they can view
+						a list of restaurants with visible profiles, and choose to view the full profile or the 
+						restaurant’s bingo board.
+						</p>
+						<p>
+						By the end of Deliverable 5, our team’s latest release includes improvement on our previous
+						work, as well as many more implemented features. Restaurant users can now customize rewards 
+						on a dedicated interface, choose from 3 sizes of game boards, set an expiration date for their 
+						game board, and plan a future game board. When their current game board’s expiration date passes,
+						it is replaced with their future board. They have an interface where they can scan customer QR 
+						codes or type in unique codes to verify when goals and rewards are completed. 
+						</p>
+						<p>
+						Customers can now view information about the restaurant, “favourite” restaurants, and view 
+						“favourite” restaurants on an interface. The customer’s “View Game Board” interface was redesigned
+						to show achievement paths, QR codes, and rewards corresponding with each goal. The board changes
+						to show progress and completed achievement paths. Customers can also view their earned and redeemed
+						rewards; earned rewards have QR codes for redemption and redeemed rewards show the date of redemption. 
+						</p>         
+                    </div>
+                </div>
+            </div>
+			
+			<div class="card border-dark h-100 mb-4">
+                <div class="card-header">How Deliverable 5 Differed from Deliverable 4</div>
+                <div class="card-body">
+                    <div class="m-0 px-3 h-100">
+					<p>
+					Deliverable 5 differed from Deliverable 4 in terms of progress and end result. At the end of 
+					Deliverable 4, our team’s release included key functionality but no redemption or expiration date 
+					features. As highlighted in the ‘Project Progression’ section, the release at the end of Deliverable 
+					5 includes full functionality. Deliverable 4 had just a singular 5x5 game board for restaurant users
+					to customize; after speaking with the PickEasy team, we implemented their feedback so that restaurant 
+					users have the option of different sizes of game boards. We added an expiry date for the board and an
+					interface to plan a future board allows our gamified to be fully updatable and usable over time.
+					</p>
+					<p>
+					Since this was the final deliverable, our team tried to get as much work done as possible in the 
+					first two sprints, as we knew we would need to allot time for the report and final adjustments before 
+					the final release; we also wanted to finish work as soon as possible to account for potential bug fixes.
+					Because of this, the project velocities for these sprints were much higher than that of Deliverable 4. 
+					As a result of the higher velocities, for these sprints there were some story points that were not
+					completed and needed to be carried over to the next sprint. 
+					</p>             
+                    </div>
+                </div>
+            </div>
+			
+			<div class="card border-dark h-100 mb-4">
+                <div class="card-header">Testing Strategies</div>
+                <div class="card-body">
+                    <div class="m-0 px-3 h-100">
+					<p>
+					Unit tests are grouped based on the feature being implemented. Each of our user stories relate 
+					to a specific testable feature; once the code is completed, the author will make a unit test
+					suite. This suite covers expected cases, edge cases, and routing, where applicable; all unit 
+					test methods have titles that reflect the test that is being run, as well as a header to 
+					describe the test. This ensures backend functionality works as expected. 
+					</p>
+					<p>
+					Frontend features that cannot be tested with unit testing, such as visuals changing on the 
+					frontend are tested with test cases. Like unit tests, these test suites are grouped according
+					to the feature they are for; these features are determined from user stories. The test case
+					files include the category/grouping the test corresponds to, test description, steps to 
+					complete the test, expected result, and whether the test passes or fails. 
+					</p>
+					<p>
+					Together, the unit tests and test cases provide proof that the user story was implemented 
+					correctly; this means it passes acceptance criteria and handles edge cases appropriately. 
+					During our peer reviews, we ensure to check our team member’s unit tests and test cases to 
+					ensure they pass, and to ensure that all expected and edge cases are documented. 
+					</p>             
+                    </div>
+                </div>
+            </div>
+
+	<div class="card border-dark h-100 mb-4">
+                <div class="card-header">Implementation of Client Requirements</div>
+                <div class="card-body">
+                    <div class="m-0 px-3 h-100">
+					<p>
+					We were initially given the requirements to make a loyalty game program for our customers. 
+					We started off with a bingo idea and built upon this. During our implementation we have always 
+					been demoing to our clients and getting feedback, then building on top of their feedback. 
+					Our most recent feedback from the clients was about our layouts and expiration of the board vs goals. 
+					</p>
+					<p>
+					First they told us about how a 5x5 board is not feasible or could be hard for a customer to complete, 
+					we took this into consideration and talked about it with them. We then came up with having the idea 
+					that owners are able to set a different sized board from a given selection, which are 3x3, 4x4 or 5x5. 
+					This allows owners to have more customization of their boards, and also satisfied what our clients wanted.
+					</p>
+					<p>
+					Next, our clients also wanted us to have certain pages layed out in certain ways, such as 
+					customization of rewards and goals. This was something we asked and they were fine with them being 
+					on 2 seperate pages. One aspect of our design that they did want us to change was how we originally 
+					had X’s for goals that were incomplete on our bingo board. They didn’t like this idea and wanted 
+					something more appealing and more intuitive. We took their feedback and changed up to have pictures on 
+					the squares instead and now when a goal is clicked, it also tells the customer all the goals they need 
+					to finish in order to get that certain reward.
+					</p>     
+					<p>
+					Lastly, we also talked to our clients about the board expirations. They wanted us to have expiration 
+					dates for each individual goal, but we realized there were some problems such as keeping track of 
+					completion status. We discussed this with the clients and they agreed that expirations would work 
+					better with smaller boards, so we have the option of choosing different sized boards for owners.
+					</p>           
+                    </div>
+                </div>
+            </div>
+		<div class="card border-dark h-100 mb-4">
+                <div class="card-header">Quality of Implementation</div>
+                <div class="card-body">
+                    <div class="m-0 px-3 h-100">
+					<p>
+					Throughout our implementation process, we always kept in mind of keeping functions 
+					efficient, having minimal code and commenting for where things may be unclear. For 
+					frontend development we had to keep our client requirements in mind and use their 
+					feedback as a stepping stone in implementing what  the potential customer would see. 
+					We had to ensure that our frontend implementation would be easy to use, easy navigable, 
+					words are readable, color scheme of design is well thought out and appealing as well. 
+					All this was done through feedback and demos with the client. In order for the 
+					frontend to do its job, we have our backend as well. 
+					</p>
+					<p>
+					For backend implementation, we had to keep in mind about efficiency and making sure 
+					that code is well organized and structured. We would follow SOLID such as the single 
+					responsibility principle making sure that one function isn’t handling things that it 
+					shouldn’t be. We would divide up our functions that they all have one single responsibility. 
+					This ensures that our code is easily maintainable and readable. Once someone finally 
+					does have their implementation done, we don’t automatically merge with master. We go 
+					through rigorous testing and peer reviews. The testing is done to ensure that the 
+					frontend is as wanted and unit testing is done to ensure that each function is able 
+					to function properly and in extreme/edge cases. Once the testing is done, a pull 
+					request is made, and someone from the team reviews the testing and implementation. 
+					If there is something that needs changing, the specific change is mentioned and a 
+					reason as to why with what benefits it would have. Once the reviewer is satisfied, 
+					the implementation is approved and finally merged with the master to join with the 
+					overall project. 
+					</p>            
+                    </div>
+                </div>
+            </div>
+			
+			<div class="card border-dark h-100 mb-4">
+                <div class="card-header">Client Interactions</div>
+                <div class="card-body">
+                    <div class="m-0 px-3 h-100">
+                        <div>
+                            <strong>Client Interactions and Questions Asked</strong>
+                            <p>
+							The following outlines the questions we asked our client, the answer
+							we received, and how we implemented their feedback.
+							</p>
+							<ul>
+								<strong>July 27, 2020</strong>
+								<li>
+									<p>
+									<strong>Q:</strong>
+									What do you think about the layout of the customer view bingo 
+									board page and the highlighted achievement paths? Do we need a 
+									help button for clarity?
+									</p>
+									<p>
+									<strong>A:</strong>
+									The client said that the layout of the customer view bingo 
+									board page and the highlighted achievement paths were intuitive
+									and a help button was not needed.
+									</p>
+									<p>
+									<strong>How we Incorporated Feedback:</strong>
+									We incorporated this feedback by not including a help button.
+									</p>
+								</li>
+								<li>				
+									<p>
+									<strong>Q:</strong>
+									Should the goals on the customer bingo board reset after an 
+									achievement path is complete or after the entire board has been
+									completed?
+									</p>
+									<p>
+									<strong>A:</strong>
+									The client said the board should be cleared after the entire 
+									bingo board has been completed.
+									</p>
+									<p>
+									<strong>How we Incorporated Feedback:</strong>
+									We incorporated this feedback by adding a function to clear the
+									board when a customer has completed the entire board.
+									</p>
+								</li>							
+								<li>				
+									<p>
+									<strong>Q:</strong>
+									What do you think of the idea for restaurants to be able to 
+									create a 3x3 board with an expiration date?
+									</p>
+									<p>
+									<strong>A:</strong>
+									The client said the 3x3 board idea would work, as 9 goals to 
+									complete is more feasible than 25. They also mentioned they 
+									would like there to be incentive to complete the entire board.
+									</p>
+									<p>
+									<strong>How we Incorporated Feedback:</strong>
+									We incorporated this feedback by letting the restaurant owner 
+									choose the size of their bingo board; the options for sizes are
+									3x3, 4x4, and 5x5. They can also choose the expiry date for 
+									their board. We were unable to complete the feature to offer an
+									additional reward once the entire board was completed due to 
+									time restrictions; however, this could easily be appended if 
+									the client chose to proceed with our project.
+									</p>
+								</li>
+							</ul>
+                        </div>
+                        <hr />
+						<strong>Demo of Second Release: Meeting Minutes</strong>
+						<p>
+						On July 27, 2020 at 3:00 p.m., we demonstrated our second release to our 
+						client. The following state the demonstration agenda, feedback from the 
+						client, and how we incorporated their feedback.
+						</p>
+						<strong>Demonstration Agenda</strong>
+						<ul>
+							<li>
+								<strong>Show restaurant side</strong>
+								<ul>
+									<li>
+										Make restaurant owner account
+									</li>
+								</ul>
+								<ul>
+									<li>
+										Edit bingo board - show drag and drop functionality
+									</li>
+								</ul>
+								<ul>
+									<li>
+										Customize goals feature - show adding and removing 
+										custom goal functionality; show error checking functionality
+									</li>
+								</ul>
+								<ul>
+									<li>
+										Add custom goal to bingo board
+									</li>
+								</ul>
+								<ul>
+									<li>
+										Edit profile feature
+									</li>
+								</ul>
+							</li>
+							<li>
+								<strong>Show customer side</strong>
+								<ul>
+									<li>
+										Make customer account
+									</li>
+								</ul>
+								<ul>
+									<li>
+										View game board feature - show how achievement paths are 
+										displayed; show how QR codes are displayed
+									</li>
+								</ul>
+							</li>
+							<li>
+								<strong>Ask for feedback</strong>
+							</li>
+							<li>
+								<strong>Ask client questions</strong>
+							</li>
+						</ul>
+						<hr />
+						<strong>Feedback from the Client and how we Incorporated their Feedback</strong>
+						<ul>
+							<li>
+								<p>
+								<strong>Feedback 1:</strong>
+								The client did not like the lack of words and visuals on the customer 
+								view board page. They especially did not like the ‘x’ to show 
+								uncompleted goals.
+								</p>
+								<p>
+								<strong>How We Incorporated Feedback:</strong>
+								We incorporated this feedback by changing the image on uncompleted 
+								goals to a hamburger icon, so that it looked more appealing than 
+								the ‘x’. Additionally, we added a drop-down menu per each reward, 
+								that shows a list of goals that the user would need to complete to 
+								achieve the reward. This resolves the issue of lack of words, while
+								still maintaining readability on a mobile device.
+								</p>
+							</li>
+						</ul>
+						<ul>
+							<li>
+								<p>
+								<strong>Feedback 2:</strong>
+								The client suggested that each individual goal and reward have an 
+								expiry date instead of the entire board, as completing 25 goals is 
+								not feasible.
+								</p>
+								<p>
+								<strong>How we Incorporated Feedback:</strong>
+								We discussed this idea further with our client after realizing 
+								problems with it. Some of these problems include what would happen 
+								to the completion status of a completed goal if it were to expire 
+								and how a restaurant can feasibly maintain the expiry dates of 25 
+								goals and 12 rewards. We brought up the idea that a restaurant 
+								owner could choose a smaller 3x3 board with an expiry date for 
+								the entire board. They agreed this was a good solution, so we 
+								implemented a feature that allows the restaurant user to choose 
+								between a 3x3, 4x4, and 5x5 board with a single expiry date.
+								</p>
+							</li>
+						</ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card border-dark h-100 mb-4">
+                <div class="card-header">Most Important Thing We Learned</div>
+                <div class="card-body">
+                    <div class="m-0 px-3 h-100">
+                        <p>
+                            There are two things we feel are the most
+                            important that we have learned. They are Client
+                            Interaction and the Importance of Organization.
+                        </p>
+                        <strong>Client Interaction</strong>
+                        <p>
+                            Early on in the project there were some
+                            features we believed were sound ideas because
+                            they made logical sense to us and in the user
+                            stories we created. However, in taking them to
+                            our clients we were met with better ideas and
+                            ideas that were different than what we had come
+                            up with as a team. When we were able to
+                            incorporate the features given to us by the
+                            clients, we found that our projects became more
+                            presentable and professional. Their suggestions
+                            also guided us in providing websites that were
+                            user friendly and intuitive, which in turn would
+                            incentivize potential future users in using both
+                            PickEasy and our applications.
+                        </p>
+                        <strong>Importance of Organization</strong>
+                        <p>
+                            Throughout the entirety of our project, we
+                            learned many tools such as Burndown Charts,
+                            Sprint Backlogs, Box and Line Diagrams, etc.
+                            With these tools, we were able to build two
+                            sound applications. When we may have fallen
+                            behind, we were able to rely on these tools to
+                            help us stay on track of our sprints. Daily
+                            Scrum meetings, Peer Reviews, and meetings with
+                            our T.A kept us accountable and on the right
+                            path. We learned how to properly test our code
+                            to verify that what we were making was correct
+                            and working well. All of these things helped us
+                            stay organized, and without them, we would not have
+                            been able to complete as much of the project
+                            that we have completed.
+                        </p>
+                    </div>
+                </div>
+            </div>
+			
+        </div>
+        <script src="/assets/common/js/main.js"></script>
+    </body>
+</html>
