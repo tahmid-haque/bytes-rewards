@@ -1,17 +1,17 @@
 {% extends 'base.j2' %} 
 
 {% block head %}
-    <title>QR Code Goal Verification</title>
+    <title>QR Code Reward Verification</title>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;" />
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/qr-verification.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/qr-verification-rewards.css') }}" />
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://rawgit.com/sitepoint-editors/jsqrcode/master/src/qr_packed.js"></script>
 {% endblock head %}
 
 {% block body %}
     <div id="container">
-      <h1>QR Code Goal Verification</h1>
+      <h1>QR Code Reward Verification</h1>
     <div id="instructions">
         <p id="message" 
             {% with messages = get_flashed_messages() %}
@@ -33,10 +33,10 @@
       <canvas hidden="" id="qr-canvas"></canvas>
 
       <div id="qr-result" hidden="">
-        <b>Goal:</b> <span id="outputData"></span>
+        <b>Reward:</b> <span id="outputData"></span>
       </div>
       <div>
-        <form class="verify" method="post" action="/verification/finish-goal">
+        <form class="verify" method="post" action="/verification/finish-reward">
           <label>QR Code:</label>
           <input type="text" id="code" name="code"><br><br>
           <input id="mark" type="submit" value="Mark for completion">
@@ -53,5 +53,5 @@
 	</div>
     </div>
 
-    <script src="{{ url_for('static', filename='js/qrCodeScanner.js') }}" ></script>
+    <script src="{{ url_for('static', filename='js/qrCodeScanner-rewards.js') }}" ></script>
 {% endblock body %}
