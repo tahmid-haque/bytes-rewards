@@ -1,10 +1,12 @@
 """
-This file contains routes related to restaurant profiles.
+This file contains routes related to customer profiles.
 """
 
 from flask import Blueprint, render_template, redirect
 from flask_login import current_user, login_required
 from modules.restaurant_profile_manager import RestaurantProfileManager
+from modules.customer.favourite import *
+from modules.customer.customer_board import *
 
 bp = Blueprint("profile", __name__)
 
@@ -16,7 +18,7 @@ def view_profiles():
     Allows users to view restaurant profiles that are set to public.
     """
     restaurant_profiles = RestaurantProfileManager("").get_public_profiles()
-    favourite = current_user.get_favourite()
+    favourite = get_favourite(current_user)
     return render_template('view_profiles.j2',
                            profiles=restaurant_profiles,
                            favourite=favourite)
@@ -32,9 +34,10 @@ def view_board(obj_id):
     rpm = RestaurantProfileManager("")
     rpm.update_board(obj_id)
     board = rpm.get_restaurant_board_by_id(obj_id)
-    current_user.set_board_progress(board, obj_id)
+    set_board_progress(current_user, board, obj_id)
     board["expiry_date"] = board["expiry_date"].strftime(
         "%B X%d, %Y - X%I:%M %p UTC").replace("X0", "X").replace("X", "")
+    
     return render_template('view_game_board.j2',
                            goals=board["board"],
                            name=board["name"],
@@ -51,7 +54,7 @@ def reset_board(obj_id):
     When posting to this route, reset the bingo board goals.
     Redirect to the bingo board on completion.
     """
-    current_user.reset_complete_board(obj_id)
+    reset_complete_board(current_user, obj_id)
     return redirect("board")
 
 
@@ -81,7 +84,7 @@ def favourite_restaurant(obj_id):
     """
     Allows users to add and remove restaurants from "favourite"
     """
-    current_user.update_favourite(obj_id)
+    update_favourite(current_user, obj_id)
     return redirect("/")
 
 
@@ -91,10 +94,10 @@ def view_favourites():
     """
     Allows users to view restaurants from "favourite"
     """
-    favourite = current_user.get_favourite()
+    favourite = get_favourite(current_user)
     rpm = RestaurantProfileManager("")
     profiles = rpm.get_public_profiles()
-    list_fav = current_user.get_favourite_doc(profiles, favourite)
+    list_fav = get_favourite_doc(profiles, favourite)
     return render_template('view_favourites.j2',
                            profiles=list_fav,
                            favourite=favourite)
@@ -106,5 +109,5 @@ def view_favourite_restaurant(obj_id):
     """
     Allows users to remove restaurants from "favourite" while on "favourites" page
     """
-    current_user.update_favourite(obj_id)
+    update_favourite(current_user, obj_id)
     return redirect('/profiles/view-favourites')

@@ -9,7 +9,7 @@ sys.path.insert(1, os.path.join(os.path.dirname(__file__),
                                 '../../src'))  # Import the src folder
 
 from rewards_app import app
-from modules.customer_profile_manager import CustomerProfileManager
+from modules.customer.customer_profile_manager import CustomerProfileManager
 from modules.restaurant_profile_manager import RestaurantProfileManager
 
 
