@@ -23,6 +23,10 @@ def view_board():
         gbm = GameBoardManager(current_user)
         gbm.update_board(rest_id)
         bingo_board = gbm.get_restaurant_board_by_id(rest_id)
+
+        if bingo_board["board"] == []:
+            return redirect("/board/edit")
+
         return render_template(
             'view_game_board.j2',
             goals=[x['goal'] for x in bingo_board["board"]],
