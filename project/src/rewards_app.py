@@ -6,7 +6,7 @@ the whole rewards app together and provide a way to start a server.
 import os
 from flask import Flask, redirect
 from flask_qrcode import QRcode
-from modules.customer_profile_manager import CustomerProfileManager
+from modules.customer.customer_profile_manager import CustomerProfileManager
 from routes.authentication import get_auth_routes, add_auth
 from routes.rewards.profile import bp as profile_routes
 from routes.rewards.customer import bp as customer_routes

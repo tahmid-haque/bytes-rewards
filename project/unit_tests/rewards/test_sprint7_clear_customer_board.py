@@ -11,8 +11,10 @@ sys.path.insert(1, os.path.join(os.path.dirname(__file__),
 
 from rewards_app import app
 from modules.restaurant_profile_manager import RestaurantProfileManager
-from modules.customer_profile_manager import CustomerProfileManager
+from modules.customer.customer_profile_manager import CustomerProfileManager
 from modules.database import Database
+from modules.customer.favourite import *
+from modules.customer.customer_board import *
 
 @pytest.fixture
 def client():
@@ -43,7 +45,7 @@ def test_reset_board(db):
         rpm.complete_goal("tester", board['board'][i], str(i))
     
     rest_id = rpm.get_restaurant_id()
-    cpm.reset_complete_board(rest_id)
+    reset_complete_board(cpm, rest_id)
     
     rest_board = db.query("customers", {
         "username": "tester2",

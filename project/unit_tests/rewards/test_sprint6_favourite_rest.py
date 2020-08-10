@@ -11,7 +11,9 @@ sys.path.insert(1, os.path.join(os.path.dirname(__file__),
 from bson.objectid import ObjectId
 from rewards_app import app
 from modules.restaurant_profile_manager import RestaurantProfileManager
-from modules.customer_profile_manager import CustomerProfileManager
+from modules.customer.customer_profile_manager import CustomerProfileManager
+from modules.customer.favourite import *
+from modules.customer.customer_board import *
 
 
 @pytest.fixture
@@ -31,7 +33,7 @@ def test_get_favourites():
     with app.app_context():
         rpm = RestaurantProfileManager("")
         cpm = CustomerProfileManager("ksawyer")
-        favourite = cpm.get_favourite()
+        favourite = get_favourite(cpm)
         assert len(favourite) > 0
 
 
@@ -42,7 +44,7 @@ def test_get_no_favourite():
     """
     with app.app_context():
         cpm = CustomerProfileManager("unittestuser")
-        favourite = cpm.get_favourite()
+        favourite = get_favourite(cpm)
         assert len(favourite) == 0
 
 
@@ -53,12 +55,12 @@ def test_update_favourite():
     """
     with app.app_context():
         cpm = CustomerProfileManager("ksawyer")
-        old_favourite = cpm.get_favourite()
+        old_favourite = get_favourite(cpm)
         if ObjectId('5f15c084143cb39bfc5619b8') in old_favourite:
             expected = len(old_favourite) - 1
         else:
             expected = len(old_favourite) + 1
-        new_favourite = cpm.update_favourite('5f15c084143cb39bfc5619b8')
+        new_favourite = update_favourite(cpm, '5f15c084143cb39bfc5619b8')
     assert len(new_favourite) == expected
 
 def test_get_favourite_doc():
@@ -70,8 +72,8 @@ def test_get_favourite_doc():
         cpm = CustomerProfileManager("testuser")
         rpm = RestaurantProfileManager("")
         all_profiles = rpm.get_public_profiles()
-        favourite = cpm.get_favourite()
-        profiles = cpm.get_favourite_doc(all_profiles, favourite)
+        favourite = get_favourite(cpm)
+        profiles = get_favourite_doc(cpm, all_profiles, favourite)
         expected_fields = ["name", "category", "image", "is_public"]
 
         has_id = True

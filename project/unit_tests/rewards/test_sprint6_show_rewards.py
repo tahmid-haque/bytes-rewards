@@ -9,7 +9,9 @@ sys.path.insert(1, os.path.join(os.path.dirname(__file__),
                                 '../../src'))  # Import the src folder
 from rewards_app import app
 from modules.restaurant_profile_manager import RestaurantProfileManager
-from modules.customer_profile_manager import CustomerProfileManager
+from modules.customer.customer_profile_manager import CustomerProfileManager
+from modules.customer.favourite import *
+from modules.customer.customer_board import *
 
 
 @pytest.fixture
@@ -48,7 +50,7 @@ def test_get_reward_progress_empty():
     """
     with app.app_context():
         cpm = CustomerProfileManager("newuser")
-        assert cpm.get_reward_progress() == ([], [])
+        assert get_reward_progress(cpm) == ([], [])
 
 
 def test_get_reward_progress_non_empty():
@@ -91,7 +93,7 @@ def test_get_reward_progress_non_empty():
             'restaurant_name': 'KFC',
             'text': '10% Off A Purchase'
         }])
-        assert cpm.get_reward_progress() == expected_progress
+        assert get_reward_progress(cpm) == expected_progress
 
 
 def test_show_rewards_not_logged_in(client):
@@ -113,7 +115,7 @@ def test_show_rewards_qr_code(client):
                 })
     res = client.get("/personal/rewards", follow_redirects=True)
 
-    progress = CustomerProfileManager("showrewardsuser").get_reward_progress()
+    progress = get_reward_progress(CustomerProfileManager("showrewardsuser"))
 
     for reward in progress[0]:
         assert str.encode(reward["redemption_code"]) in res.data
