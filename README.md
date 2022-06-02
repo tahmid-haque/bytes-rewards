@@ -1,15 +1,23 @@
-# team_02-Bytes Project
+# Bytes Rewards
 
 <img src="https://github.com/CSCC01/team_02-project/blob/master/teamWebsite/public/assets/common/logo.png" alt="Bytes Logo" width="282" height="236">
-Welcome to the project repository of team_02, also known as Bytes.
+
+This project is a restaurant-oriented rewards platform with 2 web apps to support reward curation and client management. There is also a static website to document development progress mentioned below.
+
+Technologies used in the making of this project include:
+* Python (Flask w/ Jinja2 templating)
+* MongoDB
+* Bootstrap
+* JQuery
+* HTML / CSS / JS
 
 ## Team Website Link
 
-Our team website may be found at [https://bytes-cs.web.app/](https://bytes-cs.web.app/), where you can find a deployed website containing all major team information and deliverable content.
+Our team website may be found [here](https://bytes-cs.web.app/), where you can find a deployed website containing all major team information and deliverable content.
 
 ## Project Links
- -   [Restaurant Interface](https://bytes-restaurants.herokuapp.com/)
- -   [Customer Interface](https://bytes-rewards.herokuapp.com/)
+ -   [Restaurant Interface](https://bytes-restaurants.herokuapp.com/) (Now decomissioned)
+ -   [Customer Interface](https://bytes-rewards.herokuapp.com/) (Now decomissioned)
 
 ## Sprint Progress
 
